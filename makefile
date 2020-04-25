@@ -22,11 +22,11 @@ BIN_PATH = bin
 
 LIB_PATH = lib
 
-SDL_PATH = 
+SDL_PATH =
 
-GLUT_PATH = 
+GLUT_PATH =
 
-GL_PATH = 
+GL_PATH =
 
 SDL = SDL
 
@@ -102,7 +102,7 @@ else
 
 	SDL_FLAGS = -l$(SDL)
 
-	GL_FLAGS = -lGL -lGLU 
+	GL_FLAGS = -lGL -lGLU
 
 	CCFLAGS += -D LINUX
 
@@ -164,7 +164,7 @@ $(BIN_PATH):
 
 	@echo "------------Make directory $<---------------------"
 
-	$(IF_N_EXIST) "$(BIN_PATH)" $(THEN) mkdir "$(BIN_PATH)" $(ENDIF)	
+	$(IF_N_EXIST) "$(BIN_PATH)" $(THEN) mkdir "$(BIN_PATH)" $(ENDIF)
 
 
 
@@ -183,4 +183,3 @@ $(OBJ_PATH)$(SLASH)%.o: $(SRC_PATH)$(SLASH)%.cpp $(OBJ_PATH)
 clean:
 
 	$(CLEAN_CMD)
-
