@@ -1,5 +1,4 @@
 #include "game.hpp"
-#include "geometry.hpp"
 
 #include <iostream>
 
@@ -44,11 +43,6 @@ void Game::init(const char *title, int width, int height)
     {
         isRunning = true;
     }
-
-    glPushMatrix();
-      glTranslatef(-WINDOW_WIDTH/2,WINDOW_HEIGHT/2,0); //origine en haut à gauche
-      glScalef(1,-1,1);
-    glPopMatrix();
 }
 
 void Game::handleEvents()
