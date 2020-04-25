@@ -1,5 +1,5 @@
-#ifndef GEOMETRY_H
-#define GEOMETRY_H
+#ifndef MAP_H
+#define MAP_H
 
 #include <SDL/SDL.h>
 #include <GL/gl.h>
@@ -8,6 +8,5 @@
 #include <stdio.h>
 
 void fillGrid(SDL_Surface* surface);
-void drawSquare(int i, int j);
 
 #endif
