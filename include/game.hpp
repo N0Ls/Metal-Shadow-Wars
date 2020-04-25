@@ -13,19 +13,18 @@ class Game
 public :
     Game();
     ~Game();
-
+    SDL_Surface *surface;
+    void reshape(SDL_Surface** surface, unsigned int width, unsigned int height);
     void init(const char* title, int width, int height);
-
     void handleEvents();
     void update();
     void clean();
-    void draw();
+    void draw(SDL_Surface *surface);
     bool running() { return isRunning; };
 
 private :
     int counter;
     bool isRunning;
-    SDL_Surface *surface;
 
 };
 
