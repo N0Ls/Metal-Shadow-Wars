@@ -14,7 +14,7 @@ int main(int argc, const char * argv[])
     while (game->running())
     {
         game->handleEvents();
-        //game->update();
+        game->update();
     }
     game->clean();
     return 0;

@@ -19,7 +19,7 @@ public :
     void handleEvents();
     void update();
     void clean();
-
+    void draw();
     bool running() { return isRunning; };
 
 private :

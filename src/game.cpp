@@ -1,5 +1,5 @@
 #include "game.hpp"
-
+#include "geometry.hpp"
 #include <iostream>
 
 static const unsigned int BIT_PER_PIXEL = 32;
@@ -73,7 +73,7 @@ void Game::handleEvents()
 
         /* Mouvement souris */
         case SDL_MOUSEMOTION:
-            printf("souris en (%d, %d)\n", e.button.x, e.button.y);
+            //printf("souris en (%d, %d)\n", e.button.x, e.button.y);
             break;
 
         /* Touche clavier */
@@ -86,11 +86,17 @@ void Game::handleEvents()
         }
     }
 }
-
+void Game::draw(){}
 void Game::update()
 {
-    counter++;
-    std::cout << counter << std::endl;
+    glClearColor(0,0,0,0);
+    glClear(GL_COLOR_BUFFER_BIT);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+    int k = 0;
+    fillGrid();
+    k++;
+    std::cout << "counter "<< std::endl;
 }
 
 void Game::clean()
