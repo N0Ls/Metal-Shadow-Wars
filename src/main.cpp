@@ -15,6 +15,7 @@ int main(int argc, const char * argv[])
     SDL_Surface *images[nb_textures];
     static char textures_paths[nb_textures][255]= {"doc/logo_imac.jpg", "doc/grass_block_side.png"};
     init_textures(textures_paths, nb_textures, images, textureIds);
+
     while (game->running())
     {
         game->handleEvents();

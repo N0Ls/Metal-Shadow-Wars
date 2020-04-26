@@ -12,6 +12,6 @@ typedef struct{
   std::string texture_name;
 } texture;
 
-void init_textures(char textures_paths[][255], int nb_textures, SDL_Surface *images[], GLuint textureIds[]);
+void init_textures(char textures_paths[][255], int nb_textures, SDL_Surface *images[], GLuint *textureIds);
 
 #endif

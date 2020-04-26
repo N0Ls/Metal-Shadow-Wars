@@ -1,5 +1,6 @@
 #include "map.hpp"
 #include "constants.hpp"
+using namespace std;
 #include <iostream>
 #include "texture.hpp"
 #include <SDL/SDL.h>
@@ -7,7 +8,7 @@
 
 
 void drawQuads(){
-  glBegin(GL_QUADS);
+  glBegin(GL_LINE_LOOP);
     glColor3f(0,0,1);
       glTexCoord2f( 0 , 0);
       glVertex2f(0,0);

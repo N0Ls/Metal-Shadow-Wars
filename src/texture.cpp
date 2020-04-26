@@ -13,7 +13,7 @@ using namespace std;
 
 
 
-void init_textures(char textures_paths[][255], int nb_textures, SDL_Surface *images[], GLuint textureIds[]){
+void init_textures(char textures_paths[][255], int nb_textures, SDL_Surface *images[], GLuint *textureIds){
 
 
   //load images
@@ -30,9 +30,10 @@ void init_textures(char textures_paths[][255], int nb_textures, SDL_Surface *ima
 
   GLenum format;
   for(int y=0; y< nb_textures; y++){
-    glGenTextures(1,&textureIds[y]);
-    glBindTexture(GL_TEXTURE_2D, textureIds[y]);
+    glGenTextures(1,&textureIds[0]);
+    glBindTexture(GL_TEXTURE_2D, textureIds[0]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
 
     switch(images[y]->format->BytesPerPixel){
       case 1:
