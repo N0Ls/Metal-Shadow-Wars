@@ -1,3 +1,6 @@
+#ifndef CONSTANTS_H_H
+#define CONSTANTS_H
+
 static const unsigned int WINDOW_WIDTH = 600;
 static const unsigned int WINDOW_HEIGHT = 600;
 
@@ -11,3 +14,5 @@ static const int nb_textures = 2;
 static char textures_paths[nb_textures][255]= {"doc/logo_imac.png", "doc/grass_block_side.png"};
 
 static GLuint textureIds[nb_textures];
+
+#endif

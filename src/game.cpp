@@ -64,6 +64,7 @@ void Game::init(const char *title, int width, int height)
         width, height, BIT_PER_PIXEL,
         SDL_OPENGL | SDL_GL_DOUBLEBUFFER | SDL_RESIZABLE);
 
+
     if (NULL == surface)
     {
         isRunning = false;
@@ -76,7 +77,10 @@ void Game::init(const char *title, int width, int height)
     {
         isRunning = true;
     }
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     reshape(&surface, width, height);
+
 }
 
 
@@ -143,6 +147,7 @@ void Game::update()
 
 void Game::clean()
 {
+  /* AJOUTER LE CLEAN DES TEXTURES*/
     SDL_Quit();
     exit(EXIT_SUCCESS);
 }
