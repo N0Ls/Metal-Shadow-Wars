@@ -1,6 +1,7 @@
 #include "game.hpp"
 #include "map.hpp"
 #include "constants.hpp"
+
 #include <iostream>
 
 static const unsigned int BIT_PER_PIXEL = 32;
@@ -12,6 +13,7 @@ Game::Game()
 Game::~Game()
 {
 }
+
 void Game::reshape(SDL_Surface** surface, unsigned int width, unsigned int height)
 {
 
