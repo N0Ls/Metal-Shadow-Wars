@@ -22,11 +22,11 @@ int main(int argc, const char *argv[])
     //static char textures_paths[nb_textures][255] = {"doc/logo_imac.jpg", "doc/grass_block_side.png"};
     //init_textures(textures_paths, nb_textures, images, textureIds);
 
-    player *newPlayer = nullptr;
+    player newPlayer;
 
-    initPlayer(newPlayer, 1, 3);
+    initPlayer(&newPlayer, 1, 3);
 
-    std::cout << newPlayer->resources << std::endl;
+    std::cout << newPlayer.resources << std::endl;
 
     while (game->running())
     {
