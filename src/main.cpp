@@ -17,15 +17,11 @@ int main(int argc, const char *argv[])
     game = new Game();
 
     game->init("IMAC WARS 2", WINDOW_WIDTH, WINDOW_HEIGHT);
-    SDL_Surface *images[nb_textures];
 
-    //static char textures_paths[nb_textures][255] = {"doc/logo_imac.jpg", "doc/grass_block_side.png"};
-    //init_textures(textures_paths, nb_textures, images, textureIds);
+    init_textures(nb_textures, game->textureIds);
 
     player newPlayer;
-
     initPlayer(&newPlayer, 1, 3);
-
     std::cout << newPlayer.resources << std::endl;
 
     while (game->running())

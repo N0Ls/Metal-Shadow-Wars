@@ -6,6 +6,7 @@
 #include <GL/glu.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "constants.hpp"
 
 class Game
 {
@@ -21,6 +22,7 @@ public :
     void clean();
     void draw(SDL_Surface *surface);
     bool running() { return isRunning; };
+    GLuint textureIds[nb_textures];
 
 private :
     int counter;

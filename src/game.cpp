@@ -81,6 +81,8 @@ void Game::init(const char *title, int width, int height)
     }
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_TEXTURE_2D);
+
     reshape(&surface, width, height);
 
 }
@@ -135,8 +137,7 @@ void Game::draw(SDL_Surface *surface){
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    fillGrid(surface);
-
+    fillGrid(surface, this->textureIds);
 }
 void Game::update()
 {
@@ -151,5 +152,6 @@ void Game::clean()
 {
   /* AJOUTER LE CLEAN DES TEXTURES*/
     SDL_Quit();
+    glDisable(GL_TEXTURE_2D);
     exit(EXIT_SUCCESS);
 }

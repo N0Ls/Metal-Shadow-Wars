@@ -8,8 +8,8 @@ using namespace std;
 
 
 void drawQuads(){
-  glBegin(GL_LINE_LOOP);
-    glColor3f(0,0,1);
+  glBegin(GL_QUADS);
+    glColor3f(1,1,1);
       glTexCoord2f( 0 , 0);
       glVertex2f(0,0);
 
@@ -24,11 +24,10 @@ void drawQuads(){
   glEnd();
 }
 
-void fillGrid(SDL_Surface* surface){
+void fillGrid(SDL_Surface* surface, GLuint textureIds[]){
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  glEnable(GL_TEXTURE_2D);
-  glBindTexture(GL_TEXTURE_2D, textureIds[0]);
+  glBindTexture(GL_TEXTURE_2D, textureIds[1]);
     glPushMatrix();
     glScalef(1,-1,1.);
 
@@ -44,7 +43,7 @@ void fillGrid(SDL_Surface* surface){
 
   glPopMatrix();
   glBindTexture(GL_TEXTURE_2D, 0);
-  glDisable(GL_TEXTURE_2D);
+
 
 
 

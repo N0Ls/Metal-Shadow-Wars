@@ -7,6 +7,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void fillGrid(SDL_Surface* surface);
+void fillGrid(SDL_Surface* surface, GLuint textureIds[]);
 
 #endif

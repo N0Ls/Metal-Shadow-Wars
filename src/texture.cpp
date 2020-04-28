@@ -13,9 +13,10 @@ using namespace std;
 
 
 
-void init_textures(char textures_paths[][255], int nb_textures, SDL_Surface *images[], GLuint *textureIds){
+void init_textures(int nb_textures, GLuint *textureIds){
+  char textures_paths[nb_textures][255]= {"doc/logo_imac.png", "doc/grass_block_side.png"};
 
-
+  SDL_Surface *images[nb_textures];
   //load images
   for(int i=0; i < nb_textures; i++){
     images[i] = IMG_Load(textures_paths[i]);
@@ -29,9 +30,9 @@ void init_textures(char textures_paths[][255], int nb_textures, SDL_Surface *ima
 
 
   GLenum format;
+  glGenTextures(nb_textures,&textureIds[0]);
   for(int y=0; y< nb_textures; y++){
-    glGenTextures(1,&textureIds[0]);
-    glBindTexture(GL_TEXTURE_2D, textureIds[0]);
+    glBindTexture(GL_TEXTURE_2D, textureIds[y]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 
