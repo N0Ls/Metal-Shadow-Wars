@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "constants.hpp"
+#include <SDL/SDL_mixer.h>
 
 class Game
 {
@@ -28,7 +29,7 @@ public :
 private :
     int counter;
     bool isRunning;
-
+    Mix_Music *music = NULL;
 };
 
 #endif /* GAME_H */

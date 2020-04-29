@@ -3,6 +3,7 @@
 #include "constants.hpp"
 
 #include <iostream>
+#include <SDL/SDL_mixer.h>
 
 static const unsigned int BIT_PER_PIXEL = 32;
 
@@ -83,6 +84,22 @@ void Game::init(const char *title, int width, int height)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_TEXTURE_2D);
 
+    if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 )
+    {
+        exit(EXIT_FAILURE);
+    }
+
+    this->music = Mix_LoadMUS( "doc/test.wav" );
+
+    if( this->music == NULL )
+    {
+      fprintf(
+          stderr,
+          "Impossible de charger la musique.\n");
+        exit(EXIT_FAILURE);
+    }
+
+
     reshape(&surface, width, height);
 
 }
@@ -106,6 +123,26 @@ void Game::handleEvents()
         {
             isRunning = false;
             break;
+        }
+
+        if (e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_m || e.key.keysym.sym == SDLK_ESCAPE))
+        {
+          if( Mix_PlayingMusic() == 0 ){
+             //On lance la musique
+              Mix_PlayMusic( this->music, -1 );
+          }
+          else{
+             //Si la musique est en pause
+             if( Mix_PausedMusic() == 1 ){
+                 //On enlève la pause (la musique repart où elle en était)
+                 Mix_ResumeMusic();
+             }
+             //Si la musique est en train de jouer
+             else{
+                 //On met en pause la musique
+                 Mix_PauseMusic();
+             }
+         }
         }
 
         switch (e.type)
