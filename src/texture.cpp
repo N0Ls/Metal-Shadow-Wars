@@ -8,14 +8,17 @@ using namespace std;
 #include <GL/glu.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "constants.hpp"
 
 
 
 
 
-void init_textures(int nb_textures, GLuint *textureIds){
-  char textures_paths[nb_textures][255]= {"doc/logo_imac.png", "doc/grass_block_side.png"};
-
+void init_textures(int nb_textures, GLuint *textureIds,GLuint *textureLink){
+  char textures_paths[nb_textures][255]= { "doc/grass_block_side.png","doc/grass.png","doc/water.png","doc/tree.png","doc/mountain.png","doc/factory.png"};
+  for(int i = 0; i < MAP_SIZE*2 - 1; i++){
+    textureLink[i] = rand()%4 + 1;
+  }//Tableau qui fait le lien entre les coordonnées [ligne*i + colonne*j] et la texture associée bien définie
   SDL_Surface *images[nb_textures];
   //load images
   for(int i=0; i < nb_textures; i++){

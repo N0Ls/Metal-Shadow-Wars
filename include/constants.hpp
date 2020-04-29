@@ -10,7 +10,7 @@ static const float GL_VIEW_SIZE = 100.;
 static const unsigned int MAP_TILE_SIZE = GL_VIEW_SIZE/MAP_SIZE;
 
 
-static const int nb_textures = 2;
+static const int nb_textures = 6;
 
 
 #endif

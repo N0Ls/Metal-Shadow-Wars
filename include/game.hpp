@@ -23,6 +23,7 @@ public :
     void draw(SDL_Surface *surface);
     bool running() { return isRunning; };
     GLuint textureIds[nb_textures];
+    GLuint textureLink[MAP_SIZE*2];
 
 private :
     int counter;
