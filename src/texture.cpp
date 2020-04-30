@@ -85,21 +85,8 @@ void init_textures(int nb_sub_groups,int nb_textures_map, int nb_textures_units,
       glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,images_units[j]->w, images_units[j]->h, 0,format, GL_UNSIGNED_BYTE, images_units[j]->pixels);
       glBindTexture(GL_TEXTURE_2D, 0);
     }
+    SDL_FreeSurface(images_map[0]);
+    SDL_FreeSurface(images_units[0]);
 
   }
-
-
-  //binding machin
-
-
-
-
 }
-
-
-
-//
-// if(NULL == image) {
-//     fprintf(stderr, "Echec du chargement de l'image %s\n", image_path);
-//     exit(EXIT_FAILURE);
-// }
