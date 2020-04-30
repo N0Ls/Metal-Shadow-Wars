@@ -5,6 +5,7 @@
 #include "constants.hpp"
 #include "texture.hpp"
 #include "player.hpp"
+#include "unit.hpp"
 
 #include <string.h>
 
@@ -25,11 +26,17 @@ int main(int argc, const char *argv[])
     initPlayer(&newPlayer, 1, 3);
     std::cout << newPlayer.resources << std::endl;
 
+    unit unit_test;
+    initUnit(&unit_test, 0,100,150,4, 4, 0, 0);
+    setCoordinates(&unit_test,3,2);
+    printUnitInfos(&unit_test);
+
     while (game->running())
     {
         game->handleEvents();
         game->update();
-        game->draw(game->surface);
+        game->draw(game->surface,&unit_test);
+        //displayUnit(&unit_test,game->textureIds_units);
     }
 
     game->clean();

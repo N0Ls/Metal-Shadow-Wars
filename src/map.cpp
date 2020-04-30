@@ -24,8 +24,7 @@ void drawQuads(){
   glEnd();
 }
 
-void fillGrid(SDL_Surface* surface, GLuint textureIds[],GLuint textureLink[]){
-  glEnable(GL_BLEND);
+void fillGrid(GLuint textureIds[],GLuint textureLink[]){
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glPushMatrix();
     glScalef(1,-1,1.);
@@ -52,9 +51,4 @@ void fillGrid(SDL_Surface* surface, GLuint textureIds[],GLuint textureLink[]){
   glPopMatrix();
   glBindTexture(GL_TEXTURE_2D, 0);
 
-
-
-
-
-  SDL_GL_SwapBuffers();
 }

@@ -171,12 +171,15 @@ void Game::handleEvents()
         }
     }
 }
-void Game::draw(SDL_Surface *surface){
+void Game::draw(SDL_Surface *surface, unit *unit){
     glClearColor(0,0,0,0);
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    fillGrid(surface, this->textureIds_map,this->textureLink);
+    fillGrid(this->textureIds_map,this->textureLink);
+    displayUnit(unit, this->textureIds_units);
+
+    SDL_GL_SwapBuffers();
 }
 void Game::update()
 {

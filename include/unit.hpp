@@ -20,5 +20,8 @@ typedef struct {
 
 //Declaration of prototypes
 void initUnit(unit *unit, int id,float pv,float force,float dexterity, float fireRange, int arrayIndex, GLuint texture_id);
+void setCoordinates(unit *unit, int x, int y);
+void displayUnit(unit *unit, GLuint textureIds_units[]);
+void printUnitInfos(unit *unit);
 
 #endif

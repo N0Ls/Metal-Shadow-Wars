@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "constants.hpp"
 #include <SDL/SDL_mixer.h>
+#include "unit.hpp"
 
 class Game
 {
@@ -21,7 +22,7 @@ public :
     void handleEvents();
     void update();
     void clean();
-    void draw(SDL_Surface *surface);
+    void draw(SDL_Surface *surface, unit *unit);
     bool running() { return isRunning; };
 
     //Textures
