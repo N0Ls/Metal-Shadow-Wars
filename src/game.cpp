@@ -1,7 +1,7 @@
 #include "game.hpp"
 #include "map.hpp"
 #include "constants.hpp"
-
+#include "texture.hpp"
 #include <iostream>
 #include <SDL/SDL_mixer.h>
 
@@ -83,6 +83,8 @@ void Game::init(const char *title, int width, int height)
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_TEXTURE_2D);
+
+    init_textures(this->nb_sub_groups_textures, this->nb_textures_map, this->nb_textures_units, this->textureIds_map,this->textureIds_units,this->textureLink);
 
     if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 )
     {
@@ -174,7 +176,7 @@ void Game::draw(SDL_Surface *surface){
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    fillGrid(surface, this->textureIds,this->textureLink);
+    fillGrid(surface, this->textureIds_map,this->textureLink);
 }
 void Game::update()
 {

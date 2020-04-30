@@ -23,8 +23,16 @@ public :
     void clean();
     void draw(SDL_Surface *surface);
     bool running() { return isRunning; };
-    GLuint textureIds[nb_textures];
+
+    //Textures
+    static const int nb_sub_groups_textures = 2;
+    static const int nb_textures_map = 6;
+    static const int nb_textures_units = 1;
+
+    GLuint textureIds_map[nb_textures_map];
     GLuint textureLink[MAP_SIZE*2];
+    GLuint textureIds_units[nb_textures_units];
+
 
 private :
     int counter;

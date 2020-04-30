@@ -18,7 +18,7 @@ int main(int argc, const char *argv[])
 
     game->init("IMAC WARS 2", WINDOW_WIDTH, WINDOW_HEIGHT);
 
-    init_textures(nb_textures, game->textureIds,game->textureLink);
+    //init_textures(game->nb_textures_map, game->textureIds_map,game->textureLink);
     //printf("%d\n",game->textureLink[MAP_SIZE -17]); //Test pour voir si le tableau était rempli en sortie
 
     player newPlayer;
