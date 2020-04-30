@@ -127,22 +127,25 @@ void Game::handleEvents()
             break;
         }
 
-        if (e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_m || e.key.keysym.sym == SDLK_ESCAPE))
+        if (e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_m))
         {
           if( Mix_PlayingMusic() == 0 ){
              //On lance la musique
               Mix_PlayMusic( this->music, -1 );
+              break;
           }
           else{
              //Si la musique est en pause
              if( Mix_PausedMusic() == 1 ){
                  //On enlève la pause (la musique repart où elle en était)
                  Mix_ResumeMusic();
+                 break;
              }
              //Si la musique est en train de jouer
              else{
                  //On met en pause la musique
                  Mix_PauseMusic();
+                 break;
              }
          }
         }
@@ -152,6 +155,7 @@ void Game::handleEvents()
         /* Clic souris */
         case SDL_MOUSEBUTTONUP:
             printf("clic en (%d, %d)\n", e.button.x, e.button.y);
+            deplacement(this->selected_unit, 6,6);
             break;
 
         /* Mouvement souris */
@@ -178,7 +182,6 @@ void Game::draw(SDL_Surface *surface, unit *unit){
     glLoadIdentity();
     fillGrid(this->textureIds_map,this->textureLink);
     displayUnit(unit, this->textureIds_units);
-
     SDL_GL_SwapBuffers();
 }
 void Game::update()

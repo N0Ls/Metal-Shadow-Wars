@@ -50,5 +50,4 @@ void fillGrid(GLuint textureIds[],GLuint textureLink[]){
 
   glPopMatrix();
   glBindTexture(GL_TEXTURE_2D, 0);
-
 }

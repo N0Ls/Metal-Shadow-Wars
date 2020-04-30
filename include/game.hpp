@@ -34,6 +34,10 @@ public :
     GLuint textureLink[MAP_SIZE*2];
     GLuint textureIds_units[nb_textures_units];
 
+    unit *selected_unit;
+
+    int move = 0;
+
 
 private :
     int counter;

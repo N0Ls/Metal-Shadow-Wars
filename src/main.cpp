@@ -30,6 +30,9 @@ int main(int argc, const char *argv[])
     initUnit(&unit_test, 0,100,150,4, 4, 0, 0);
     setCoordinates(&unit_test,3,2);
     printUnitInfos(&unit_test);
+    updateDisplayCoordinates(&unit_test);
+
+    game->selected_unit = &unit_test;
 
     while (game->running())
     {
