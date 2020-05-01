@@ -186,6 +186,12 @@ void Game::draw(SDL_Surface *surface){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     fillGrid(this->textureIds_map,this->textureLink);
+    for (int g= 0; g < this->nb_players; g++) {
+      for (int a = 0; a < this->players[g].nbUnits; a++) {
+          displayUnit(this->players[g].units+a, this->textureIds_units);
+      }
+
+    }
     displayUnit(this->selected_unit, this->textureIds_units);
     SDL_GL_SwapBuffers();
 }
