@@ -9,6 +9,7 @@
 #include "constants.hpp"
 #include <SDL/SDL_mixer.h>
 #include "unit.hpp"
+#include "player.hpp"
 
 class Game
 {
@@ -22,8 +23,12 @@ public :
     void handleEvents();
     void update();
     void clean();
-    void draw(SDL_Surface *surface, unit *unit);
+    void draw(SDL_Surface *surface);
     bool running() { return isRunning; };
+
+    static const int nb_players = 2 ;
+    static const int nb_start_units = 3;
+    player players[nb_players];
 
     //Textures
     static const int nb_sub_groups_textures = 2;

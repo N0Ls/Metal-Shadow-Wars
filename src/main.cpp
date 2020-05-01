@@ -26,19 +26,17 @@ int main(int argc, const char *argv[])
     initPlayer(&newPlayer, 1, 3);
     std::cout << newPlayer.resources << std::endl;
 
-    unit unit_test;
-    initUnit(&unit_test, 0,100,150,4, 4, 0, 0);
-    setCoordinates(&unit_test,3,2);
-    printUnitInfos(&unit_test);
-    updateDisplayCoordinates(&unit_test);
+    setCoordinates(game->players->units,3,2);
+    printUnitInfos(game->players->units);
+    updateDisplayCoordinates(game->players->units);
 
-    game->selected_unit = &unit_test;
+    game->selected_unit = game->players->units;
 
     while (game->running())
     {
         game->handleEvents();
         game->update();
-        game->draw(game->surface,&unit_test);
+        game->draw(game->surface);
         //displayUnit(&unit_test,game->textureIds_units);
     }
 

@@ -16,7 +16,7 @@ void initPlayer(player *player, int id, int nbUnits)
 
     for (int i = 0; i < nbUnits; i++)
     {
-        initUnit(player->units + i, i + 1, 100, 50, 7, 20, i, 1);
+        initUnit(player->units + i, i, 100, 50, 7, 3, i, 0);
     }
 }
 
