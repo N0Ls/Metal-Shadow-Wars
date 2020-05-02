@@ -55,7 +55,6 @@ void displayUnit(unit *unit, GLuint textureIds_units[]){
   if(unit -> displayX > destinationDisplayX){
     unit ->displayX = unit->displayX - 0.1;
   }
-  std::cout << unit->displayX << '\n';
 
   if(unit->displayY < destinationDisplayY){
     unit ->displayY = unit->displayY + 0.1;
@@ -65,7 +64,7 @@ void displayUnit(unit *unit, GLuint textureIds_units[]){
   }
   glTranslatef(unit->displayX, unit->displayY,0);
   glBindTexture(GL_TEXTURE_2D, textureIds_units[unit->texture_id]);
-  glRotatef(90,0,0,1);
+  //glRotatef(90,0,0,1);
   drawQuadUnit();
 
   glPopMatrix();

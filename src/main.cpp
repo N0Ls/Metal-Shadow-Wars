@@ -30,7 +30,7 @@ int main(int argc, const char *argv[])
     printUnitInfos(game->players->units);
     updateDisplayCoordinates(game->players->units);
 
-    game->selected_unit = game->players->units;
+    //game->selected_unit = game->players->units;
 
     while (game->running())
     {

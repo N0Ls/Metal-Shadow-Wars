@@ -25,6 +25,7 @@ public :
     void clean();
     void draw(SDL_Surface *surface);
     bool running() { return isRunning; };
+    void clickCheck(float mouseX,float mouseY);
 
     static const int nb_players = 2 ;
     static const int nb_start_units = 3;
@@ -39,7 +40,7 @@ public :
     GLuint textureLink[MAP_SIZE*2];
     GLuint textureIds_units[nb_textures_units];
 
-    unit *selected_unit;
+    unit *selected_unit=NULL;
 
     int move = 0;
 
@@ -48,6 +49,7 @@ private :
     int counter;
     bool isRunning;
     Mix_Music *music = NULL;
+    Mix_Chunk *click = NULL;
 };
 
 #endif /* GAME_H */

@@ -97,8 +97,9 @@ void Game::init(const char *title, int width, int height)
     }
 
     this->music = Mix_LoadMUS( "doc/test.wav" );
+    this->click = Mix_LoadWAV( "doc/click.wav" );
 
-    if( this->music == NULL )
+    if( this->music == NULL || this->click == NULL)
     {
       fprintf(
           stderr,
@@ -159,8 +160,11 @@ void Game::handleEvents()
         {
         /* Clic souris */
         case SDL_MOUSEBUTTONUP:
+            break;
+        case SDL_MOUSEBUTTONDOWN:
             printf("clic en (%d, %d)\n", e.button.x, e.button.y);
-            deplacement(this->selected_unit, 6,6);
+            Mix_PlayChannel( -1, this->click, 0 );
+            this->clickCheck(e.button.x, e.button.y);
             break;
 
         /* Mouvement souris */
@@ -192,21 +196,37 @@ void Game::draw(SDL_Surface *surface){
       }
 
     }
-    displayUnit(this->selected_unit, this->textureIds_units);
+    //displayUnit(this->selected_unit, this->textureIds_units);
     SDL_GL_SwapBuffers();
 }
 void Game::update()
 {
-
+    //std::cout << this->selected_unit << '\n';
     int k = 0;
 
     k++;
     //std::cout << "counter "<< std::endl;
 }
 
+
+void Game::clickCheck(float mouseX,float mouseY){
+  // for(int i=0; i < this->nb_players ; i++){
+  //   for(int j = 0 ; j< players[i].nbUnits; j++){
+  //     //std::cout << mouseX << " "  << players[i].units[j].x*MAP_TILE_SIZE<< std::endl;
+  //     if(mouseX > players[i].units[j].x*MAP_TILE_SIZE){
+  //       std::cout << "unité cliquée"<< std::endl;
+  //     }
+  //   }
+  // }
+
+  std::cout << " x : "<< mouseX/this->surface->w  << "y : " << mouseY/this->surface->h <<'\n';
+}
+
 void Game::clean()
 {
   /* AJOUTER LE CLEAN DES TEXTURES*/
+    Mix_FreeMusic(this->music);
+    Mix_FreeChunk(this->click);
     SDL_Quit();
     glDisable(GL_TEXTURE_2D);
     exit(EXIT_SUCCESS);
