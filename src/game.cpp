@@ -210,16 +210,37 @@ void Game::update()
 
 
 void Game::clickCheck(float mouseX,float mouseY){
-  // for(int i=0; i < this->nb_players ; i++){
-  //   for(int j = 0 ; j< players[i].nbUnits; j++){
-  //     //std::cout << mouseX << " "  << players[i].units[j].x*MAP_TILE_SIZE<< std::endl;
-  //     if(mouseX > players[i].units[j].x*MAP_TILE_SIZE){
-  //       std::cout << "unité cliquée"<< std::endl;
-  //     }
-  //   }
-  // }
 
-  std::cout << " x : "<< mouseX/this->surface->w  << "y : " << mouseY/this->surface->h <<'\n';
+  float ratio = (float) this->surface->w/this->surface->h;
+
+  float mouseXpos;
+  float mouseYpos;
+
+  int mouseTileX;
+  int mouseTileY;
+
+  if(ratio > 1){
+    mouseXpos=((mouseX/this->surface->w)*ratio - 0.5 * ratio);
+    mouseYpos=(mouseY/this->surface->h -0.5);
+  }
+  else{
+    mouseXpos=(mouseX/this->surface->w -0.5);
+    mouseYpos=((mouseY/this->surface->h)*ratio - 0.5 * ratio);
+  }
+  float step = (float) 0.5/(MAP_SIZE/2);
+
+  mouseTileX = MAP_SIZE/2 + mouseXpos/step;
+  mouseTileY = MAP_SIZE/2 + mouseYpos/step;
+  std::cout << "Tu as cliqué sur la case : " << mouseTileX << " ; " << mouseTileY<<std::endl;
+
+  for(int i=0; i < this->nb_players ; i++){
+    for(int j = 0 ; j< players[i].nbUnits; j++){
+      if(mouseTileX == players[i].units[j].x && mouseTileY == players[i].units[j].y){
+        this->selected_unit = &players[i].units[j];
+        std::cout << "unité cliquée"<< std::endl;
+      }
+    }
+  }
 }
 
 void Game::clean()
