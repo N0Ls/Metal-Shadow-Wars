@@ -196,7 +196,7 @@ void Game::draw(SDL_Surface *surface){
       }
 
     }
-    //displayUnit(this->selected_unit, this->textureIds_units);
+    this->displaySelectdUnit();
     SDL_GL_SwapBuffers();
 }
 void Game::update()
@@ -208,7 +208,28 @@ void Game::update()
     //std::cout << "counter "<< std::endl;
 }
 
+void Game::displaySelectdUnit(){
+  if(this->selected_unit != NULL){
+    glPushMatrix();
+    glScalef(1,-1,1.);
+    glTranslatef(this->selected_unit->displayX, this->selected_unit->displayY,0);
+      glBegin(GL_QUADS);
+        glColor3f(1,0,0);
+          glTexCoord2f( 0 , 0);
+          glVertex2f(0,0);
 
+          glTexCoord2f( 1 , 0);
+          glVertex2f(MAP_TILE_SIZE,0);
+
+          glTexCoord2f( 1 , 1);
+          glVertex2f(MAP_TILE_SIZE,MAP_TILE_SIZE);
+
+          glTexCoord2f( 0 , 1);
+          glVertex2f(0,MAP_TILE_SIZE);
+      glEnd();
+    glPopMatrix();
+  }
+}
 void Game::clickCheck(float mouseX,float mouseY){
 
   float ratio = (float) this->surface->w/this->surface->h;

@@ -50,6 +50,9 @@ private :
     bool isRunning;
     Mix_Music *music = NULL;
     Mix_Chunk *click = NULL;
+
+    void displaySelectdUnit();
+
 };
 
 #endif /* GAME_H */
