@@ -5,6 +5,8 @@
 #include <iostream>
 #include <SDL/SDL_mixer.h>
 #include "player.hpp"
+#include <stdio.h>
+#include <stdlib.h>
 
 static const unsigned int BIT_PER_PIXEL = 32;
 
@@ -190,13 +192,14 @@ void Game::draw(SDL_Surface *surface){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     fillGrid(this->textureIds_map,this->textureLink);
+    this->displaySelectdUnit();
     for (int g= 0; g < this->nb_players; g++) {
       for (int a = 0; a < this->players[g].nbUnits; a++) {
           displayUnit(this->players[g].units+a, this->textureIds_units);
       }
 
     }
-    this->displaySelectdUnit();
+
     SDL_GL_SwapBuffers();
 }
 void Game::update()
@@ -207,26 +210,71 @@ void Game::update()
     k++;
     //std::cout << "counter "<< std::endl;
 }
+void drawQuadsSelection(){
+  glBegin(GL_QUADS);
+    glColor4f(1,0,0,0.5);
+      glTexCoord2f( 0 , 0);
+      glVertex2f(0,0);
 
+      glTexCoord2f( 1 , 0);
+      glVertex2f(MAP_TILE_SIZE,0);
+
+      glTexCoord2f( 1 , 1);
+      glVertex2f(MAP_TILE_SIZE,MAP_TILE_SIZE);
+
+      glTexCoord2f( 0 , 1);
+      glVertex2f(0,MAP_TILE_SIZE);
+  glEnd();
+}
 void Game::displaySelectdUnit(){
   if(this->selected_unit != NULL){
     glPushMatrix();
-    glScalef(1,-1,1.);
-    glTranslatef(this->selected_unit->displayX, this->selected_unit->displayY,0);
-      glBegin(GL_QUADS);
-        glColor3f(1,0,0);
-          glTexCoord2f( 0 , 0);
-          glVertex2f(0,0);
+      glScalef(1,-1,1.);
+      //Drawing red square on selected unit
+      glPushMatrix();
+        glTranslatef(this->selected_unit->displayX,this->selected_unit->displayY ,0);
+        drawQuadsSelection();
+      glPopMatrix();
 
-          glTexCoord2f( 1 , 0);
-          glVertex2f(MAP_TILE_SIZE,0);
-
-          glTexCoord2f( 1 , 1);
-          glVertex2f(MAP_TILE_SIZE,MAP_TILE_SIZE);
-
-          glTexCoord2f( 0 , 1);
-          glVertex2f(0,MAP_TILE_SIZE);
-      glEnd();
+      //Drawing where the unit can go on NSEW directions
+      // for(int i=1; i <=this->selected_unit->dexterity; i++){
+      //     glPushMatrix();
+      //       glTranslatef((-GL_VIEW_SIZE/2)+(this->selected_unit->x+i)*MAP_TILE_SIZE, this->selected_unit->displayY,0);
+      //       if(!(this->selected_unit->x+i >= MAP_SIZE ))drawQuadsSelection();
+      //     glPopMatrix();
+      //     glPushMatrix();
+      //       glTranslatef((-GL_VIEW_SIZE/2)+(this->selected_unit->x-i)*MAP_TILE_SIZE, this->selected_unit->displayY,0);
+      //       if(!(this->selected_unit->x-i < 0))drawQuadsSelection();
+      //     glPopMatrix();
+      //     glPushMatrix();
+      //       glTranslatef(this->selected_unit->displayX, (-GL_VIEW_SIZE/2)+(this->selected_unit->y+i)*MAP_TILE_SIZE,0);
+      //       if(!(this->selected_unit->y+i >= MAP_SIZE ))drawQuadsSelection();
+      //     glPopMatrix();
+      //     glPushMatrix();
+      //       glTranslatef(this->selected_unit->displayX, (-GL_VIEW_SIZE/2)+(this->selected_unit->y-i)*MAP_TILE_SIZE,0);
+      //       if(!(this->selected_unit->y-i < 0))drawQuadsSelection();
+      //     glPopMatrix();
+      // }
+      for(int y=0 ; y<=this->selected_unit->dexterity ; y++){
+        for(int j=0; j<=this->selected_unit->dexterity-y ; j++){
+          glPushMatrix();
+            glTranslatef((-GL_VIEW_SIZE/2)+(this->selected_unit->x+y)*MAP_TILE_SIZE, (-GL_VIEW_SIZE/2)+(this->selected_unit->y+j)*MAP_TILE_SIZE,0);
+            if(!(this->selected_unit->x+y >= MAP_SIZE || this->selected_unit->y+j >=MAP_SIZE))drawQuadsSelection();
+          glPopMatrix();
+          glPushMatrix();
+            glTranslatef((-GL_VIEW_SIZE/2)+(this->selected_unit->x-y)*MAP_TILE_SIZE, (-GL_VIEW_SIZE/2)+(this->selected_unit->y-j)*MAP_TILE_SIZE,0);
+            if(!(this->selected_unit->x-y < 0 || this->selected_unit->y-j <0))drawQuadsSelection();
+          glPopMatrix();
+          glPushMatrix();
+            glTranslatef((-GL_VIEW_SIZE/2)+(this->selected_unit->x+y)*MAP_TILE_SIZE, (-GL_VIEW_SIZE/2)+(this->selected_unit->y-j)*MAP_TILE_SIZE,0);
+            if(!(this->selected_unit->x+y >= MAP_SIZE || this->selected_unit->y-j <0))drawQuadsSelection();
+          glPopMatrix();
+          glPushMatrix();
+            glTranslatef((-GL_VIEW_SIZE/2)+(this->selected_unit->x-y)*MAP_TILE_SIZE, (-GL_VIEW_SIZE/2)+(this->selected_unit->y+j)*MAP_TILE_SIZE,0);
+            if(!(this->selected_unit->x-j <0 || this->selected_unit->y+j >=MAP_SIZE))drawQuadsSelection();
+          glPopMatrix();
+        }
+      }
     glPopMatrix();
   }
 }

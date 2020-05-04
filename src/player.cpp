@@ -16,7 +16,7 @@ void initPlayer(player *player, int id, int nbUnits)
 
     for (int i = 0; i < nbUnits; i++)
     {
-        initUnit(player->units + i, i, 100, 50, 7, 3, i, 0);
+        initUnit(player->units + i, i, 100, 50, 4, 3, i, 0);
         setCoordinates(player->units + i, rand()%9, rand()%9);
     }
 }
