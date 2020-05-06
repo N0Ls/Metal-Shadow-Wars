@@ -164,9 +164,11 @@ void Game::handleEvents()
         case SDL_MOUSEBUTTONUP:
             break;
         case SDL_MOUSEBUTTONDOWN:
-            printf("clic en (%d, %d)\n", e.button.x, e.button.y);
-            Mix_PlayChannel( -1, this->click, 0 );
-            this->clickCheck(e.button.x, e.button.y);
+            if(e.button.button ==SDL_BUTTON_LEFT){
+              printf("clic en (%d, %d)\n", e.button.x, e.button.y);
+              Mix_PlayChannel( -1, this->click, 0 );
+              this->clickCheck(e.button.x, e.button.y);
+            }
             break;
 
         /* Mouvement souris */
@@ -294,7 +296,7 @@ void Game::clickCheck(float mouseX,float mouseY){
   }
   else{
     mouseXpos=(mouseX/this->surface->w -0.5);
-    mouseYpos=((mouseY/this->surface->h)*ratio - 0.5 * ratio);
+    mouseYpos=((mouseY/this->surface->h)*1/ratio - 0.5 * 1/ratio);
   }
   float step = (float) 0.5/(MAP_SIZE/2);
 
