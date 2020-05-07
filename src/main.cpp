@@ -6,7 +6,7 @@
 #include "texture.hpp"
 #include "player.hpp"
 #include "unit.hpp"
-
+#include "node.hpp"
 #include <string.h>
 
 #include <iostream>
@@ -31,7 +31,20 @@ int main(int argc, const char *argv[])
     updateDisplayCoordinates(game->players->units);
 
     //game->selected_unit = game->players->units;
-
+    int maze[MAP_SIZE][MAP_SIZE] = {
+      {0,0,0,0,0,0,0,0,0,0},
+      {0,0,0,0,0,0,0,0,0,0},
+      {0,0,0,0,0,0,0,0,0,0},
+      {0,0,0,0,0,0,0,0,0,0},
+      {0,0,0,0,0,0,0,0,0,0},
+      {0,0,0,0,0,0,0,0,0,0},
+      {0,0,0,0,0,0,0,0,0,0},
+      {0,0,0,0,0,0,0,0,0,0},
+      {0,0,0,0,0,0,0,0,0,0},
+      {0,0,0,0,0,0,0,0,0,0},
+    };
+    
+    aStar(maze,0,0,1,1);
     while (game->running())
     {
         game->handleEvents();
