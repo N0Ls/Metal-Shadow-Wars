@@ -3,9 +3,23 @@
 
 struct Node{
   int x,y;
-  double heuristic, g_cost, f_weight;
+  bool validity;
+  double h, g, f;
   Node* parent;
-  Node* children;
+  Node* children[];
+};
+
+typedef struct Element Element;
+struct Element
+{
+    Node *node;
+    Element *next;
+};
+
+typedef struct Liste Liste;
+struct Liste
+{
+    Element *first;
 };
 
 void initNode(Node *node, int x, int y);
