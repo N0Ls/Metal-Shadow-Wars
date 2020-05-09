@@ -119,35 +119,34 @@ void afficherListe(Liste *liste)
     free(current);
 }
 
-// void deleteNode(Liste *l, Node nodeToDelete)
-// {
-//     // Store head node
-//     struct Node* temp = *head_ref, *prev;
-//
-//     // If head node itself holds the key to be deleted
-//     if (temp != NULL && temp->data == key)
-//     {
-//         *head_ref = temp->next;   // Changed head
-//         free(temp);               // free old head
-//         return;
-//     }
-//
-//     // Search for the key to be deleted, keep track of the
-//     // previous node as we need to change 'prev->next'
-//     while (temp != NULL && temp->data != key)
-//     {
-//         prev = temp;
-//         temp = temp->next;
-//     }
-//
-//     // If key was not present in linked list
-//     if (temp == NULL) return;
-//
-//     // Unlink the node from linked list
-//     prev->next = temp->next;
-//
-//     free(temp);  // Free memory
-// }
+void deleteNode(Liste *l, Node nodeToDelete)
+{
+    Element *tmp = (Element *) malloc(sizeof(Element *));
+    Element *prev = (Element *) malloc(sizeof(Element *));
+
+    tmp = l->first;
+
+    if (tmp != NULL && tmp->node->x == nodeToDelete.x && tmp->node->y == nodeToDelete.y)
+    {
+        l->first = tmp->next;   // Changed head
+        free(tmp);               // free old head
+        return;
+    }
+
+    while (tmp != NULL && tmp->node->x != nodeToDelete.x && tmp->node->y == nodeToDelete.y)
+    {
+        prev = tmp;
+        tmp = tmp->next;
+    }
+
+    if (tmp == NULL) return;
+
+    // Unlink the node from linked list
+    prev->next = tmp->next;
+
+    free(tmp);
+    free(prev);  // Free memory
+}
 
 bool isNodeExisting(Liste *l, Node *nodeToSearch){
   if (l == NULL)
@@ -245,6 +244,7 @@ void aStar(int map[][MAP_SIZE], int xStart, int yStart, int xDest, int yDest){
     nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]->parent = currentNode;
     setNodeValues(nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
     insertion(toVisit,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
+    //deleteNode(toVisit,*nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
   }
   if(isValid(currentNode->x-1,currentNode->y) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]))){
     nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]->parent = currentNode;
