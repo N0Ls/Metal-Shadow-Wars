@@ -105,7 +105,12 @@ void afficherListe(Liste *liste)
     cout << "voici la liste" << endl;
     if (liste == NULL)
     {
-        exit(EXIT_FAILURE);
+      cout<<"erreur liste"<<endl;
+      exit(EXIT_FAILURE);
+    }
+    if(liste->first->node == NULL){
+      cout<< "listevide"<<endl;
+      return;
     }
 
     Element *current = (Element *) malloc(sizeof(Element *));
@@ -128,24 +133,22 @@ void deleteNode(Liste *l, Node nodeToDelete)
 
     if (tmp != NULL && tmp->node->x == nodeToDelete.x && tmp->node->y == nodeToDelete.y)
     {
-        l->first = tmp->next;   // Changed head
-        free(tmp);               // free old head
+        l->first = tmp->next;
         return;
     }
-
-    while (tmp != NULL && tmp->node->x != nodeToDelete.x && tmp->node->y == nodeToDelete.y)
+    while (tmp != NULL && ((tmp->node->y != nodeToDelete.y)||(tmp->node->x != nodeToDelete.x)))
     {
+        cout<< "je passe par ici"<<endl;
         prev = tmp;
         tmp = tmp->next;
     }
 
-    if (tmp == NULL) return;
-
+    if (tmp == NULL){
+      return;
+    }
     // Unlink the node from linked list
     prev->next = tmp->next;
 
-    free(tmp);
-    free(prev);  // Free memory
 }
 
 bool isNodeExisting(Liste *l, Node *nodeToSearch){
@@ -173,6 +176,7 @@ Node *findcheapestNode(Liste *l){
   {
       exit(EXIT_FAILURE);
   }
+
   Element *currentElement = (Element *) malloc(sizeof(Element *));
   currentElement = l->first;
 
@@ -185,8 +189,8 @@ Node *findcheapestNode(Liste *l){
     if(minF>currentElement->node->f){
       minF=currentElement->node->f;
       cheapestNode=currentElement->node;
-      cout << "Le noeud le plus cheap est : ";
-      displayNode(*cheapestNode);
+      //cout << "Le noeud le plus cheap est : ";
+      //displayNode(*cheapestNode);
     }
     currentElement = currentElement->next;
   }
@@ -238,7 +242,7 @@ void aStar(int map[][MAP_SIZE], int xStart, int yStart, int xDest, int yDest){
   toVisit->first = NULL;
   visited->first = elementStart;
 
-  cout << "Le node y est : "<<isNodeExisting(toVisit,currentNode)<<endl;
+  //cout << "Le node y est : "<<isNodeExisting(visited,currentNode)<<endl;
 
   if(isValid(currentNode->x+1,currentNode->y) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]))){
     nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]->parent = currentNode;
@@ -265,14 +269,38 @@ void aStar(int map[][MAP_SIZE], int xStart, int yStart, int xDest, int yDest){
   afficherListe(visited);
   afficherListe(toVisit);
 
-  Node *cheapestNode = findcheapestNode(toVisit);
+  currentNode = findcheapestNode(toVisit);
   cout <<"cheapestNode : " ;
-  displayNode(*cheapestNode);
-
+  displayNode(*currentNode);
+  deleteNode(toVisit,*currentNode);
+  afficherListe(toVisit);
 
   bool found = 0;
-  //future boucle while
+  // //future boucle while
   // while(found==0){
+  //   currentNode = findcheapestNode(toVisit);
+  //   cout <<"cheapestNode : " ;
+  //   displayNode(*currentNode);
+  //   deleteNode(toVisit,*currentNode);
+  //   insertion(visited,currentNode);
+  //
+  //   afficherListe(visited);
+  //   afficherListe(toVisit);
+  //
+  //   if(currentNode->x == destNode->x && currentNode->y == destNode->y){
+  //     cout<<"trouvé";
+  //     found=1;
+  //   }
+  //   else{
+  //     cout << "pas encore trouvé"<<endl;
+  //   }
+  //
+  //   if(isValid(currentNode->x+1,currentNode->y) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]))){
+  //     nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]->parent = currentNode;
+  //     setNodeValues(nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
+  //     insertion(toVisit,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
+  //     //deleteNode(toVisit,*nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
+  //   }
   //
   // }
   //   insertion(visited)
