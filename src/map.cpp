@@ -24,6 +24,115 @@ void drawQuads(){
   glEnd();
 }
 
+Uint32 getpixel(SDL_Surface *surface, int x, int y)
+{
+    int bpp = surface->format->BytesPerPixel;
+    /* Here p is the address to the pixel we want to retrieve */
+    Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
+
+switch (bpp)
+{
+    case 1:
+        return *p;
+        break;
+
+    case 2:
+        return *(Uint16 *)p;
+        break;
+
+    case 3:
+        if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+            return p[0] << 16 | p[1] << 8 | p[2];
+        else
+            return p[0] | p[1] << 8 | p[2] << 16;
+        break;
+
+    case 4:
+        return *(Uint32 *)p;
+        break;
+
+    default:
+        return 0;       /* shouldn't happen, but avoids warnings */
+  }
+}
+
+Uint32 Getpixel(SDL_Surface *surface, int x, int y)
+{
+    //int bpp = surface->format->BytesPerPixel;
+    /* Here p is the address to the pixel we want to retrieve */
+    Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * 1;  // 4=bpp
+
+    return *(Uint32 *)p;
+}
+
+
+void loadMap(){
+  SDL_Surface *mapLoad;
+  SDL_Surface *mapColor;
+  char mapLoadImage[255]= {"doc/map.png"};
+  mapLoad = IMG_Load(mapLoadImage);
+  if(NULL == mapLoad) {
+      fprintf(stderr, "Echec du chargement de l'image %s\n",mapLoadImage );
+      exit(EXIT_FAILURE);
+  }
+
+  // SDL_PixelFormat *fmt;
+  //
+  // fmt=SDL_PIXELFORMAT_INDEX8;
+  // mapColor=SDL_ConvertSurface(mapLoad,fmt);
+
+  SDL_Color rgb;
+  Uint8 r,g,b,a;
+  Uint32 data;
+  for(int i=0; i<mapLoad->w ; i++){
+    for(int y=0; y<mapLoad->h ; y++){
+      data=getpixel(mapLoad, y, i);
+      SDL_GetRGBA(data, mapLoad->format, &r, &g, &b,&a);
+      //cout << unsigned(r) << " " << unsigned(g) << " "<< unsigned(g) <<  " "<< unsigned(a)<< endl;
+    }
+  }
+
+  //c'est juste
+  SDL_PixelFormat *fmt;
+  SDL_Surface *surface;
+  surface=IMG_Load(mapLoadImage);
+  Uint32 temp, pixel;
+  Uint8 red, green, blue, alpha;
+
+  fmt=surface->format;
+  SDL_LockSurface(surface);
+  pixel=*((Uint32*)surface->pixels);
+  pixel=getpixel(surface,9,1);
+  SDL_UnlockSurface(surface);
+
+  /* Get Red component */
+  temp=pixel&fmt->Rmask; /* Isolate red component */
+  temp=temp>>fmt->Rshift;/* Shift it down to 8-bit */
+  temp=temp<<fmt->Rloss; /* Expand to a full 8-bit number */
+  red=(Uint8)temp;
+
+  /* Get Green component */
+  temp=pixel&fmt->Gmask; /* Isolate green component */
+  temp=temp>>fmt->Gshift;/* Shift it down to 8-bit */
+  temp=temp<<fmt->Gloss; /* Expand to a full 8-bit number */
+  green=(Uint8)temp;
+
+  /* Get Blue component */
+  temp=pixel&fmt->Bmask; /* Isolate blue component */
+  temp=temp>>fmt->Bshift;/* Shift it down to 8-bit */
+  temp=temp<<fmt->Bloss; /* Expand to a full 8-bit number */
+  blue=(Uint8)temp;
+
+  /* Get Alpha component */
+  temp=pixel&fmt->Amask; /* Isolate alpha component */
+  temp=temp>>fmt->Ashift;/* Shift it down to 8-bit */
+  temp=temp<<fmt->Aloss; /* Expand to a full 8-bit number */
+  alpha=(Uint8)temp;
+
+  printf("Pixel Color -> R: %d,  G: %d,  B: %d,  A: %d\n", red, green, blue, alpha);
+
+}
+
 void fillGrid(GLuint textureIds[],GLuint textureLink[]){
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glPushMatrix();

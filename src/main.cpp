@@ -7,6 +7,7 @@
 #include "player.hpp"
 #include "unit.hpp"
 #include "node.hpp"
+#include "map.hpp"
 #include <string.h>
 
 #include <iostream>
@@ -43,8 +44,8 @@ int main(int argc, const char *argv[])
       {1,1,1,1,1,1,1,1,1,1},
       {1,1,1,1,1,1,1,1,1,1},
     };
-
-    aStar(maze,5,4,0,0);
+    loadMap();
+    //aStar(maze,5,4,0,0);
     while (game->running())
     {
         game->handleEvents();

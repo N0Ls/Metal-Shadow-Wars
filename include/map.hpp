@@ -8,5 +8,6 @@
 #include <stdio.h>
 
 void fillGrid(GLuint textureIds[], GLuint textureLink[]);
-
+Uint32 getpixel(SDL_Surface *surface, int x, int y);
+void loadMap();
 #endif
