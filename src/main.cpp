@@ -32,9 +32,9 @@ int main(int argc, const char *argv[])
 
     //game->selected_unit = game->players->units;
     int maze[MAP_SIZE][MAP_SIZE] = {
-      {1,1,1,1,1,1,1,1,1,1},
-      {1,1,1,1,1,1,1,1,1,1},
-      {1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,0,0,1,1,1,1},
+      {0,0,1,0,0,0,1,1,1,1},
+      {0,1,1,1,1,1,1,1,1,1},
       {1,1,1,1,1,1,1,1,1,1},
       {1,1,1,1,1,1,1,1,1,1},
       {1,1,1,1,1,1,1,1,1,1},
@@ -44,7 +44,7 @@ int main(int argc, const char *argv[])
       {1,1,1,1,1,1,1,1,1,1},
     };
 
-    aStar(maze,5,5,0,0);
+    aStar(maze,5,4,0,0);
     while (game->running())
     {
         game->handleEvents();

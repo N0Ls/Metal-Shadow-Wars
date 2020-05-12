@@ -42,18 +42,18 @@ double calculateHeuristic(int x, int y, Node node_destination)
   return abs (x - node_destination.x) + abs (y - node_destination.y);
 }
 
-int maze[MAP_SIZE][MAP_SIZE] = {
-  {1,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1},
-};
+// int maze[MAP_SIZE][MAP_SIZE] = {
+//   {1,1,1,1,1,1,1,1,1,1},
+//   {1,1,1,1,1,1,1,1,1,1},
+//   {1,1,1,1,1,1,1,1,1,1},
+//   {1,1,1,1,1,1,1,1,1,1},
+//   {1,1,1,1,1,1,1,1,1,1},
+//   {1,1,1,1,1,1,1,1,1,1},
+//   {1,1,1,1,1,1,1,1,1,1},
+//   {1,1,1,1,1,1,1,1,1,1},
+//   {1,1,1,1,1,1,1,1,1,1},
+//   {1,1,1,1,1,1,1,1,1,1},
+// };
 
 // void generateNodeTab(int map[][MAP_SIZE], Node nodeMap[]){
 //   for (int j = 0; j < MAP_SIZE; j++) {
@@ -108,7 +108,7 @@ void afficherListe(Liste *liste)
       cout<<"erreur liste"<<endl;
       exit(EXIT_FAILURE);
     }
-    if(liste->first->node == NULL){
+    if(liste->first == NULL){
       cout<< "listevide"<<endl;
       return;
     }
@@ -138,7 +138,6 @@ void deleteNode(Liste *l, Node nodeToDelete)
     }
     while (tmp != NULL && ((tmp->node->y != nodeToDelete.y)||(tmp->node->x != nodeToDelete.x)))
     {
-        cout<< "je passe par ici"<<endl;
         prev = tmp;
         tmp = tmp->next;
     }
@@ -162,7 +161,7 @@ bool isNodeExisting(Liste *l, Node *nodeToSearch){
   while (current != NULL)
   {
     if(current->node->x == nodeToSearch->x && current->node->y == nodeToSearch->y){
-      free(current);
+      //free(current);
       return 1;
     }
     current = current->next;
@@ -244,65 +243,131 @@ void aStar(int map[][MAP_SIZE], int xStart, int yStart, int xDest, int yDest){
 
   //cout << "Le node y est : "<<isNodeExisting(visited,currentNode)<<endl;
 
-  if(isValid(currentNode->x+1,currentNode->y) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]))){
+  if(isValid(currentNode->x+1,currentNode->y) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y])) && map[currentNode->y][currentNode->x+1]){
     nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]->parent = currentNode;
     setNodeValues(nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
     insertion(toVisit,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
-    //deleteNode(toVisit,*nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
   }
-  if(isValid(currentNode->x-1,currentNode->y) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]))){
+  if(isValid(currentNode->x-1,currentNode->y) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]))&& map[currentNode->y][currentNode->x-1]){
     nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]->parent = currentNode;
     setNodeValues(nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
     insertion(toVisit,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]);
   }
-  if(isValid(currentNode->x,currentNode->y-1) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]))){
+  if(isValid(currentNode->x,currentNode->y-1) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]))&& map[currentNode->y-1][currentNode->x]){
     nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]->parent = currentNode;
     setNodeValues(nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)],*currentNode,*destNode);
     insertion(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]);
   }
-  if(isValid(currentNode->x,currentNode->y+1)&& !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]))){
+  if(isValid(currentNode->x,currentNode->y+1)&& !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]))&& map[currentNode->y+1][currentNode->x]){
     nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]->parent = currentNode;
     setNodeValues(nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)],*currentNode,*destNode);
     insertion(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]);
   }
 
-  afficherListe(visited);
-  afficherListe(toVisit);
 
-  currentNode = findcheapestNode(toVisit);
-  cout <<"cheapestNode : " ;
-  displayNode(*currentNode);
-  deleteNode(toVisit,*currentNode);
-  afficherListe(toVisit);
+  // currentNode = findcheapestNode(toVisit);
+  // cout <<"cheapestNode : " ;
+  // displayNode(*currentNode);
+  // deleteNode(toVisit,*currentNode);
+  // afficherListe(toVisit);
 
   bool found = 0;
   // //future boucle while
-  // while(found==0){
-  //   currentNode = findcheapestNode(toVisit);
-  //   cout <<"cheapestNode : " ;
-  //   displayNode(*currentNode);
-  //   deleteNode(toVisit,*currentNode);
-  //   insertion(visited,currentNode);
-  //
-  //   afficherListe(visited);
-  //   afficherListe(toVisit);
-  //
-  //   if(currentNode->x == destNode->x && currentNode->y == destNode->y){
-  //     cout<<"trouvé";
-  //     found=1;
-  //   }
-  //   else{
-  //     cout << "pas encore trouvé"<<endl;
-  //   }
-  //
-  //   if(isValid(currentNode->x+1,currentNode->y) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]))){
-  //     nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]->parent = currentNode;
-  //     setNodeValues(nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
-  //     insertion(toVisit,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
-  //     //deleteNode(toVisit,*nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
-  //   }
-  //
-  // }
+  while(found==0 && toVisit->first !=NULL){
+
+    currentNode = findcheapestNode(toVisit);
+    cout <<"cheapestNode : " ;
+    displayNode(*currentNode);
+    deleteNode(toVisit,*currentNode);
+    insertion(visited,currentNode);
+
+    // afficherListe(visited);
+    // afficherListe(toVisit);
+
+    if(currentNode->x == destNode->x && currentNode->y == destNode->y){
+      cout<<"trouvé";
+      found=1;
+    }
+
+    else{
+      cout << "pas encore trouvé"<<endl;
+    }
+
+    //check pour chaque enfant
+    if(isValid(currentNode->x+1,currentNode->y) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y])) && map[currentNode->y][currentNode->x+1]){
+
+      nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]->parent = currentNode;
+
+      if(isNodeExisting(toVisit,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y])){
+        if(currentNode->g+1 > nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]->g){
+
+        }
+        else{
+          setNodeValues(nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
+          insertion(toVisit,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
+        }
+      }
+      else{
+          setNodeValues(nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
+          insertion(toVisit,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
+      }
+    }
+    if(isValid(currentNode->x-1,currentNode->y) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y])) && map[currentNode->y][currentNode->x-1]){
+
+      nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]->parent = currentNode;
+
+      if(isNodeExisting(toVisit,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y])){
+        if(currentNode->g+1 > nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]->g){
+
+        }
+        else{
+          setNodeValues(nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
+          insertion(toVisit,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]);
+        }
+      }
+      else{
+          setNodeValues(nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
+          insertion(toVisit,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]);
+      }
+    }
+    if(isValid(currentNode->x,currentNode->y-1) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]))&& map[currentNode->y-1][currentNode->x]){
+
+      nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]->parent = currentNode;
+
+      if(isNodeExisting(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)])){
+        if(currentNode->g+1 > nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]->g){
+
+        }
+        else{
+          setNodeValues(nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)],*currentNode,*destNode);
+          insertion(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]);
+        }
+      }
+      else{
+          setNodeValues(nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)],*currentNode,*destNode);
+          insertion(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]);
+      }
+    }
+    if(isValid(currentNode->x,currentNode->y+1) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]))&& map[currentNode->y+1][currentNode->x]){
+
+      nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]->parent = currentNode;
+
+      if(isNodeExisting(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)])){
+        if(currentNode->g+1 > nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]->g){
+
+        }
+        else{
+          setNodeValues(nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)],*currentNode,*destNode);
+          insertion(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]);
+        }
+      }
+      else{
+          setNodeValues(nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)],*currentNode,*destNode);
+          insertion(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]);
+      }
+    }
+
+  }
   //   insertion(visited)
 
   // let the currentNode equal the node with the least f value
