@@ -34,6 +34,6 @@ double calculateHeuristic(int x, int y, Node node_destination);
 
 void generateNodeTab(int map[][MAP_SIZE], Node* nodeMap[]);
 
-void aStar(int map[][MAP_SIZE], int xStart, int yStart, int xDest, int yDest);
+void aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yDest);
 
 #endif
