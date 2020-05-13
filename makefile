@@ -114,11 +114,11 @@ else
 
 		INC_FLAGS += -I/opt/local/include
 
-		INC_FLAGS += -I/Library/Frameworks/SDL.framework/Headers -I/Library/Frameworks/SDL_image.framework/Headers -I/Library/Frameworks/SDL_mixer.framework/Headers
+		INC_FLAGS += -I/Library/Frameworks/SDL.framework/Headers -I/Library/Frameworks/SDL_image.framework/Headers -I/Library/Frameworks/SDL_mixer.framework/Headers -I/Library/Frameworks/SDL_ttf.framework/Headers
 
 		LDFLAGS += `sdl-config --libs` `sdl-config --cflags`
 
-		LDFLAGS += -framework Cocoa -framework OpenGL -lSDL_image -lSDL_mixer -lglut
+		LDFLAGS += -framework Cocoa -framework OpenGL -lSDL_image -lSDL_mixer -lSDL_ttf -lglut
 
 		CCFLAGS += -D OSX
 
@@ -136,7 +136,7 @@ SRC_FILES = $(wildcard $(SRC_PATH)/*.cpp) $(wildcard $(SRC_PATH)/*/*.cpp)
 
 OBJ_FILES = $(patsubst $(SRC_PATH)/%.cpp, $(OBJ_PATH)/%.o, $(SRC_FILES))
 
-LDFLAGS += $(SDL_FLAGS) $(GL_FLAGS) -l$(SDL)_image -l$(SDL)_mixer
+LDFLAGS += $(SDL_FLAGS) $(GL_FLAGS) -l$(SDL)_image -l$(SDL)_mixer -l$(SDL)_ttf
 
 
 
