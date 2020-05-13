@@ -15,7 +15,7 @@ using namespace std;
 
 
 void init_textures(int nb_sub_groups,int nb_textures_map, int nb_textures_units, GLuint *textureIds_map, GLuint *textureIds_units ,GLuint *textureLink){
-  char textures_paths_map[nb_textures_map][255]= { "doc/grass_block_side.png","doc/grass.png","doc/water.png","doc/tree.png","doc/mountain.png","doc/factory.png"};
+  char textures_paths_map[nb_textures_map][255]= { "doc/water.png","doc/grass_block_side.png","doc/grass.png","doc/tree.png","doc/mountain.png","doc/factory.png"};
   char textures_paths_units[nb_textures_units][255] = {"doc/tank.png"};
   for(int i = 0; i < MAP_SIZE*2 - 1; i++){
     textureLink[i] = rand()%4 + 1;

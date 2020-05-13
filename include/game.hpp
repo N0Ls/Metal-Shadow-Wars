@@ -23,7 +23,7 @@ public :
     void handleEvents();
     void update();
     void clean();
-    void draw(SDL_Surface *surface);
+    void draw(SDL_Surface *surface, int *tabMap);
     bool running() { return isRunning; };
     void clickCheck(float mouseX,float mouseY);
 

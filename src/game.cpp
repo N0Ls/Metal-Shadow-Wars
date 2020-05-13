@@ -188,12 +188,12 @@ void Game::handleEvents()
         }
     }
 }
-void Game::draw(SDL_Surface *surface){
+void Game::draw(SDL_Surface *surface, int *tabMap){
     glClearColor(0,0,0,0);
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    fillGrid(this->textureIds_map,this->textureLink);
+    fillGrid(this->textureIds_map,this->textureLink, tabMap);
     this->displaySelectdUnit();
     for (int g= 0; g < this->nb_players; g++) {
       for (int a = 0; a < this->players[g].nbUnits; a++) {

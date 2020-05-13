@@ -47,13 +47,13 @@ int main(int argc, const char *argv[])
     int maze[MAP_SIZE*MAP_SIZE] =
       {1,1,1,1,0,0,1,1,1,1,0,0,1,0,0,0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
     int maze2[MAP_SIZE*MAP_SIZE];
-    //loadMap(&maze2);
-    aStar(maze,5,4,0,0);
+    loadMap(maze2);
+    //aStar(maze,5,4,0,0);
     while (game->running())
     {
         game->handleEvents();
         game->update();
-        game->draw(game->surface);
+        game->draw(game->surface, maze2);
         //displayUnit(&unit_test,game->textureIds_units);
     }
 

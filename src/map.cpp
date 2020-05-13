@@ -5,6 +5,7 @@ using namespace std;
 #include "texture.hpp"
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
+#include "constants.hpp"
 
 
 void drawQuads(){
@@ -66,7 +67,7 @@ Uint32 Getpixel(SDL_Surface *surface, int x, int y)
 }
 
 
-void loadMap(){
+void loadMap(int *tabMap){
   SDL_Surface *mapLoad;
   SDL_Surface *mapColor;
   char mapLoadImage[255]= {"doc/map.png"};
@@ -74,22 +75,6 @@ void loadMap(){
   if(NULL == mapLoad) {
       fprintf(stderr, "Echec du chargement de l'image %s\n",mapLoadImage );
       exit(EXIT_FAILURE);
-  }
-
-  // SDL_PixelFormat *fmt;
-  //
-  // fmt=SDL_PIXELFORMAT_INDEX8;
-  // mapColor=SDL_ConvertSurface(mapLoad,fmt);
-
-  SDL_Color rgb;
-  Uint8 r,g,b,a;
-  Uint32 data;
-  for(int i=0; i<mapLoad->w ; i++){
-    for(int y=0; y<mapLoad->h ; y++){
-      data=getpixel(mapLoad, y, i);
-      SDL_GetRGBA(data, mapLoad->format, &r, &g, &b,&a);
-      //cout << unsigned(r) << " " << unsigned(g) << " "<< unsigned(g) <<  " "<< unsigned(a)<< endl;
-    }
   }
 
   //c'est juste
@@ -100,40 +85,59 @@ void loadMap(){
   Uint8 red, green, blue, alpha;
 
   fmt=surface->format;
-  SDL_LockSurface(surface);
-  pixel=*((Uint32*)surface->pixels);
-  pixel=getpixel(surface,9,1);
-  SDL_UnlockSurface(surface);
 
-  /* Get Red component */
-  temp=pixel&fmt->Rmask; /* Isolate red component */
-  temp=temp>>fmt->Rshift;/* Shift it down to 8-bit */
-  temp=temp<<fmt->Rloss; /* Expand to a full 8-bit number */
-  red=(Uint8)temp;
+  for (int i = 0; i < surface->w; i++) {
+    for(int y = 0; y < surface->h;y++){
+      SDL_LockSurface(surface);
+      pixel=*((Uint32*)surface->pixels);
+      pixel=getpixel(surface,y,i);
+      SDL_UnlockSurface(surface);
 
-  /* Get Green component */
-  temp=pixel&fmt->Gmask; /* Isolate green component */
-  temp=temp>>fmt->Gshift;/* Shift it down to 8-bit */
-  temp=temp<<fmt->Gloss; /* Expand to a full 8-bit number */
-  green=(Uint8)temp;
+      /* Get Red component */
+      temp=pixel&fmt->Rmask; /* Isolate red component */
+      temp=temp>>fmt->Rshift;/* Shift it down to 8-bit */
+      temp=temp<<fmt->Rloss; /* Expand to a full 8-bit number */
+      red=(Uint8)temp;
 
-  /* Get Blue component */
-  temp=pixel&fmt->Bmask; /* Isolate blue component */
-  temp=temp>>fmt->Bshift;/* Shift it down to 8-bit */
-  temp=temp<<fmt->Bloss; /* Expand to a full 8-bit number */
-  blue=(Uint8)temp;
+      /* Get Green component */
+      temp=pixel&fmt->Gmask; /* Isolate green component */
+      temp=temp>>fmt->Gshift;/* Shift it down to 8-bit */
+      temp=temp<<fmt->Gloss; /* Expand to a full 8-bit number */
+      green=(Uint8)temp;
 
-  /* Get Alpha component */
-  temp=pixel&fmt->Amask; /* Isolate alpha component */
-  temp=temp>>fmt->Ashift;/* Shift it down to 8-bit */
-  temp=temp<<fmt->Aloss; /* Expand to a full 8-bit number */
-  alpha=(Uint8)temp;
+      /* Get Blue component */
+      temp=pixel&fmt->Bmask; /* Isolate blue component */
+      temp=temp>>fmt->Bshift;/* Shift it down to 8-bit */
+      temp=temp<<fmt->Bloss; /* Expand to a full 8-bit number */
+      blue=(Uint8)temp;
 
-  printf("Pixel Color -> R: %d,  G: %d,  B: %d,  A: %d\n", red, green, blue, alpha);
+      /* Get Alpha component */
+      temp=pixel&fmt->Amask; /* Isolate alpha component */
+      temp=temp>>fmt->Ashift;/* Shift it down to 8-bit */
+      temp=temp<<fmt->Aloss; /* Expand to a full 8-bit number */
+      alpha=(Uint8)temp;
+
+      printf("Pixel Color -> R: %d,  G: %d,  B: %d,  A: %d\n", red, green, blue, alpha);
+
+      if(red == 255 && green ==0 && blue ==0){
+        tabMap[i*MAP_SIZE + y]=1;
+      }
+      else if(red == 0 && green ==255 && blue ==0){
+        tabMap[i*MAP_SIZE + y]=2;
+      }
+      else if(red == 0 && green ==0 && blue ==255){
+        tabMap[i*MAP_SIZE + y]=0;
+      }
+      else{
+        tabMap[i*MAP_SIZE + y]=0;
+      }
+    }
+  }
+
 
 }
 
-void fillGrid(GLuint textureIds[],GLuint textureLink[]){
+void fillGrid(GLuint textureIds[],GLuint textureLink[], int *tabMap){
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glPushMatrix();
     glScalef(1,-1,1.);
@@ -142,15 +146,15 @@ void fillGrid(GLuint textureIds[],GLuint textureLink[]){
       for (int y = 0; y < MAP_SIZE; y++) {
           glPushMatrix();
             glTranslatef((-GL_VIEW_SIZE/2)+i*MAP_TILE_SIZE,(-GL_VIEW_SIZE/2)+y*MAP_TILE_SIZE,0);
-            glBindTexture(GL_TEXTURE_2D, textureIds[2]);
+            glBindTexture(GL_TEXTURE_2D, textureIds[tabMap[y*MAP_SIZE + i]]);
             drawQuads();
 
-            if (textureLink[t] < 6){
-              glBindTexture(GL_TEXTURE_2D, textureIds[textureLink[t]]);
-            }
-            else {
-              glBindTexture(GL_TEXTURE_2D, textureIds[textureLink[2]]);
-            }
+            // if (textureLink[t] < 6){
+            //   glBindTexture(GL_TEXTURE_2D, textureIds[textureLink[t]]);
+            // }
+            // else {
+            //   glBindTexture(GL_TEXTURE_2D, textureIds[textureLink[2]]);
+            // }
             drawQuads();
           glPopMatrix();
           t++;
