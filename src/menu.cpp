@@ -7,23 +7,60 @@
 
 #include <iostream>
 
-int show_menu(SDL_Surface *screen, TTF_Font *font)
+static const unsigned int BIT_PER_PIXEL = 32;
+
+Menu::Menu() {}
+
+Menu::~Menu() {}
+
+int Menu::show(const char *title, int width, int height)
 {
-  std::cout << "menu actif" << std::endl;
-  
+  /* Initialisation de la SDL */
+  if (-1 == SDL_Init(SDL_INIT_VIDEO))
+  {
+    isActiv = false;
+    fprintf(
+        stderr,
+        "Impossible d'initialiser la SDL. Fin du programme.\n");
+    exit(EXIT_FAILURE);
+  }
+  else
+  {
+    fprintf(
+        stderr,
+        "SDL initialisée.\n");
+  }
+
+  SDL_Surface *screen = SDL_SetVideoMode(width, height, 32, SDL_SWSURFACE);
+
+  if (NULL == screen)
+  {
+    isActiv = false;
+    fprintf(
+        stderr,
+        "Impossible d'ouvrir la fenêtre. Fin du programme.\n");
+    exit(EXIT_FAILURE);
+  }
+  else
+  {
+    fprintf(
+        stderr,
+        "Menu initialisé.\n");
+    isActiv = true;
+  }
+
   Uint32 time;
 
+  // Axes
   int x, y;
-  // Number of menu items
-  const int NUMMENU = 2;
-  // Menu labels (count : number of menu items)
-  const char *labels[NUMMENU] = {"Continue", "Exit"};
+
+  // Font initialization
+  TTF_Font *font;
+  TTF_Init();
+  font = TTF_OpenFont("test.ttf", 30);
+
   // Menu buttons
   SDL_Surface *menus[NUMMENU];
-  // Initial select state : false
-  bool selected[NUMMENU] = {0, 0};
-  // Colors used
-  SDL_Color color[2] = {{255, 255, 255}, {255, 0, 0}};
 
   // Menu items font
   menus[0] = TTF_RenderText_Solid(font, labels[0], color[0]);
@@ -31,17 +68,17 @@ int show_menu(SDL_Surface *screen, TTF_Font *font)
 
   // Buttons rect (for positions)
   SDL_Rect pos[NUMMENU];
-  
+
   // Buttons actual positions (x and y coordinates)
   pos[0].x = screen->clip_rect.w / 2 - menus[0]->clip_rect.w / 2;
   pos[0].y = screen->clip_rect.h / 2 - menus[0]->clip_rect.h;
   pos[1].x = screen->clip_rect.w / 2 - menus[0]->clip_rect.w / 2;
   pos[1].y = screen->clip_rect.h / 2 + menus[0]->clip_rect.h;
 
-  bool result = SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x00, 0x00, 0x00));
+  // Selection state
+  bool selected[NUMMENU] = {0, 0};
 
-  // Check if SDL_FillRect is a success
-  std::cout << result << std::endl;
+  SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x00, 0x00, 0x00));
 
   SDL_Event event;
   while (1)

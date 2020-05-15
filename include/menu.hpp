@@ -7,6 +7,23 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-int show_menu(SDL_Surface *screen, TTF_Font *font);
+static const unsigned int NUMMENU = 2;
+
+class Menu
+{
+
+public :
+    Menu();
+    ~Menu();
+    SDL_Surface *surface;
+    int show(const char* title, int width, int height);
+    bool running() { return isActiv; };
+
+private :
+    bool isActiv;
+    const char *labels[NUMMENU] = {"Play", "Exit"};
+    SDL_Color color[2] = {{255, 255, 255}, {255, 0, 0}};
+
+};
 
 #endif
