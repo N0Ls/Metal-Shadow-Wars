@@ -23,7 +23,7 @@ public :
     void handleEvents();
     void update();
     void clean();
-    void draw(SDL_Surface *surface, int *tabMap);
+    void draw(SDL_Surface *surface);
     bool running() { return isRunning; };
     void clickCheck(float mouseX,float mouseY);
 
@@ -42,9 +42,13 @@ public :
     GLuint textureLink[MAP_SIZE*2];
     GLuint textureIds_units[nb_textures_units];
 
+    int tabMap[MAP_SIZE * MAP_SIZE];
+
     unit *selected_unit=NULL;
 
-    int move = 0;
+    bool move = false;
+    bool moving_unit = false;
+
 
 
 private :
@@ -52,7 +56,8 @@ private :
     bool isRunning;
     Mix_Music *music = NULL;
     Mix_Chunk *click = NULL;
-
+    int lastClickX;
+    int lastClickY;
     void displaySelectdUnit();
 
 };

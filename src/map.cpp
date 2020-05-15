@@ -123,13 +123,13 @@ void loadMap(int *tabMap){
         tabMap[i*MAP_SIZE + y]=1;
       }
       else if(red == 0 && green ==255 && blue ==0){
-        tabMap[i*MAP_SIZE + y]=2;
+        tabMap[i*MAP_SIZE + y]=1;
       }
       else if(red == 0 && green ==0 && blue ==255){
-        tabMap[i*MAP_SIZE + y]=0;
+        tabMap[i*MAP_SIZE + y]=1;
       }
       else{
-        tabMap[i*MAP_SIZE + y]=0;
+        tabMap[i*MAP_SIZE + y]=1;
       }
     }
   }

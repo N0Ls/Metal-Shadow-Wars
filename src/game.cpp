@@ -7,6 +7,7 @@
 #include "player.hpp"
 #include <stdio.h>
 #include <stdlib.h>
+#include "node.hpp"
 
 static const unsigned int BIT_PER_PIXEL = 32;
 
@@ -109,6 +110,7 @@ void Game::init(const char *title, int width, int height)
         exit(EXIT_FAILURE);
     }
 
+    loadMap(this->tabMap);
 
     reshape(&surface, width, height);
 
@@ -188,12 +190,12 @@ void Game::handleEvents()
         }
     }
 }
-void Game::draw(SDL_Surface *surface, int *tabMap){
+void Game::draw(SDL_Surface *surface){
     glClearColor(0,0,0,0);
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    fillGrid(this->textureIds_map,this->textureLink, tabMap);
+    fillGrid(this->textureIds_map,this->textureLink, this->tabMap);
     this->displaySelectdUnit();
     for (int g= 0; g < this->nb_players; g++) {
       for (int a = 0; a < this->players[g].nbUnits; a++) {
@@ -210,6 +212,11 @@ void Game::update()
     int k = 0;
 
     k++;
+
+    if(this->move == true && this->moving_unit==false){
+      this->moving_unit = true;
+      aStar(this->tabMap,this->selected_unit->x,this->selected_unit->y,this->lastClickX,this->lastClickY);
+    }
     //std::cout << "counter "<< std::endl;
 }
 void drawQuadsSelection(){
@@ -299,17 +306,38 @@ void Game::clickCheck(float mouseX,float mouseY){
     mouseYpos=((mouseY/this->surface->h)*1/ratio - 0.5 * 1/ratio);
   }
   float step = (float) 0.5/(MAP_SIZE/2);
+  std::cout << mouseXpos/step << std::endl;
 
-  mouseTileX = MAP_SIZE/2 + mouseXpos/step;
-  mouseTileY = MAP_SIZE/2 + mouseYpos/step;
+
+  if((mouseXpos/step < -5 && mouseXpos/step > -6 )|| (mouseYpos/step < -5 && mouseYpos/step > -6) ){ //avoiding -0 symetry
+    std::cout << "here" << std::endl;
+    mouseTileX = MAP_SIZE/2 + mouseXpos/step - 1;
+    mouseTileY = MAP_SIZE/2 + mouseYpos/step - 1;
+  }else{
+    mouseTileX = MAP_SIZE/2 + mouseXpos/step;
+    mouseTileY = MAP_SIZE/2 + mouseYpos/step;
+  }
   std::cout << "Tu as cliqué sur la case : " << mouseTileX << " ; " << mouseTileY<<std::endl;
+  if(mouseTileX > 0 && mouseTileY > 0 && mouseTileX <= MAP_SIZE && mouseTileY <= MAP_SIZE){
+    this->lastClickX = mouseTileX;
+    this->lastClickY = mouseTileY;
 
-  for(int i=0; i < this->nb_players ; i++){
-    for(int j = 0 ; j< players[i].nbUnits; j++){
-      if(mouseTileX == players[i].units[j].x && mouseTileY == players[i].units[j].y){
-        this->selected_unit = &players[i].units[j];
-        std::cout << "unité cliquée"<< std::endl;
+    for(int i=0; i < this->nb_players ; i++){
+      for(int j = 0 ; j< players[i].nbUnits; j++){
+        if(mouseTileX == players[i].units[j].x && mouseTileY == players[i].units[j].y){
+          if(this->selected_unit!=NULL && this->selected_unit->x ==mouseTileX &&this->selected_unit->y == mouseTileY){
+            std::cout << "unité désélectionnée" << '\n';
+            this->selected_unit = NULL;
+          }else{
+            this->selected_unit = &players[i].units[j];
+            std::cout << "unité cliquée"<< std::endl;
+          }
+        }
       }
+    }
+    if(this->selected_unit!=NULL && lastClickX != NULL && lastClickY!=NULL && lastClickX!=this->selected_unit->x && lastClickY!=this->selected_unit->y){
+      std::cout << "C'est parti pour un déplacement" << '\n';
+      this->move=true;
     }
   }
 }

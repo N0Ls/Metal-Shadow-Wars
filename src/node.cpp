@@ -4,6 +4,7 @@
 #include <limits>
 using namespace std;
 #include <iostream>
+#include <stack>
 
 void initNode(Node *node, int x, int y)
 {
@@ -235,6 +236,7 @@ void aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yD
   Element *elementStart = (Element *) malloc(sizeof(Element *));
 
   startingNode->f=0;
+  startingNode->parent =NULL;
   elementStart->node = startingNode;
   elementStart->next = NULL;
 
@@ -277,7 +279,7 @@ void aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yD
 
     currentNode = findcheapestNode(toVisit);
     cout <<"cheapestNode : " ;
-    displayNode(*currentNode);
+    //displayNode(*currentNode);
     deleteNode(toVisit,*currentNode);
     insertion(visited,currentNode);
 
@@ -368,6 +370,17 @@ void aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yD
     }
 
   }
+  if(currentNode == NULL){
+
+  }
+  else{
+
+    while (currentNode != NULL) {
+      displayNode(*currentNode);
+      currentNode=currentNode->parent;
+    }
+  }
+
   //   insertion(visited)
 
   // let the currentNode equal the node with the least f value

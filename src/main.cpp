@@ -49,9 +49,6 @@ int main(int argc, const char *argv[])
   // };
   int maze[MAP_SIZE * MAP_SIZE] =
       {1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-  int maze2[MAP_SIZE * MAP_SIZE];
-  loadMap(maze2);
-  //aStar(maze,5,4,0,0);
 
   SDL_Surface *screen;
   const int width = 640;
@@ -76,7 +73,7 @@ int main(int argc, const char *argv[])
   {
     game->handleEvents();
     game->update();
-    game->draw(game->surface, maze2);
+    game->draw(game->surface);
     //displayUnit(&unit_test,game->textureIds_units);
   }
 
