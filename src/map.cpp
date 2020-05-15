@@ -120,16 +120,16 @@ void loadMap(int *tabMap){
       printf("Pixel Color -> R: %d,  G: %d,  B: %d,  A: %d\n", red, green, blue, alpha);
 
       if(red == 255 && green ==0 && blue ==0){
-        tabMap[i*MAP_SIZE + y]=1;
+        tabMap[y*MAP_SIZE + i]=0;
       }
       else if(red == 0 && green ==255 && blue ==0){
-        tabMap[i*MAP_SIZE + y]=1;
+        tabMap[y*MAP_SIZE + i]=2;
       }
       else if(red == 0 && green ==0 && blue ==255){
-        tabMap[i*MAP_SIZE + y]=1;
+        tabMap[y*MAP_SIZE + i]=3;
       }
       else{
-        tabMap[i*MAP_SIZE + y]=1;
+        tabMap[y*MAP_SIZE + i]=0;
       }
     }
   }
@@ -146,7 +146,7 @@ void fillGrid(GLuint textureIds[],GLuint textureLink[], int *tabMap){
       for (int y = 0; y < MAP_SIZE; y++) {
           glPushMatrix();
             glTranslatef((-GL_VIEW_SIZE/2)+i*MAP_TILE_SIZE,(-GL_VIEW_SIZE/2)+y*MAP_TILE_SIZE,0);
-            glBindTexture(GL_TEXTURE_2D, textureIds[tabMap[y*MAP_SIZE + i]]);
+            glBindTexture(GL_TEXTURE_2D, textureIds[tabMap[i*MAP_SIZE + y]]);
             drawQuads();
 
             // if (textureLink[t] < 6){
