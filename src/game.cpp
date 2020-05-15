@@ -201,7 +201,6 @@ void Game::draw(SDL_Surface *surface){
       for (int a = 0; a < this->players[g].nbUnits; a++) {
           displayUnit(this->players[g].units+a, this->textureIds_units);
       }
-
     }
 
     SDL_GL_SwapBuffers();
@@ -214,8 +213,15 @@ void Game::update()
     k++;
 
     if(this->move == true && this->moving_unit==false){
+      Node *pathNode;
       this->moving_unit = true;
-      aStar(this->tabMap,this->selected_unit->x,this->selected_unit->y,this->lastClickX,this->lastClickY);
+      pathNode = aStar(this->tabMap,this->selected_unit->x,this->selected_unit->y,this->lastClickX,this->lastClickY);
+      deplacement(this->selected_unit , pathNode->x, pathNode->y);
+
+      while (pathNode != NULL) {
+        displayNode(*pathNode);
+        pathNode=pathNode->parent;
+      }
     }
     //std::cout << "counter "<< std::endl;
 }

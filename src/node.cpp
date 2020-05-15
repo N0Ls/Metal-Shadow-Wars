@@ -20,9 +20,9 @@ void displayNode(Node node){
   std::cout << node.x<< " , " << node.y << " is valid : " << node.validity <<'\n';
 }
 
-bool isValid(int x, int y)
+bool isValid(int x, int y, int map[MAP_SIZE*MAP_SIZE])
 {
-    if((x>=0 && y>=0 && x<MAP_SIZE && y<MAP_SIZE)){
+    if((x>=0 && y>=0 && x<MAP_SIZE && y<MAP_SIZE) && (map[(x)*MAP_SIZE+ y]==1 || map[(x)*MAP_SIZE+ y]==2 || map[(x)*MAP_SIZE+ y]==3)){
       return 1;
     }
     else{
@@ -204,7 +204,7 @@ void setNodeValues(Node *nodeToSet, Node current,Node dest){
   nodeToSet->f=nodeToSet->g+nodeToSet->h;
 }
 
-void aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yDest){
+Node * aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yDest){
   Node nodeMap[MAP_SIZE*MAP_SIZE];
 
   //le tableau de pointeur est surement inutile
@@ -245,22 +245,22 @@ void aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yD
 
   //cout << "Le node y est : "<<isNodeExisting(visited,currentNode)<<endl;
 
-  if(isValid(currentNode->x+1,currentNode->y) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y])) && map[(currentNode->x+1)*MAP_SIZE+ currentNode->y]==1){
+  if(isValid(currentNode->x+1,currentNode->y,map) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]))){
     nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]->parent = currentNode;
     setNodeValues(nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
     insertion(toVisit,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
   }
-  if(isValid(currentNode->x-1,currentNode->y) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]))&& map[(currentNode->x-1)*MAP_SIZE+ currentNode->y]==1){
+  if(isValid(currentNode->x-1,currentNode->y,map) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]))){
     nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]->parent = currentNode;
     setNodeValues(nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
     insertion(toVisit,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]);
   }
-  if(isValid(currentNode->x,currentNode->y-1) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]))&& map[(currentNode->x)*MAP_SIZE+ currentNode->y-1]==1){
+  if(isValid(currentNode->x,currentNode->y-1,map) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]))){
     nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]->parent = currentNode;
     setNodeValues(nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)],*currentNode,*destNode);
     insertion(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]);
   }
-  if(isValid(currentNode->x,currentNode->y+1)&& !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]))&& map[(currentNode->x)*MAP_SIZE+ currentNode->y+1]==1){
+  if(isValid(currentNode->x,currentNode->y+1,map)&& !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]))){
     nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]->parent = currentNode;
     setNodeValues(nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)],*currentNode,*destNode);
     insertion(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]);
@@ -287,7 +287,7 @@ void aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yD
     // afficherListe(toVisit);
 
     if(currentNode->x == destNode->x && currentNode->y == destNode->y){
-      cout<<"trouvé";
+      cout<<"trouvé" << endl;
       found=1;
     }
 
@@ -296,7 +296,7 @@ void aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yD
     }
 
     //check pour chaque enfant
-    if(isValid(currentNode->x+1,currentNode->y) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y])) &&  map[(currentNode->x+1)*MAP_SIZE+ currentNode->y]==1){
+    if(isValid(currentNode->x+1,currentNode->y, map) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]))){
 
       nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]->parent = currentNode;
 
@@ -314,7 +314,7 @@ void aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yD
           insertion(toVisit,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
       }
     }
-    if(isValid(currentNode->x-1,currentNode->y) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y])) && map[(currentNode->x-1)*MAP_SIZE+ currentNode->y]==1){
+    if(isValid(currentNode->x-1,currentNode->y, map) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]))){
 
       nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]->parent = currentNode;
 
@@ -332,7 +332,7 @@ void aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yD
           insertion(toVisit,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]);
       }
     }
-    if(isValid(currentNode->x,currentNode->y-1) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]))&& map[(currentNode->x)*MAP_SIZE+ currentNode->y-1]==1){
+    if(isValid(currentNode->x,currentNode->y-1, map) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]))){
 
       nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]->parent = currentNode;
 
@@ -350,7 +350,7 @@ void aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yD
           insertion(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]);
       }
     }
-    if(isValid(currentNode->x,currentNode->y+1) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]))&& map[(currentNode->x)*MAP_SIZE+ currentNode->y+1]==1){
+    if(isValid(currentNode->x,currentNode->y+1, map) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]))){
 
       nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]->parent = currentNode;
 
@@ -371,14 +371,14 @@ void aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yD
 
   }
   if(currentNode == NULL){
-
+    return startingNode;
   }
   else{
-
-    while (currentNode != NULL) {
-      displayNode(*currentNode);
-      currentNode=currentNode->parent;
-    }
+    return currentNode;
+      // while (currentNode != NULL) {
+      //   displayNode(*currentNode);
+      //   currentNode=currentNode->parent;
+      // }
   }
 
   //   insertion(visited)

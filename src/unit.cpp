@@ -44,6 +44,7 @@ void drawQuadUnit(){
       glVertex2f(0,MAP_TILE_SIZE);
   glEnd();
 }
+
 void displayUnit(unit *unit, GLuint textureIds_units[]){
   glPushMatrix();
   glScalef(1,-1,1.);
