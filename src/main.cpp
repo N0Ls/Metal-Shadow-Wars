@@ -53,25 +53,24 @@ int main(int argc, const char *argv[])
   loadMap(maze2);
   //aStar(maze,5,4,0,0);
 
-  // SDL_Surface *screen;
-  // const int width = 640;
-  // const int height = 480;
-  // const int FPS = 30;
-  // screen = SDL_SetVideoMode(width, height, 32, SDL_SWSURFACE);
-  // TTF_Font *font;
-  // TTF_Init();
-  // font = TTF_OpenFont("Test.ttf", 30);
-  // SDL_Color color = {0, 0, 0};
-  // SDL_Event event;
-  // Uint32 start;
-  // bool arr[4] = {0, 0, 0, 0};
+  SDL_Surface *screen;
+  const int width = 640;
+  const int height = 480;
+  const int FPS = 30;
+  screen = SDL_SetVideoMode(width, height, 32, SDL_SWSURFACE);
+  TTF_Font *font;
+  TTF_Init();
+  font = TTF_OpenFont("test.ttf", 30);
+  SDL_Color color = {0, 0, 0};
+  SDL_Event event;
+  Uint32 start;
+  bool arr[4] = {0, 0, 0, 0};
   
-  // int i = show_menu(screen);
+  int i = show_menu(screen, font);
 
-  // // En fonction de la valeur retournée, on change l'état du jeu
-
-  // if (i == 1)
-  //   game->isRunning = false;
+  // En fonction de la valeur retournée, on change l'état du jeu
+  if (i == 0)
+    game->changeState(true);
 
   while (game->running())
   {

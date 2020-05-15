@@ -27,6 +27,8 @@ public :
     bool running() { return isRunning; };
     void clickCheck(float mouseX,float mouseY);
 
+    void changeState(bool state);
+
     static const int nb_players = 2 ;
     static const int nb_start_units = 3;
     player players[nb_players];

@@ -7,6 +7,6 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-int show_menu(SDL_Surface *screen);
+int show_menu(SDL_Surface *screen, TTF_Font *font);
 
 #endif

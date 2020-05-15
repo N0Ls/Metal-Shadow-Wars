@@ -7,29 +7,41 @@
 
 #include <iostream>
 
-int show_menu(SDL_Surface *screen/*, TTF_Font *font*/)
+int show_menu(SDL_Surface *screen, TTF_Font *font)
 {
   std::cout << "menu actif" << std::endl;
   
-  /*Uint32 time;
+  Uint32 time;
+
   int x, y;
+  // Number of menu items
   const int NUMMENU = 2;
+  // Menu labels (count : number of menu items)
   const char *labels[NUMMENU] = {"Continue", "Exit"};
+  // Menu buttons
   SDL_Surface *menus[NUMMENU];
+  // Initial select state : false
   bool selected[NUMMENU] = {0, 0};
-  SDL_Color color[2] = {{255, 255, 255}, {255, 0, 0}};*/
+  // Colors used
+  SDL_Color color[2] = {{255, 255, 255}, {255, 0, 0}};
 
-  //menus[0] = TTF_RenderText_Solid(font, labels[0], color[0]);
-  //menus[1] = TTF_RenderText_Solid(font, labels[1], color[0]);
+  // Menu items font
+  menus[0] = TTF_RenderText_Solid(font, labels[0], color[0]);
+  menus[1] = TTF_RenderText_Solid(font, labels[1], color[0]);
 
-  /*SDL_Rect pos[NUMMENU];
+  // Buttons rect (for positions)
+  SDL_Rect pos[NUMMENU];
   
+  // Buttons actual positions (x and y coordinates)
   pos[0].x = screen->clip_rect.w / 2 - menus[0]->clip_rect.w / 2;
   pos[0].y = screen->clip_rect.h / 2 - menus[0]->clip_rect.h;
   pos[1].x = screen->clip_rect.w / 2 - menus[0]->clip_rect.w / 2;
   pos[1].y = screen->clip_rect.h / 2 + menus[0]->clip_rect.h;
 
-  SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x00, 0x00, 0x00));
+  bool result = SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x00, 0x00, 0x00));
+
+  // Check if SDL_FillRect is a success
+  std::cout << result << std::endl;
 
   SDL_Event event;
   while (1)
@@ -54,7 +66,7 @@ int show_menu(SDL_Surface *screen/*, TTF_Font *font*/)
             {
               selected[i] = 1;
               SDL_FreeSurface(menus[i]);
-              //menus[i] = TTF_RenderText_Solid(font, labels[i], color[1]);
+              menus[i] = TTF_RenderText_Solid(font, labels[i], color[1]);
             }
           }
           else
@@ -63,7 +75,7 @@ int show_menu(SDL_Surface *screen/*, TTF_Font *font*/)
             {
               selected[i] = 0;
               SDL_FreeSurface(menus[i]);
-              //menus[i] = TTF_RenderText_Solid(font, labels[i], color[0]);
+              menus[i] = TTF_RenderText_Solid(font, labels[i], color[0]);
             }
           }
         }
@@ -97,5 +109,5 @@ int show_menu(SDL_Surface *screen/*, TTF_Font *font*/)
     SDL_Flip(screen);
     if (1000 / 30 > (SDL_GetTicks() - time))
       SDL_Delay(1000 / 30 - (SDL_GetTicks() - time));
-  }*/
+  }
 }

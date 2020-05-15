@@ -314,6 +314,11 @@ void Game::clickCheck(float mouseX,float mouseY){
   }
 }
 
+void Game::changeState(bool state)
+{
+  isRunning = state;
+}
+
 void Game::clean()
 {
   /* AJOUTER LE CLEAN DES TEXTURES*/
