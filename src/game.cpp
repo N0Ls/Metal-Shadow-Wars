@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "node.hpp"
+#include <stack>
+using namespace std;
 
 static const unsigned int BIT_PER_PIXEL = 32;
 
@@ -213,16 +215,19 @@ void Game::update()
     k++;
 
     if(this->move == true && this->moving_unit==false){
+      stack <Node*> path;
       Node *pathNode;
       this->moving_unit = true;
       pathNode = aStar(this->tabMap,this->selected_unit->x,this->selected_unit->y,this->lastClickX,this->lastClickY);
       deplacement(this->selected_unit , pathNode->x, pathNode->y);
 
-      while (pathNode != NULL) {
-        displayNode(*pathNode);
-        pathNode=pathNode->parent;
-      }
+      // while (pathNode != NULL) {
+      //   displayNode(*pathNode);
+      //   //path.push(pathNode);
+      //   pathNode=pathNode->parent;
+      // }
     }
+
     //std::cout << "counter "<< std::endl;
 }
 void drawQuadsSelection(){
@@ -242,7 +247,7 @@ void drawQuadsSelection(){
   glEnd();
 }
 void Game::displaySelectdUnit(){
-  if(this->selected_unit != NULL){
+  if(this->selected_unit != NULL && this->move == false){
     glPushMatrix();
       glScalef(1,-1,1.);
       //Drawing red square on selected unit
@@ -322,8 +327,8 @@ void Game::clickCheck(float mouseX,float mouseY){
     mouseTileX = MAP_SIZE/2 + mouseXpos/step;
     mouseTileY = MAP_SIZE/2 + mouseYpos/step;
   }
-  std::cout << "Tu as cliqué sur la case : " << mouseTileX << " ; " << mouseTileY<<std::endl;
-  if(mouseTileX > 0 && mouseTileY > 0 && mouseTileX <= MAP_SIZE && mouseTileY <= MAP_SIZE){
+  std::cout << "Tu as cliqué sur la case : " << mouseTileX << " ; " << mouseTileY << " : " << this->tabMap[mouseTileX*MAP_SIZE + mouseTileY]<<std::endl;
+  if(mouseTileX >= 0 && mouseTileY >= 0 && mouseTileX < MAP_SIZE && mouseTileY < MAP_SIZE){
     this->lastClickX = mouseTileX;
     this->lastClickY = mouseTileY;
 
@@ -340,7 +345,7 @@ void Game::clickCheck(float mouseX,float mouseY){
         }
       }
     }
-    if(this->selected_unit!=NULL && lastClickX != NULL && lastClickY!=NULL && !(lastClickX==this->selected_unit->x && lastClickY==this->selected_unit->y) && this->moving_unit==false){
+    if(this->selected_unit!=NULL && lastClickX != NULL && lastClickY!=NULL && !(lastClickX==this->selected_unit->x && lastClickY==this->selected_unit->y) && this->moving_unit==false && isValid(lastClickX,lastClickY,this->tabMap)){
       //std::cout << "C'est parti pour un déplacement" << '\n';
       this->move=true;
     }

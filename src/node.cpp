@@ -227,6 +227,11 @@ Node * aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int 
   displayNode(*startingNode);
   displayNode(*destNode);
 
+  if(destNode->validity == false){
+    std::cout << "case non valide" << '\n';
+    return(currentNode);
+  }
+
   Liste *visited = (Liste *) malloc(sizeof(Liste *));
   Liste *toVisit = (Liste *) malloc(sizeof(Liste *));
 
@@ -370,15 +375,16 @@ Node * aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int 
     }
 
   }
-  if(currentNode == NULL){
+  displayNode(*currentNode);
+  if(currentNode == NULL || (currentNode->x!=destNode->x && currentNode->y!=destNode->y)){
     return startingNode;
   }
   else{
     return currentNode;
-      // while (currentNode != NULL) {
-      //   displayNode(*currentNode);
-      //   currentNode=currentNode->parent;
-      // }
+      while (currentNode != NULL) {
+        displayNode(*currentNode);
+        currentNode=currentNode->parent;
+      }
   }
 
   //   insertion(visited)
