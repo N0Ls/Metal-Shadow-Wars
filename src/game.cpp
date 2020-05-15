@@ -310,7 +310,6 @@ void Game::clickCheck(float mouseX,float mouseY){
 
 
   if((mouseXpos/step < -5 && mouseXpos/step > -6 )|| (mouseYpos/step < -5 && mouseYpos/step > -6) ){ //avoiding -0 symetry
-    std::cout << "here" << std::endl;
     mouseTileX = MAP_SIZE/2 + mouseXpos/step - 1;
     mouseTileY = MAP_SIZE/2 + mouseYpos/step - 1;
   }else{
@@ -335,8 +334,8 @@ void Game::clickCheck(float mouseX,float mouseY){
         }
       }
     }
-    if(this->selected_unit!=NULL && lastClickX != NULL && lastClickY!=NULL && lastClickX!=this->selected_unit->x && lastClickY!=this->selected_unit->y){
-      std::cout << "C'est parti pour un déplacement" << '\n';
+    if(this->selected_unit!=NULL && lastClickX != NULL && lastClickY!=NULL && !(lastClickX==this->selected_unit->x && lastClickY==this->selected_unit->y) && this->moving_unit==false){
+      //std::cout << "C'est parti pour un déplacement" << '\n';
       this->move=true;
     }
   }
