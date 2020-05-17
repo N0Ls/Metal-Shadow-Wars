@@ -43,50 +43,6 @@ double calculateHeuristic(int x, int y, Node node_destination)
   return abs (x - node_destination.x) + abs (y - node_destination.y);
 }
 
-// int maze[MAP_SIZE][MAP_SIZE] = {
-//   {1,1,1,1,1,1,1,1,1,1},
-//   {1,1,1,1,1,1,1,1,1,1},
-//   {1,1,1,1,1,1,1,1,1,1},
-//   {1,1,1,1,1,1,1,1,1,1},
-//   {1,1,1,1,1,1,1,1,1,1},
-//   {1,1,1,1,1,1,1,1,1,1},
-//   {1,1,1,1,1,1,1,1,1,1},
-//   {1,1,1,1,1,1,1,1,1,1},
-//   {1,1,1,1,1,1,1,1,1,1},
-//   {1,1,1,1,1,1,1,1,1,1},
-// };
-
-// void generateNodeTab(int map[][MAP_SIZE], Node nodeMap[]){
-//   for (int j = 0; j < MAP_SIZE; j++) {
-//     for (int k = 0; k < MAP_SIZE; k++) {
-//       initNode(nodeMap[j*MAP_SIZE +k],j,k);
-//     }
-//   }
-// }
-// void insertion(Liste *liste, Node* nodeToAdd){
-//     Element *newElement = (Element *) malloc(sizeof(Element *));
-//     if (liste==NULL || newElement == NULL)
-//     {
-//         exit(EXIT_FAILURE);
-//     }
-//
-//     newElement->node = nodeToAdd;
-//     newElement->next = NULL;
-//
-//     if(liste->first == NULL){
-//       liste->first = newElement;
-//       return;
-//     }
-//
-//     Element *tmp = liste->first;
-//     while(tmp->next != NULL){
-//       tmp = tmp->next;
-//     }
-//     tmp->next = newElement;
-//
-//     return;
-// }
-
 void insertion(Liste *liste, Node *nvNode)
 {
     /* Création du nouvel élément */
@@ -162,7 +118,6 @@ bool isNodeExisting(Liste *l, Node *nodeToSearch){
   while (current != NULL)
   {
     if(current->node->x == nodeToSearch->x && current->node->y == nodeToSearch->y){
-      //free(current);
       return 1;
     }
     current = current->next;
@@ -248,7 +203,6 @@ std::stack <PathCoordinates> aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int y
   toVisit->first = NULL;
   visited->first = elementStart;
 
-  //cout << "Le node y est : "<<isNodeExisting(visited,currentNode)<<endl;
 
   if(isValid(currentNode->x+1,currentNode->y,map) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]))){
     nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]->parent = currentNode;
@@ -272,14 +226,7 @@ std::stack <PathCoordinates> aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int y
   }
 
 
-  // currentNode = findcheapestNode(toVisit);
-  // cout <<"cheapestNode : " ;
-  // displayNode(*currentNode);
-  // deleteNode(toVisit,*currentNode);
-  // afficherListe(toVisit);
-
   bool found = 0;
-  // //future boucle while
   while(found==0 && toVisit->first !=NULL){
 
     currentNode = findcheapestNode(toVisit);
@@ -391,32 +338,8 @@ std::stack <PathCoordinates> aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int y
       currentNode=currentNode->parent;
     }
 
-    //cout << endl<< endl;
-    // while(!(path.empty())){
-    //   displayNode(*path.top());
-    //   path.pop();
-    // }
     return path;
   }
-
-  //   insertion(visited)
-
-  // let the currentNode equal the node with the least f value
-  // remove the currentNode from the openList
-  // add the currentNode to the closedList
-
-
-
-  //insertion(visited,startingNode);
-
-
-
-  // while (currentNode->x != xDest && currentNode->y != yDest) {
-  //
-  //
-  // }
-
-
 
 
   free(nodeMapPTR);
