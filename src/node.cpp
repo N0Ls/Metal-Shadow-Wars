@@ -204,9 +204,9 @@ void setNodeValues(Node *nodeToSet, Node current,Node dest){
   nodeToSet->f=nodeToSet->g+nodeToSet->h;
 }
 
-Node * aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yDest){
+std::stack <PathCoordinates> aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yDest){
   Node nodeMap[MAP_SIZE*MAP_SIZE];
-
+  stack <PathCoordinates> path;
   //le tableau de pointeur est surement inutile
   Node** nodeMapPTR;
   nodeMapPTR =(Node**) malloc(MAP_SIZE*MAP_SIZE * sizeof(Node*));
@@ -229,7 +229,7 @@ Node * aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int 
 
   if(destNode->validity == false){
     std::cout << "case non valide" << '\n';
-    return(currentNode);
+    return path;
   }
 
   Liste *visited = (Liste *) malloc(sizeof(Liste *));
@@ -375,16 +375,28 @@ Node * aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int 
     }
 
   }
-  displayNode(*currentNode);
+  //displayNode(*currentNode);
   if(currentNode == NULL || (currentNode->x!=destNode->x && currentNode->y!=destNode->y)){
-    return startingNode;
+    return path; //startingNode;
   }
   else{
-    return currentNode;
-      while (currentNode != NULL) {
-        displayNode(*currentNode);
-        currentNode=currentNode->parent;
-      }
+
+    // return currentNode;
+    while (currentNode->parent != NULL) {
+      displayNode(*currentNode);
+      PathCoordinates newPathCoord;
+      newPathCoord.x = currentNode->x;
+      newPathCoord.y = currentNode->y;
+      path.push(newPathCoord);
+      currentNode=currentNode->parent;
+    }
+
+    //cout << endl<< endl;
+    // while(!(path.empty())){
+    //   displayNode(*path.top());
+    //   path.pop();
+    // }
+    return path;
   }
 
   //   insertion(visited)

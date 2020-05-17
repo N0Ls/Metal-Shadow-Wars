@@ -1,5 +1,10 @@
+
+#include <stack>
+using namespace std;
 #ifndef NODE_H
 #define NODE_H
+
+
 
 struct Node{
   int x,y;
@@ -7,6 +12,10 @@ struct Node{
   double h, g, f;
   Node* parent;
   Node* children[];
+};
+
+struct PathCoordinates{
+  int x,y;
 };
 
 typedef struct Element Element;
@@ -33,7 +42,6 @@ double calculateHeuristic(int x, int y, Node node_destination);
 
 
 void generateNodeTab(int map[][MAP_SIZE], Node* nodeMap[]);
-
-Node * aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yDest);
+stack <PathCoordinates> aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yDest);
 
 #endif

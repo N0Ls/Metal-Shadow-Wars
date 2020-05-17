@@ -215,17 +215,25 @@ void Game::update()
     k++;
 
     if(this->move == true && this->moving_unit==false){
-      stack <Node*> path;
+      stack <PathCoordinates> path;
       Node *pathNode;
       this->moving_unit = true;
-      pathNode = aStar(this->tabMap,this->selected_unit->x,this->selected_unit->y,this->lastClickX,this->lastClickY);
-      deplacement(this->selected_unit , pathNode->x, pathNode->y);
+      path = aStar(this->tabMap,this->selected_unit->x,this->selected_unit->y,this->lastClickX,this->lastClickY);
+      //deplacement(this->selected_unit , pathNode->x, pathNode->y);
 
       // while (pathNode != NULL) {
       //   displayNode(*pathNode);
       //   //path.push(pathNode);
       //   pathNode=pathNode->parent;
       // }
+      cout << endl<< endl;
+      PathCoordinates print;
+      while(!(path.empty())){
+        print = path.top();
+        cout << print.x << " " << print.y<< endl;
+        //displayNode(*path.top());
+        path.pop();
+      }
     }
 
     //std::cout << "counter "<< std::endl;

@@ -37,7 +37,7 @@ int main(int argc, const char *argv[])
     initPlayer(&newPlayer, 1, 3);
     std::cout << newPlayer.resources << std::endl;
 
-    setCoordinates(game->players->units, 3, 2);
+    setCoordinates(game->players->units, 9, 9);
     printUnitInfos(game->players->units);
     updateDisplayCoordinates(game->players->units);
 
