@@ -163,18 +163,15 @@ std::stack <PathCoordinates> aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int y
   Node nodeMap[MAP_SIZE*MAP_SIZE];
   stack <PathCoordinates> path;
   //le tableau de pointeur est surement inutile
-  Node** nodeMapPTR;
-  nodeMapPTR =(Node**) malloc(MAP_SIZE*MAP_SIZE * sizeof(Node*));
 
   for (int j = 0; j < MAP_SIZE; j++) {
     for (int k = 0; k < MAP_SIZE; k++) {
       initNode(&nodeMap[j*MAP_SIZE +k],j,k);
       setValidity(&nodeMap[j*MAP_SIZE +k],map[j*MAP_SIZE+k]);
-      nodeMapPTR[j*MAP_SIZE +k] = &nodeMap[j*MAP_SIZE +k];
     }
   }
 
-  Node *startingNode = nodeMapPTR[xStart*MAP_SIZE +yStart];
+  Node *startingNode = &nodeMap[xStart*MAP_SIZE +yStart];
   Node *destNode = &nodeMap[xDest*MAP_SIZE +yDest];
 
   Node *currentNode = startingNode;
@@ -204,25 +201,25 @@ std::stack <PathCoordinates> aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int y
   visited->first = elementStart;
 
 
-  if(isValid(currentNode->x+1,currentNode->y,map) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]))){
-    nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]->parent = currentNode;
-    setNodeValues(nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
-    insertion(toVisit,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
+  if(isValid(currentNode->x+1,currentNode->y,map) && !(isNodeExisting(visited,&nodeMap[(currentNode->x+1)*MAP_SIZE +currentNode->y]))){
+    nodeMap[(currentNode->x+1)*MAP_SIZE +currentNode->y].parent = currentNode;
+    setNodeValues(&nodeMap[(currentNode->x+1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
+    insertion(toVisit,&nodeMap[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
   }
-  if(isValid(currentNode->x-1,currentNode->y,map) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]))){
-    nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]->parent = currentNode;
-    setNodeValues(nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
-    insertion(toVisit,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]);
+  if(isValid(currentNode->x-1,currentNode->y,map) && !(isNodeExisting(visited,&nodeMap[(currentNode->x-1)*MAP_SIZE +currentNode->y]))){
+    nodeMap[(currentNode->x-1)*MAP_SIZE +currentNode->y].parent = currentNode;
+    setNodeValues(&nodeMap[(currentNode->x-1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
+    insertion(toVisit,&nodeMap[(currentNode->x-1)*MAP_SIZE +currentNode->y]);
   }
-  if(isValid(currentNode->x,currentNode->y-1,map) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]))){
-    nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]->parent = currentNode;
-    setNodeValues(nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)],*currentNode,*destNode);
-    insertion(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]);
+  if(isValid(currentNode->x,currentNode->y-1,map) && !(isNodeExisting(visited,&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]))){
+    nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y-1)].parent = currentNode;
+    setNodeValues(&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y-1)],*currentNode,*destNode);
+    insertion(toVisit,&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]);
   }
-  if(isValid(currentNode->x,currentNode->y+1,map)&& !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]))){
-    nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]->parent = currentNode;
-    setNodeValues(nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)],*currentNode,*destNode);
-    insertion(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]);
+  if(isValid(currentNode->x,currentNode->y+1,map)&& !(isNodeExisting(visited,&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]))){
+    nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y+1)].parent = currentNode;
+    setNodeValues(&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y+1)],*currentNode,*destNode);
+    insertion(toVisit,&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]);
   }
 
 
@@ -248,87 +245,86 @@ std::stack <PathCoordinates> aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int y
     }
 
     //check pour chaque enfant
-    if(isValid(currentNode->x+1,currentNode->y, map) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]))){
+    if(isValid(currentNode->x+1,currentNode->y, map) && !(isNodeExisting(visited,&nodeMap[(currentNode->x+1)*MAP_SIZE +currentNode->y]))){
 
-      nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]->parent = currentNode;
+      nodeMap[(currentNode->x+1)*MAP_SIZE +currentNode->y].parent = currentNode;
 
-      if(isNodeExisting(toVisit,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y])){
-        if(currentNode->g+1 > nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]->g){
+      if(isNodeExisting(toVisit,&nodeMap[(currentNode->x+1)*MAP_SIZE +currentNode->y])){
+        if(currentNode->g+1 > nodeMap[(currentNode->x+1)*MAP_SIZE +currentNode->y].g){
 
         }
         else{
-          setNodeValues(nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
-          insertion(toVisit,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
+          setNodeValues(&nodeMap[(currentNode->x+1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
+          insertion(toVisit,&nodeMap[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
         }
       }
       else{
-          setNodeValues(nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
-          insertion(toVisit,nodeMapPTR[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
+          setNodeValues(&nodeMap[(currentNode->x+1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
+          insertion(toVisit,&nodeMap[(currentNode->x+1)*MAP_SIZE +currentNode->y]);
       }
     }
-    if(isValid(currentNode->x-1,currentNode->y, map) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]))){
+    if(isValid(currentNode->x-1,currentNode->y, map) && !(isNodeExisting(visited,&nodeMap[(currentNode->x-1)*MAP_SIZE +currentNode->y]))){
 
-      nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]->parent = currentNode;
+      nodeMap[(currentNode->x-1)*MAP_SIZE +currentNode->y].parent = currentNode;
 
-      if(isNodeExisting(toVisit,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y])){
-        if(currentNode->g+1 > nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]->g){
+      if(isNodeExisting(toVisit,&nodeMap[(currentNode->x-1)*MAP_SIZE +currentNode->y])){
+        if(currentNode->g+1 > nodeMap[(currentNode->x-1)*MAP_SIZE +currentNode->y].g){
 
         }
         else{
-          setNodeValues(nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
-          insertion(toVisit,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]);
+          setNodeValues(&nodeMap[(currentNode->x-1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
+          insertion(toVisit,&nodeMap[(currentNode->x-1)*MAP_SIZE +currentNode->y]);
         }
       }
       else{
-          setNodeValues(nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
-          insertion(toVisit,nodeMapPTR[(currentNode->x-1)*MAP_SIZE +currentNode->y]);
+          setNodeValues(&nodeMap[(currentNode->x-1)*MAP_SIZE +currentNode->y],*currentNode,*destNode);
+          insertion(toVisit,&nodeMap[(currentNode->x-1)*MAP_SIZE +currentNode->y]);
       }
     }
-    if(isValid(currentNode->x,currentNode->y-1, map) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]))){
+    if(isValid(currentNode->x,currentNode->y-1, map) && !(isNodeExisting(visited,&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]))){
 
-      nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]->parent = currentNode;
+      nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y-1)].parent = currentNode;
 
-      if(isNodeExisting(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)])){
-        if(currentNode->g+1 > nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]->g){
+      if(isNodeExisting(toVisit,&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y-1)])){
+        if(currentNode->g+1 > nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y-1)].g){
 
         }
         else{
-          setNodeValues(nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)],*currentNode,*destNode);
-          insertion(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]);
+          setNodeValues(&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y-1)],*currentNode,*destNode);
+          insertion(toVisit,&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]);
         }
       }
       else{
-          setNodeValues(nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)],*currentNode,*destNode);
-          insertion(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]);
+          setNodeValues(&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y-1)],*currentNode,*destNode);
+          insertion(toVisit,&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y-1)]);
       }
     }
-    if(isValid(currentNode->x,currentNode->y+1, map) && !(isNodeExisting(visited,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]))){
+    if(isValid(currentNode->x,currentNode->y+1, map) && !(isNodeExisting(visited,&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]))){
 
-      nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]->parent = currentNode;
+      nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y+1)].parent = currentNode;
 
-      if(isNodeExisting(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)])){
-        if(currentNode->g+1 > nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]->g){
+      if(isNodeExisting(toVisit,&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y+1)])){
+        if(currentNode->g+1 > nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y+1)].g){
 
         }
         else{
-          setNodeValues(nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)],*currentNode,*destNode);
-          insertion(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]);
+          setNodeValues(&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y+1)],*currentNode,*destNode);
+          insertion(toVisit,&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]);
         }
       }
       else{
-          setNodeValues(nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)],*currentNode,*destNode);
-          insertion(toVisit,nodeMapPTR[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]);
+          setNodeValues(&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y+1)],*currentNode,*destNode);
+          insertion(toVisit,&nodeMap[(currentNode->x)*MAP_SIZE +(currentNode->y+1)]);
       }
     }
 
   }
-  //displayNode(*currentNode);
+  //If there is no path found we return an empty stack
   if(currentNode == NULL || (currentNode->x!=destNode->x && currentNode->y!=destNode->y)){
-    return path; //startingNode;
+    return path;
   }
+  //Else we fill in the path
   else{
-
-    // return currentNode;
     while (currentNode->parent != NULL) {
       displayNode(*currentNode);
       PathCoordinates newPathCoord;
@@ -342,6 +338,6 @@ std::stack <PathCoordinates> aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int y
   }
 
 
-  free(nodeMapPTR);
+  free(nodeMap);
 }
 //function to generate the tab of nodes
