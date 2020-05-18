@@ -57,14 +57,6 @@ switch (bpp)
   }
 }
 
-Uint32 Getpixel(SDL_Surface *surface, int x, int y)
-{
-    //int bpp = surface->format->BytesPerPixel;
-    /* Here p is the address to the pixel we want to retrieve */
-    Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * 1;  // 4=bpp
-
-    return *(Uint32 *)p;
-}
 
 
 void loadMap(int *tabMap){
@@ -86,8 +78,8 @@ void loadMap(int *tabMap){
 
   fmt=surface->format;
 
-  for (int i = 0; i < surface->w; i++) {
-    for(int y = 0; y < surface->h;y++){
+  for (int i = 0; i < MAP_SIZE; i++) {
+    for(int y = 0; y < MAP_SIZE;y++){
       SDL_LockSurface(surface);
       pixel=*((Uint32*)surface->pixels);
       pixel=getpixel(surface,y,i);
