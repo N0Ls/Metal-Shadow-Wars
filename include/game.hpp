@@ -49,7 +49,8 @@ public :
     bool move = false;
     bool moving_unit = false;
 
-
+      bool unitPlaced=false;
+    void placeUnits();
 
 private :
     int counter;
@@ -58,7 +59,9 @@ private :
     Mix_Chunk *click = NULL;
     int lastClickX;
     int lastClickY;
+
     void displaySelectdUnit();
+
 
 };
 

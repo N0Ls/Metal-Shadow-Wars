@@ -33,27 +33,22 @@ int main(int argc, const char *argv[])
     //init_textures(game->nb_textures_map, game->textureIds_map,game->textureLink);
     //printf("%d\n",game->textureLink[MAP_SIZE -17]); //Test pour voir si le tableau était rempli en sortie
 
-    player newPlayer;
-    initPlayer(&newPlayer, 1, 3);
-    std::cout << newPlayer.resources << std::endl;
+    // player newPlayer;
+    // initPlayer(&newPlayer, 1, 3);
+    // std::cout << newPlayer.resources << std::endl;
 
-    setCoordinates(game->players->units, 9, 9);
-    printUnitInfos(game->players->units);
-    updateDisplayCoordinates(game->players->units);
+    // setCoordinates(game->players->units, 9, 9);
+    // printUnitInfos(game->players->units);
+    // updateDisplayCoordinates(game->players->units);
 
-    //game->selected_unit = game->players->units;
-    // int maze[MAP_SIZE][MAP_SIZE] = {
-    //   {1,1,1,1,0,0,1,1,1,1},
-    //   {0,0,1,0,0,0,1,1,1,1},
-    //   {0,1,1,1,1,1,1,1,1,1},
-    //   {1,1,1,1,1,1,1,1,1,1},
-    //   {1,1,1,1,1,1,1,1,1,1},
-    //   {1,1,1,1,1,1,1,1,1,1},
-    //   {1,1,1,1,1,1,1,1,1,1},
-    //   {1,1,1,1,1,1,1,1,1,1},
-    //   {1,1,1,1,1,1,1,1,1,1},
-    //   {1,1,1,1,1,1,1,1,1,1},
-    // };
+    game->selected_unit = nullptr;
+    while(game->unitPlaced == false){
+        game->handleEvents();
+        game->update();
+        game->draw(game->surface);
+        game->placeUnits();
+    }
+
     int maze[MAP_SIZE * MAP_SIZE] =
         {1, 1, 1, 1, 0, 0, 1, 1, 1, 1,
          0, 0, 1, 0, 0, 0, 1, 1, 1, 1,
@@ -71,6 +66,7 @@ int main(int argc, const char *argv[])
       game->handleEvents();
       game->update();
       game->draw(game->surface);
+
       //displayUnit(&unit_test,game->textureIds_units);
     }
 

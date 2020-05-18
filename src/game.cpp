@@ -115,7 +115,16 @@ void Game::init(const char *title, int width, int height)
     loadMap(this->tabMap);
 
     reshape(&surface, width, height);
+}
 
+void Game::placeUnits(){
+  for (int i = 0; i < this->nb_players; i++) {
+    for(int y=0;y <this->players[i].nbUnits; y++){
+      setCoordinates(&this->players[i].units[y], rand()%9, rand()%9);
+      updateDisplayCoordinates(&this->players[i].units[y]);
+    }
+  }
+  this->unitPlaced = true;
 }
 
 
@@ -214,28 +223,6 @@ void Game::update()
 
     k++;
 
-    if(this->move == true && this->moving_unit==false){
-      stack <PathCoordinates> path;
-      Node *pathNode;
-      this->moving_unit = true;
-      path = aStar(this->tabMap,this->selected_unit->x,this->selected_unit->y,this->lastClickX,this->lastClickY);
-
-
-      // while (pathNode != NULL) {
-      //   displayNode(*pathNode);
-      //   //path.push(pathNode);
-      //   pathNode=pathNode->parent;
-      // }
-      cout << endl<< endl;
-      PathCoordinates print;
-      while(!(path.empty())){
-        print = path.top();
-        cout << print.x << " " << print.y<< endl;
-        deplacement(this->selected_unit , print.x, print.y);
-        //displayNode(*path.top());
-        path.pop();
-      }
-    }
 
     //std::cout << "counter "<< std::endl;
 }
@@ -265,25 +252,6 @@ void Game::displaySelectdUnit(){
         drawQuadsSelection();
       glPopMatrix();
 
-      //Drawing where the unit can go on NSEW directions
-      // for(int i=1; i <=this->selected_unit->dexterity; i++){
-      //     glPushMatrix();
-      //       glTranslatef((-GL_VIEW_SIZE/2)+(this->selected_unit->x+i)*MAP_TILE_SIZE, this->selected_unit->displayY,0);
-      //       if(!(this->selected_unit->x+i >= MAP_SIZE ))drawQuadsSelection();
-      //     glPopMatrix();
-      //     glPushMatrix();
-      //       glTranslatef((-GL_VIEW_SIZE/2)+(this->selected_unit->x-i)*MAP_TILE_SIZE, this->selected_unit->displayY,0);
-      //       if(!(this->selected_unit->x-i < 0))drawQuadsSelection();
-      //     glPopMatrix();
-      //     glPushMatrix();
-      //       glTranslatef(this->selected_unit->displayX, (-GL_VIEW_SIZE/2)+(this->selected_unit->y+i)*MAP_TILE_SIZE,0);
-      //       if(!(this->selected_unit->y+i >= MAP_SIZE ))drawQuadsSelection();
-      //     glPopMatrix();
-      //     glPushMatrix();
-      //       glTranslatef(this->selected_unit->displayX, (-GL_VIEW_SIZE/2)+(this->selected_unit->y-i)*MAP_TILE_SIZE,0);
-      //       if(!(this->selected_unit->y-i < 0))drawQuadsSelection();
-      //     glPopMatrix();
-      // }
       for(int y=0 ; y<=this->selected_unit->dexterity ; y++){
         for(int j=0; j<=this->selected_unit->dexterity-y ; j++){
           glPushMatrix();
@@ -329,7 +297,7 @@ void Game::clickCheck(float mouseX,float mouseY){
   std::cout << mouseXpos/step << std::endl;
 
 
-  if((mouseXpos/step < -5 && mouseXpos/step > -6 )|| (mouseYpos/step < -5 && mouseYpos/step > -6) ){ //avoiding -0 symetry
+  if((mouseXpos/step < -(MAP_SIZE/2) && mouseXpos/step > -((MAP_SIZE/2)+1) )|| (mouseYpos/step < -(MAP_SIZE/2) && mouseYpos/step > -((MAP_SIZE/2)+1)) ){ //avoiding -0 symetry
     mouseTileX = MAP_SIZE/2 + mouseXpos/step - 1;
     mouseTileY = MAP_SIZE/2 + mouseYpos/step - 1;
   }else{
@@ -355,8 +323,28 @@ void Game::clickCheck(float mouseX,float mouseY){
       }
     }
     if(this->selected_unit!=NULL && lastClickX != NULL && lastClickY!=NULL && !(lastClickX==this->selected_unit->x && lastClickY==this->selected_unit->y) && this->moving_unit==false && isValid(lastClickX,lastClickY,this->tabMap)){
-      //std::cout << "C'est parti pour un déplacement" << '\n';
       this->move=true;
+      if(this->move == true && this->moving_unit==false){
+        stack <PathCoordinates> path;
+        Node *pathNode;
+        this->moving_unit = true;
+        path = aStar(this->tabMap,this->selected_unit->x,this->selected_unit->y,this->lastClickX,this->lastClickY);
+        // while (pathNode != NULL) {
+        //   displayNode(*pathNode);
+        //   //path.push(pathNode);
+        //   pathNode=pathNode->parent;
+        // }
+        cout << endl<< endl;
+        PathCoordinates print;
+        while(!(path.empty())){
+          print = path.top();
+          cout << print.x << " " << print.y<< endl;
+          deplacement(this->selected_unit , print.x, print.y);
+          //displayNode(*path.top());
+          path.pop();
+        }
+      }
+
     }
   }
 }
