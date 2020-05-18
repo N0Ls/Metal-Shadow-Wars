@@ -120,13 +120,13 @@ void loadMap(int *tabMap){
       printf("Pixel Color -> R: %d,  G: %d,  B: %d,  A: %d\n", red, green, blue, alpha);
 
       if(red == 255 && green ==0 && blue ==0){
-        tabMap[y*MAP_SIZE + i]=0;
+        tabMap[y*MAP_SIZE + i]=3;
       }
       else if(red == 0 && green ==255 && blue ==0){
         tabMap[y*MAP_SIZE + i]=2;
       }
       else if(red == 0 && green ==0 && blue ==255){
-        tabMap[y*MAP_SIZE + i]=3;
+        tabMap[y*MAP_SIZE + i]=0;
       }
       else{
         tabMap[y*MAP_SIZE + i]=0;
