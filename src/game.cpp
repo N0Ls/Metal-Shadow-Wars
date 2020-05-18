@@ -219,7 +219,7 @@ void Game::update()
       Node *pathNode;
       this->moving_unit = true;
       path = aStar(this->tabMap,this->selected_unit->x,this->selected_unit->y,this->lastClickX,this->lastClickY);
-      //deplacement(this->selected_unit , pathNode->x, pathNode->y);
+
 
       // while (pathNode != NULL) {
       //   displayNode(*pathNode);
@@ -231,6 +231,7 @@ void Game::update()
       while(!(path.empty())){
         print = path.top();
         cout << print.x << " " << print.y<< endl;
+        deplacement(this->selected_unit , print.x, print.y);
         //displayNode(*path.top());
         path.pop();
       }
@@ -299,7 +300,7 @@ void Game::displaySelectdUnit(){
           glPopMatrix();
           glPushMatrix();
             glTranslatef((-GL_VIEW_SIZE/2)+(this->selected_unit->x-y)*MAP_TILE_SIZE, (-GL_VIEW_SIZE/2)+(this->selected_unit->y+j)*MAP_TILE_SIZE,0);
-            if(!(this->selected_unit->x-j <0 || this->selected_unit->y+j >=MAP_SIZE))drawQuadsSelection();
+            if(!(this->selected_unit->x-y <0 || this->selected_unit->y+j >=MAP_SIZE))drawQuadsSelection();
           glPopMatrix();
         }
       }
