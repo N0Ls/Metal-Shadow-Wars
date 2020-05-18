@@ -14,6 +14,7 @@ void initUnit(unit *unit, int id,float pv,float force,float dexterity, float fir
   unit -> dexterity = dexterity;
   unit -> fireRange = fireRange;
   unit -> isAlive = true;
+  unit -> isMoving = false;
   unit -> arrayIndex = arrayIndex;
   unit -> texture_id = texture_id;
 }
@@ -62,7 +63,7 @@ void displayUnit(unit *unit, GLuint textureIds_units[]){
     unit ->displayY = unit->displayY + 0.1;
   }
   if(unit->displayY > destinationDisplayY){
-    unit ->displayY = unit->displayY - 0.1;
+    unit->displayY = unit->displayY - 0.1;
   }
   glTranslatef(unit->displayX, unit->displayY,0);
   glBindTexture(GL_TEXTURE_2D, textureIds_units[unit->texture_id]);
@@ -76,6 +77,7 @@ void displayUnit(unit *unit, GLuint textureIds_units[]){
 void deplacement(unit *unit , int destinationX, int destinationY){
   unit->x = destinationX;
   unit->y = destinationY;
+  unit->isMoving = true;
 }
 
 void printUnitInfos(unit *unit){

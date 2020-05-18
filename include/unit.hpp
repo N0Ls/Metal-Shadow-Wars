@@ -14,6 +14,7 @@ typedef struct {
     float displayY;
     int arrayIndex;
     bool isAlive;
+    bool isMoving;
     float force;
     float dexterity;
     float fireRange;

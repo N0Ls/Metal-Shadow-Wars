@@ -323,7 +323,7 @@ std::stack <PathCoordinates> aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int y
   if(currentNode == NULL || (currentNode->x!=destNode->x && currentNode->y!=destNode->y)){
     return path;
   }
-  //Else we fill in the path
+  //Else we fill in the path stack
   else{
     while (currentNode->parent != NULL) {
       displayNode(*currentNode);
