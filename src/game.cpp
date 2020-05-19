@@ -256,23 +256,32 @@ void Game::displaySelectdUnit(){
         for(int j=0; j<=this->selected_unit->dexterity-y ; j++){
           glPushMatrix();
             glTranslatef((-GL_VIEW_SIZE/2)+(this->selected_unit->x+y)*MAP_TILE_SIZE, (-GL_VIEW_SIZE/2)+(this->selected_unit->y+j)*MAP_TILE_SIZE,0);
-            if(!(this->selected_unit->x+y >= MAP_SIZE || this->selected_unit->y+j >=MAP_SIZE))drawQuadsSelection();
+            if(!(this->selected_unit->x+y >= MAP_SIZE || this->selected_unit->y+j >=MAP_SIZE)&&((this->tabMap[(this->selected_unit->x+y)*MAP_SIZE+ this->selected_unit->y+j]==1) || (this->tabMap[(this->selected_unit->x+y)*MAP_SIZE+ this->selected_unit->y+j]==2)))drawQuadsSelection();
           glPopMatrix();
           glPushMatrix();
             glTranslatef((-GL_VIEW_SIZE/2)+(this->selected_unit->x-y)*MAP_TILE_SIZE, (-GL_VIEW_SIZE/2)+(this->selected_unit->y-j)*MAP_TILE_SIZE,0);
-            if(!(this->selected_unit->x-y < 0 || this->selected_unit->y-j <0))drawQuadsSelection();
+            if(!(this->selected_unit->x-y < 0 || this->selected_unit->y-j <0)&&((this->tabMap[(this->selected_unit->x-y)*MAP_SIZE+ this->selected_unit->y-j]==1) || (this->tabMap[(this->selected_unit->x-y)*MAP_SIZE+ this->selected_unit->y-j]==2)))drawQuadsSelection();
           glPopMatrix();
           glPushMatrix();
             glTranslatef((-GL_VIEW_SIZE/2)+(this->selected_unit->x+y)*MAP_TILE_SIZE, (-GL_VIEW_SIZE/2)+(this->selected_unit->y-j)*MAP_TILE_SIZE,0);
-            if(!(this->selected_unit->x+y >= MAP_SIZE || this->selected_unit->y-j <0))drawQuadsSelection();
+            if(!(this->selected_unit->x+y >= MAP_SIZE || this->selected_unit->y-j <0) && ((this->tabMap[(this->selected_unit->x+y)*MAP_SIZE+ this->selected_unit->y-j]==1) || (this->tabMap[(this->selected_unit->x+y)*MAP_SIZE+ this->selected_unit->y-j]==2)))drawQuadsSelection();
           glPopMatrix();
           glPushMatrix();
             glTranslatef((-GL_VIEW_SIZE/2)+(this->selected_unit->x-y)*MAP_TILE_SIZE, (-GL_VIEW_SIZE/2)+(this->selected_unit->y+j)*MAP_TILE_SIZE,0);
-            if(!(this->selected_unit->x-y <0 || this->selected_unit->y+j >=MAP_SIZE))drawQuadsSelection();
+            if(!(this->selected_unit->x-y <0 || this->selected_unit->y+j >=MAP_SIZE) && ((this->tabMap[(this->selected_unit->x-y)*MAP_SIZE+ this->selected_unit->y+j]==1) || (this->tabMap[(this->selected_unit->x-y)*MAP_SIZE+ this->selected_unit->y+j]==2)))drawQuadsSelection();
           glPopMatrix();
         }
       }
     glPopMatrix();
+  }
+}
+
+bool Game::validClickMove(int x, int y){
+  if((x>=0 && y>=0 && x<MAP_SIZE && y<MAP_SIZE) && (this->tabMap[(x)*MAP_SIZE+ y]==1 || this->tabMap[(x)*MAP_SIZE+ y]==2) && (abs (this->selected_unit->x - x) + abs (this->selected_unit->y - y) <= this->selected_unit->dexterity)){
+    return 1;
+  }
+  else{
+    return 0;
   }
 }
 void Game::clickCheck(float mouseX,float mouseY){
@@ -322,7 +331,7 @@ void Game::clickCheck(float mouseX,float mouseY){
         }
       }
     }
-    if(this->selected_unit!=NULL && lastClickX != NULL && lastClickY!=NULL && !(lastClickX==this->selected_unit->x && lastClickY==this->selected_unit->y) && this->moving_unit==false && isValid(lastClickX,lastClickY,this->tabMap)){
+    if(this->selected_unit!=NULL && lastClickX != NULL && lastClickY!=NULL && !(lastClickX==this->selected_unit->x && lastClickY==this->selected_unit->y) && this->moving_unit==false && validClickMove(lastClickX,lastClickY)){
       this->move=true;
       if(this->move == true && this->moving_unit==false){
         stack <PathCoordinates> path;

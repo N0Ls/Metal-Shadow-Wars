@@ -52,6 +52,8 @@ public :
       bool unitPlaced=false;
     void placeUnits();
 
+    bool validClickMove(int x, int y);
+
 private :
     int counter;
     bool isRunning;

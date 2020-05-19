@@ -22,7 +22,7 @@ void displayNode(Node node){
 
 bool isValid(int x, int y, int map[MAP_SIZE*MAP_SIZE])
 {
-    if((x>=0 && y>=0 && x<MAP_SIZE && y<MAP_SIZE) && (map[(x)*MAP_SIZE+ y]==1 || map[(x)*MAP_SIZE+ y]==2 || map[(x)*MAP_SIZE+ y]==3)){
+    if((x>=0 && y>=0 && x<MAP_SIZE && y<MAP_SIZE) && (map[(x)*MAP_SIZE+ y]==1 || map[(x)*MAP_SIZE+ y]==2)){
       return 1;
     }
     else{
