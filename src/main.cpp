@@ -20,6 +20,12 @@ Game *game = nullptr;
 
 int main(int argc, const char *argv[])
 {
+  const int FPS = 60;
+  const int frameDelay = 1000 / FPS;
+
+  Uint32 frameStart;
+  int frameTime;
+
   menu = new Menu();
   int c = menu->show("IMAC WARS 2 - Menu", WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -65,10 +71,18 @@ int main(int argc, const char *argv[])
 
     while (game->running())
     {
+      frameStart = SDL_GetTicks();
+
       game->handleEvents();
       game->update();
       game->draw(game->surface);
 
+      frameTime = SDL_GetTicks() - frameStart;
+
+      if(frameDelay > frameTime)
+      {
+        SDL_Delay(frameDelay - frameTime);
+      }
       //displayUnit(&unit_test,game->textureIds_units);
     }
 

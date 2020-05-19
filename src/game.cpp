@@ -198,6 +198,11 @@ void Game::handleEvents()
     /* Touche clavier */
     case SDL_KEYDOWN:
       printf("touche pressee (code = %d)\n", e.key.keysym.sym);
+      if (e.key.keysym.sym == 275 || e.type == SDLK_RIGHT)
+      {
+        std::cout << "Call nextTurn" << std::endl;
+        nextTurn();
+      }
       break;
     case SDL_VIDEORESIZE:
       reshape(&surface, e.resize.w, e.resize.h);
@@ -228,10 +233,6 @@ void Game::draw(SDL_Surface *surface)
 }
 void Game::update()
 {
-  // TO DO : condition sur event
-  if(true) {
-    nextTurn();
-  }
   //std::cout << this->selected_unit << '\n';
   int k = 0;
 
@@ -250,7 +251,7 @@ void Game::nextTurn()
   player currentPlayer = this->getCurrentPlayer();
   std::cout << "Tour n°" << Game::turn << endl;
   std::cout << "Joueur : " << currentPlayer.name << ", avec les unités :" << endl;
-  for (int i=0 ; i<currentPlayer.nbUnits;i++)
+  for (int i = 0; i < currentPlayer.nbUnits; i++)
   {
     printUnitInfos(&currentPlayer.units[i]);
   }
