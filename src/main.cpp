@@ -42,12 +42,14 @@ int main(int argc, const char *argv[])
     // updateDisplayCoordinates(game->players->units);
 
     game->selected_unit = nullptr;
-    while(game->unitPlaced == false){
-        game->handleEvents();
-        game->update();
-        game->draw(game->surface);
-        game->placeUnits();
-    }
+
+    game->placeUnits();
+    // while(game->unitPlaced == false){
+    //     game->handleEvents();
+    //     game->update();
+    //     game->draw(game->surface);
+    //
+    // }
 
     int maze[MAP_SIZE * MAP_SIZE] =
         {1, 1, 1, 1, 0, 0, 1, 1, 1, 1,

@@ -220,6 +220,7 @@ void Game::draw(SDL_Surface *surface)
     for (int a = 0; a < this->players[g].nbUnits; a++)
     {
       displayUnit(this->players[g].units + a, this->textureIds_units);
+      //printUnitInfos(this->players[g].units + a);
     }
   }
 
@@ -239,7 +240,7 @@ void Game::update()
   //std::cout << "counter "<< std::endl;
 }
 
-player Game::getCurrentPlayer() 
+player Game::getCurrentPlayer()
 {
   return this->players[this->turn % this->nb_players];
 }
@@ -249,9 +250,9 @@ void Game::nextTurn()
   player currentPlayer = this->getCurrentPlayer();
   std::cout << "Tour n°" << Game::turn << endl;
   std::cout << "Joueur : " << currentPlayer.name << ", avec les unités :" << endl;
-  for (unit unit : currentPlayer.units)
+  for (int i=0 ; i<currentPlayer.nbUnits;i++)
   {
-    printUnitInfos(&unit);
+    printUnitInfos(&currentPlayer.units[i]);
   }
   Game::turn++;
 }
