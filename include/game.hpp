@@ -29,6 +29,8 @@ public :
 
     void changeState(bool state);
 
+    int turn;
+
     static const int nb_players = 2 ;
     static const int nb_start_units = 3;
     player players[nb_players];
@@ -49,10 +51,12 @@ public :
     bool move = false;
     bool moving_unit = false;
 
-      bool unitPlaced=false;
+    bool unitPlaced=false;
     void placeUnits();
 
     bool validClickMove(int x, int y);
+
+    void nextTurn();
 
 private :
     int counter;
@@ -63,7 +67,7 @@ private :
     int lastClickY;
 
     void displaySelectdUnit();
-
+    player getCurrentPlayer();
 
 };
 
