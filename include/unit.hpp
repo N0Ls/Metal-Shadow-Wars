@@ -1,9 +1,11 @@
 #ifndef UNIT_H
 #define UNIT_H
 
+using namespace std;
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <stack>
 
 typedef struct {
     int ownerId;
@@ -19,6 +21,7 @@ typedef struct {
     float dexterity;
     float fireRange;
     GLuint texture_id;
+    stack <PathCoordinates> currentPath;
 } unit;
 
 //Declaration of prototypes

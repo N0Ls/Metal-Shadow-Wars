@@ -124,7 +124,9 @@ void Game::placeUnits()
     for (int y = 0; y < this->players[i].nbUnits; y++)
     {
       setCoordinates(&this->players[i].units[y], rand() % 9, rand() % 9);
-      updateDisplayCoordinates(&this->players[i].units[y]);
+      this->players[i].units[y].displayX = (-GL_VIEW_SIZE/2)+this->players[i].units[y].x*MAP_TILE_SIZE;
+      this->players[i].units[y].displayY = (-GL_VIEW_SIZE/2)+this->players[i].units[y].y*MAP_TILE_SIZE;
+      //updateDisplayCoordinates(&this->players[i].units[y]);
     }
   }
   this->unitPlaced = true;
@@ -224,7 +226,9 @@ void Game::draw(SDL_Surface *surface)
   {
     for (int a = 0; a < this->players[g].nbUnits; a++)
     {
-      displayUnit(this->players[g].units + a, this->textureIds_units);
+      if(this->players[g].units[a].isAlive == true){
+          displayUnit(this->players[g].units + a, this->textureIds_units);
+      }
       //printUnitInfos(this->players[g].units + a);
     }
   }
@@ -397,7 +401,7 @@ void Game::clickCheck(float mouseX, float mouseY)
         stack<PathCoordinates> path;
         Node *pathNode;
         this->moving_unit = true;
-        path = aStar(this->tabMap, this->selected_unit->x, this->selected_unit->y, this->lastClickX, this->lastClickY);
+        this->selected_unit.currentPath = aStar(this->tabMap, this->selected_unit->x, this->selected_unit->y, this->lastClickX, this->lastClickY);
         // while (pathNode != NULL) {
         //   displayNode(*pathNode);
         //   //path.push(pathNode);
