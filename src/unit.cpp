@@ -91,9 +91,6 @@ void drawQuadUnit(){
   glEnd();
 }
 
-void move(unit *unit){
-
-}
 
 void displayUnit(unit *unit, GLuint textureIds_units[]){
   glPushMatrix();
@@ -116,7 +113,6 @@ void displayUnit(unit *unit, GLuint textureIds_units[]){
 void deplacement(unit *unit , int destinationX, int destinationY){
   unit->x = destinationX;
   unit->y = destinationY;
-  unit->isMoving = true;
 }
 
 void printUnitInfos(unit *unit){

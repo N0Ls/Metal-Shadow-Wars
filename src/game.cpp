@@ -286,7 +286,7 @@ void drawQuadsSelection()
 
 void Game::displaySelectdUnit()
 {
-  if (this->selected_unit != NULL && this->move == false)
+  if (this->selected_unit != NULL && this->selected_unit->isMoving ==false)
   {
     glPushMatrix();
     glScalef(1, -1, 1.);
@@ -404,13 +404,11 @@ void Game::clickCheck(float mouseX, float mouseY)
     }
     if (this->selected_unit != NULL && lastClickX != NULL && lastClickY != NULL && !(lastClickX == this->selected_unit->x && lastClickY == this->selected_unit->y) && this->moving_unit == false && validClickMove(lastClickX, lastClickY))
     {
-      this->move = true;
-      if (this->move == true && this->moving_unit == false)
-      {
-        this->moving_unit = true;
+        //this->moving_unit = true;
         this->selected_unit->currentPath = aStar(this->tabMap, this->selected_unit->x, this->selected_unit->y, this->lastClickX, this->lastClickY);
         this->selected_unit->isMoving =true;
-      }
+        deplacement(this->selected_unit, lastClickX, lastClickY);
+
     }
   }
 }
