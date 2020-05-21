@@ -26,26 +26,51 @@ void setCoordinates(unit *unit, int x, int y){
 }
 
 void updateDisplayCoordinates(unit *unit){
-  float destinationDisplayX = (-GL_VIEW_SIZE/2)+unit->x*MAP_TILE_SIZE;
-  float destinationDisplayY = (-GL_VIEW_SIZE/2)+unit->y*MAP_TILE_SIZE;
 
+  float destinationDisplayX;
+  float destinationDisplayY;
 
-  if(unit -> displayX < destinationDisplayX){
-    unit ->displayX = unit->displayX + 0.1;
+  if(!(unit->currentPath.empty())){
+    if(unit->isMovingToNextTile ==true){
+      destinationDisplayX = (-GL_VIEW_SIZE/2)+unit->currentDestination.x*MAP_TILE_SIZE;
+      destinationDisplayY = (-GL_VIEW_SIZE/2)+unit->currentDestination.y*MAP_TILE_SIZE;
+
+      //déplacement de l'unité
+      if(unit -> displayX < destinationDisplayX){
+        unit ->displayX = unit->displayX + 0.15;
+      }
+      if(unit -> displayX > destinationDisplayX){
+        unit ->displayX = unit->displayX - 0.15;
+      }
+
+      if(unit->displayY < destinationDisplayY){
+        unit ->displayY = unit->displayY + 0.15;
+      }
+      if(unit->displayY > destinationDisplayY){
+        unit->displayY = unit->displayY - 0.15;
+      }
+
+      //on vérifie si on est arrivé sur la case
+      if(unit->displayX > (destinationDisplayX-0.2) && unit->displayX < (destinationDisplayX+0.2) && unit->displayY >(destinationDisplayY-0.2) && unit->displayY <(destinationDisplayY+0.2)){
+        cout <<"on est arrivé à la case"<< endl;
+        //on arrondie la position pour être sur une valeur entière
+        unit->displayX = (-GL_VIEW_SIZE/2)+unit->currentDestination.x*MAP_TILE_SIZE;
+        unit->displayY = (-GL_VIEW_SIZE/2)+unit->currentDestination.y*MAP_TILE_SIZE;
+
+        unit->isMovingToNextTile = false;
+        unit->currentPath.pop();
+      }
+    }
+    else{
+      unit->isMovingToNextTile =true;
+      unit->currentDestination = unit->currentPath.top();
+    }
   }
-  if(unit -> displayX > destinationDisplayX){
-    unit ->displayX = unit->displayX - 0.1;
+  else{
+    cout << "Chemin terminé" << endl;
+    unit->isMoving=false;
   }
 
-  if(unit->displayY < destinationDisplayY){
-    unit ->displayY = unit->displayY + 0.1;
-  }
-  if(unit->displayY > destinationDisplayY){
-    unit->displayY = unit->displayY - 0.1;
-  }
-  //
-  // unit -> displayX = (-GL_VIEW_SIZE/2)+unit->x*MAP_TILE_SIZE;
-  // unit -> displayY = (-GL_VIEW_SIZE/2)+unit->y*MAP_TILE_SIZE;
 }
 
 void drawQuadUnit(){
@@ -78,20 +103,6 @@ void displayUnit(unit *unit, GLuint textureIds_units[]){
   if(unit->isMoving ==true){
     updateDisplayCoordinates(unit);
   }
-  // if(unit -> displayX < destinationDisplayX){
-  //   unit ->displayX = unit->displayX + 0.1;
-  // }
-  // if(unit -> displayX > destinationDisplayX){
-  //   unit ->displayX = unit->displayX - 0.1;
-  // }
-  //
-  // if(unit->displayY < destinationDisplayY){
-  //   unit ->displayY = unit->displayY + 0.1;
-  // }
-  // if(unit->displayY > destinationDisplayY){
-  //   unit->displayY = unit->displayY - 0.1;
-  // }
-
   glTranslatef(unit->displayX, unit->displayY,0);
   glBindTexture(GL_TEXTURE_2D, textureIds_units[unit->texture_id]);
   //glRotatef(90,0,0,1);

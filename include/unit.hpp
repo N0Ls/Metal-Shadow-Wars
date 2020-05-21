@@ -18,11 +18,13 @@ typedef struct {
     int arrayIndex;
     bool isAlive;
     bool isMoving;
+    bool isMovingToNextTile=false;
     float force;
     float dexterity;
     float fireRange;
     GLuint texture_id;
     stack <PathCoordinates> currentPath;
+    PathCoordinates currentDestination;
 } unit;
 
 //Declaration of prototypes

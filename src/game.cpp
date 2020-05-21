@@ -398,26 +398,9 @@ void Game::clickCheck(float mouseX, float mouseY)
       this->move = true;
       if (this->move == true && this->moving_unit == false)
       {
-        stack<PathCoordinates> path;
-        Node *pathNode;
         this->moving_unit = true;
         this->selected_unit->currentPath = aStar(this->tabMap, this->selected_unit->x, this->selected_unit->y, this->lastClickX, this->lastClickY);
-        // while (pathNode != NULL) {
-        //   displayNode(*pathNode);
-        //   //path.push(pathNode);
-        //   pathNode=pathNode->parent;
-        // }
-        cout << endl
-             << endl;
-        PathCoordinates print;
-        while (!(path.empty()))
-        {
-          print = path.top();
-          cout << print.x << " " << print.y << endl;
-          deplacement(this->selected_unit, print.x, print.y);
-          //displayNode(*path.top());
-          path.pop();
-        }
+        this->selected_unit->isMoving =true;
       }
     }
   }
