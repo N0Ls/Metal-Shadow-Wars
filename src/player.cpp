@@ -22,17 +22,17 @@ void initPlayer(player *player, int id, int nbUnits)
     }
 }
 
-/*bool isAlive(player *playerToCheck)
+bool isAlive(player *playerToCheck)
 {
     int n = 0;
-    unit u;
-    while (u != nullptr)
+    unit* u;
+    while (u != NULL)
     {
         n++;
-        u = playerToCheck->units[n];
+        u = &playerToCheck->units[n];
     }
     if (n > 0)
         return true;
     else
         return false;
-}*/
+}

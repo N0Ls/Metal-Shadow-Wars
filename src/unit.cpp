@@ -11,6 +11,7 @@ using namespace std;
 void initUnit(unit *unit, int id,float pv,float force,float dexterity, float fireRange, int arrayIndex, GLuint texture_id){
   unit -> ownerId = id;
   unit -> pv = pv;
+  unit -> pvMax = pv;
   unit -> force = force;
   unit -> dexterity = dexterity;
   unit -> fireRange = fireRange;
@@ -121,4 +122,17 @@ void deplacement(unit *unit , int destinationX, int destinationY){
 void printUnitInfos(unit *unit){
   cout << "Cette unité se situe en"<< unit->x <<", "<< unit->y << '\n';
   cout << "Cette unité utilise la texture"<< unit->texture_id << '\n';
+}
+
+void attackUnit(unit *attacker, unit *defender)
+{
+    // When call, attacker correspond to the selected unit,
+    // and the defender to the unit corresponding to the position where the click happened.
+    defender->pv -= attacker->force * attacker->pv/(float)attacker->pvMax;
+    if (defender->pv <= 0)
+    {
+        std::cout << "Defender is dead." << std::endl;
+        // Retirer l'unité de la liste des unités du joueur
+    }
+    //attacker->state = DONE;
 }

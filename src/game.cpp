@@ -260,6 +260,10 @@ void Game::nextTurn()
     printUnitInfos(&currentPlayer.units[i]);
   }
   Game::turn++;
+  if(!isAlive(&currentPlayer))
+  {
+    nextTurn();
+  }
 }
 
 void drawQuadsSelection()
@@ -392,6 +396,11 @@ void Game::clickCheck(float mouseX, float mouseY)
           }
         }
       }
+    }
+    // Vérification à faire : unité selectionnée, et un click sur une case où une unité n'appartenant au joueur à qui c'est le tour est présente
+    if(false)
+    {
+      attackUnit(this->selected_unit, &players[0].units[0]);
     }
     if (this->selected_unit != NULL && lastClickX != NULL && lastClickY != NULL && !(lastClickX == this->selected_unit->x && lastClickY == this->selected_unit->y) && this->moving_unit == false && validClickMove(lastClickX, lastClickY))
     {

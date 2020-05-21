@@ -11,6 +11,7 @@ using namespace std;
 typedef struct {
     int ownerId;
     float pv;
+    float pvMax;
     int x;
     int y ;
     float displayX;
@@ -34,4 +35,6 @@ void displayUnit(unit *unit, GLuint textureIds_units[]);
 void printUnitInfos(unit *unit);
 void updateDisplayCoordinates(unit *unit);
 void deplacement(unit *unit , int destinationX, int destinationY);
+void attackUnit(unit *attacker, unit *defender);
+
 #endif
