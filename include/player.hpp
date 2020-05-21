@@ -19,7 +19,7 @@ struct player {
   SDL_Color color;
 } ;
 
-bool isAlive(player *playerToCheck);
+void isAlive(player *playerToCheck);
 
 void initPlayer(player *player, int id, int nbUnits, char name[], SDL_Color couleur);
 

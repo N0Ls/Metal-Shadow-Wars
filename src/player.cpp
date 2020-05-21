@@ -23,17 +23,9 @@ void initPlayer(player *player, int id, int nbUnits, char name[], SDL_Color coul
     }
 }
 
-bool isAlive(player *playerToCheck)
+void isAlive(player *playerToCheck)
 {
-    int n = 0;
-    unit* u;
-    while (u != NULL)
-    {
-        n++;
-        u = &playerToCheck->units[n];
-    }
-    if (n > 0)
-        return true;
-    else
-        return false;
+  if(playerToCheck->nbUnits <=0){
+    playerToCheck->isAlive =false;
+  }
 }

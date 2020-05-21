@@ -92,10 +92,6 @@ void Game::init(const char *title, int width, int height)
   init_textures(this->nb_sub_groups_textures, this->nb_textures_map, this->nb_textures_units, this->textureIds_map, this->textureIds_units, this->textureLink);
 
   /* INIT PLAYERS */
-  // for (int i = 0; i < this->nb_players; i++)
-  // {
-  //   initPlayer(this->players + i, i, this->nb_start_units);
-  // }
   SDL_Color couleurJ1 = {.r = 255, .g = 0 , .b = 0};
   SDL_Color couleurJ2 = {.r = 0, .g = 255 , .b = 255};
   initPlayer(&this->players[0],0,this->nb_start_units,"Michel",couleurJ1);
@@ -259,16 +255,19 @@ void Game::nextTurn()
 {
   player currentPlayer = this->getCurrentPlayer();
   std::cout << "Tour n°" << Game::turn << endl;
-  std::cout << "Joueur : " << currentPlayer.name << ", avec les unités :" << endl;
+  //std::cout << "Joueur : " << currentPlayer.name << ", avec les unités :" << endl;
   for (int i = 0; i < currentPlayer.nbUnits; i++)
   {
     printUnitInfos(&currentPlayer.units[i]);
   }
   Game::turn++;
-  if(!isAlive(&currentPlayer))
-  {
-    nextTurn();
+  for(int y=0; y<this->nb_players ; y++){
+    isAlive(&this->players[y]);
   }
+  if(this->players[0].isAlive == false || this->players[1].isAlive==false){
+    this->isRunning=false;
+  }
+
 }
 
 void drawQuadsSelection()

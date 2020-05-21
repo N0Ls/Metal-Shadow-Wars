@@ -119,7 +119,7 @@ void deplacement(unit *unit , int destinationX, int destinationY){
 void printUnitInfos(unit *unit){
   cout << "Cette unité se situe en"<< unit->x <<", "<< unit->y << '\n';
   cout << "Cette unité utilise la texture"<< unit->texture_id << '\n';
-  cout << "Cette unité appartient à "<< unit->ownerPlayer->name << '\n';
+  //cout << "Cette unité appartient à "<< unit->ownerPlayer->name << '\n';
 }
 
 void attackUnit(unit *attacker, unit *defender)
