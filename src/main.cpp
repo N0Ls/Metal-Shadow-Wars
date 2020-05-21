@@ -50,24 +50,6 @@ int main(int argc, const char *argv[])
     game->selected_unit = nullptr;
 
     game->placeUnits();
-    // while(game->unitPlaced == false){
-    //     game->handleEvents();
-    //     game->update();
-    //     game->draw(game->surface);
-    //
-    // }
-
-    int maze[MAP_SIZE * MAP_SIZE] =
-        {1, 1, 1, 1, 0, 0, 1, 1, 1, 1,
-         0, 0, 1, 0, 0, 0, 1, 1, 1, 1,
-         0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-         1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-         1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-         1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-         1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-         1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-         1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-         1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 
     while (game->running())
     {
@@ -83,7 +65,6 @@ int main(int argc, const char *argv[])
       {
         SDL_Delay(frameDelay - frameTime);
       }
-      //displayUnit(&unit_test,game->textureIds_units);
     }
 
     game->clean();
