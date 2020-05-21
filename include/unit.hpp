@@ -8,8 +8,11 @@ using namespace std;
 #include <stack>
 #include "node.hpp"
 
+struct player;
+
 typedef struct {
     int ownerId;
+    player *ownerPlayer;
     float pv;
     float pvMax;
     int x;
@@ -29,7 +32,7 @@ typedef struct {
 } unit;
 
 //Declaration of prototypes
-void initUnit(unit *unit, int id,float pv,float force,float dexterity, float fireRange, int arrayIndex, GLuint texture_id);
+void initUnit(unit *unit, int id, player *owner, float pv,float force,float dexterity, float fireRange, int arrayIndex, GLuint texture_id);
 void setCoordinates(unit *unit, int x, int y);
 void displayUnit(unit *unit, GLuint textureIds_units[]);
 void printUnitInfos(unit *unit);
