@@ -6,17 +6,18 @@ using namespace std;
 #include "player.hpp"
 #include "unit.hpp"
 
-void initPlayer(player *player, int id, int nbUnits)
+void initPlayer(player *player, int id, int nbUnits, char name[], SDL_Color couleur)
 {
     player->id = id;
-    //strcpy(player->name, name);
+    strcpy(player->name, name);
+    player->color = couleur;
     player->nbUnits = nbUnits;
     player->resources = 45;
     player->isAlive = true;
 
     for (int i = 0; i < nbUnits; i++)
     {
-        initUnit(player->units + i, i, 100, 50, 4, 3, i, 0);
+        initUnit(player->units + i, i, player,100, 50, 4, 3, i, 0);
         // setCoordinates(player->units + i, rand()%9, rand()%9);
         // updateDisplayCoordinates(player->units + i);
     }

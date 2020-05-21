@@ -91,10 +91,15 @@ void Game::init(const char *title, int width, int height)
 
   init_textures(this->nb_sub_groups_textures, this->nb_textures_map, this->nb_textures_units, this->textureIds_map, this->textureIds_units, this->textureLink);
 
-  for (int i = 0; i < this->nb_players; i++)
-  {
-    initPlayer(this->players + i, i, this->nb_start_units);
-  }
+  /* INIT PLAYERS */
+  // for (int i = 0; i < this->nb_players; i++)
+  // {
+  //   initPlayer(this->players + i, i, this->nb_start_units);
+  // }
+  SDL_Color couleurJ1 = {.r = 255, .g = 0 , .b = 0};
+  SDL_Color couleurJ2 = {.r = 0, .g = 255 , .b = 255};
+  initPlayer(&this->players[0],0,this->nb_start_units,"Michel",couleurJ1);
+  initPlayer(&this->players[1],1,this->nb_start_units,"Jacques",couleurJ2);
 
   if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
   {
@@ -123,7 +128,7 @@ void Game::placeUnits()
   {
     for (int y = 0; y < this->players[i].nbUnits; y++)
     {
-      setCoordinates(&this->players[i].units[y], rand() % 9, rand() % 9);
+      setCoordinates(&this->players[i].units[y], rand() % MAP_SIZE, rand() % MAP_SIZE);
       this->players[i].units[y].displayX = (-GL_VIEW_SIZE/2)+this->players[i].units[y].x*MAP_TILE_SIZE;
       this->players[i].units[y].displayY = (-GL_VIEW_SIZE/2)+this->players[i].units[y].y*MAP_TILE_SIZE;
       //updateDisplayCoordinates(&this->players[i].units[y]);
