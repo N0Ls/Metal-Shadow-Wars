@@ -401,7 +401,7 @@ void Game::clickCheck(float mouseX, float mouseY)
         stack<PathCoordinates> path;
         Node *pathNode;
         this->moving_unit = true;
-        this->selected_unit.currentPath = aStar(this->tabMap, this->selected_unit->x, this->selected_unit->y, this->lastClickX, this->lastClickY);
+        this->selected_unit->currentPath = aStar(this->tabMap, this->selected_unit->x, this->selected_unit->y, this->lastClickX, this->lastClickY);
         // while (pathNode != NULL) {
         //   displayNode(*pathNode);
         //   //path.push(pathNode);

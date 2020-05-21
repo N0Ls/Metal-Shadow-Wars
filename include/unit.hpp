@@ -6,6 +6,7 @@ using namespace std;
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <stack>
+#include "node.hpp"
 
 typedef struct {
     int ownerId;

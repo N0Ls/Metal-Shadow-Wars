@@ -6,6 +6,7 @@ using namespace std;
 #include <math.h>
 #include <SDL/SDL.h>
 #include <stack>
+#include "node.hpp"
 
 void initUnit(unit *unit, int id,float pv,float force,float dexterity, float fireRange, int arrayIndex, GLuint texture_id){
   unit -> ownerId = id;

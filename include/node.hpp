@@ -1,10 +1,10 @@
 
-#include <stack>
-using namespace std;
 #ifndef NODE_H
 #define NODE_H
 
-
+#include <stack>
+using namespace std;
+#include "constants.hpp"
 
 struct Node{
   int x,y;
