@@ -109,7 +109,7 @@ void loadMap(int *tabMap){
       temp=temp<<fmt->Aloss; /* Expand to a full 8-bit number */
       alpha=(Uint8)temp;
 
-      //printf("Pixel Color -> R: %d,  G: %d,  B: %d,  A: %d\n", red, green, blue, alpha);
+      printf("Pixel Color -> R: %d,  G: %d,  B: %d,  A: %d\n", red, green, blue, alpha);
 
       if(red == 255 && green ==0 && blue ==0){
         tabMap[y*MAP_SIZE + i]=3;
