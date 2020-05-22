@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "node.hpp"
 #include <stack>
+#include <vector>
 using namespace std;
 
 static const unsigned int BIT_PER_PIXEL = 32;
@@ -130,13 +131,32 @@ void Game::init(const char *title, int width, int height)
   reshape(&surface, width, height);
 }
 
+
 void Game::placeUnits()
 {
+  //Checking alvailableTiles
+  vector <PathCoordinates> alvailableTiles;
+  for(int j=0; j<MAP_SIZE ; j++){
+    for(int k=0; k<MAP_SIZE; k++){
+      if(this->tabMap[j*MAP_SIZE+k] == 2){
+        PathCoordinates newTile;
+        newTile.x=j;
+        newTile.y=k;
+        alvailableTiles.push_back(newTile);
+      }
+    }
+  }
+  for(int a=0; a<(int)alvailableTiles.size(); a++){
+    cout << alvailableTiles[a].x << " : " << alvailableTiles[a].y << endl;
+  }
+
   for (int i = 0; i < this->nb_players; i++)
   {
     for (int y = 0; y < this->players[i].nbUnits; y++)
     {
-      setCoordinates(&this->players[i].units[y], rand() % MAP_SIZE, rand() % MAP_SIZE);
+      srand(time(NULL)+rand());
+      PathCoordinates randomTile = alvailableTiles[rand() % alvailableTiles.size()];
+      setCoordinates(&this->players[i].units[y], randomTile.x, randomTile.y);
       this->players[i].units[y].displayX = (-GL_VIEW_SIZE/2)+this->players[i].units[y].x*MAP_TILE_SIZE;
       this->players[i].units[y].displayY = (-GL_VIEW_SIZE/2)+this->players[i].units[y].y*MAP_TILE_SIZE;
       //updateDisplayCoordinates(&this->players[i].units[y]);
@@ -409,6 +429,7 @@ void Game::clickCheck(float mouseX, float mouseY)
         {
           this->selected_unit = &currentPlayerClick.units[j];
           std::cout << "unité cliquée" << std::endl;
+          printUnitInfos(this->selected_unit);
         }
       }
     }
@@ -420,7 +441,7 @@ void Game::clickCheck(float mouseX, float mouseY)
     }
     if (this->selected_unit != NULL && lastClickX != NULL && lastClickY != NULL && !(lastClickX == this->selected_unit->x && lastClickY == this->selected_unit->y) && this->moving_unit == false && validClickMove(lastClickX, lastClickY))
     {
-        //this->moving_unit = true;
+        this->moving_unit = true;
         this->selected_unit->currentPath = aStar(this->tabMap, this->selected_unit->x, this->selected_unit->y, this->lastClickX, this->lastClickY);
         this->selected_unit->isMoving =true;
         deplacement(this->selected_unit, lastClickX, lastClickY);
