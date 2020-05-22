@@ -49,7 +49,7 @@ int main(int argc, const char *argv[])
 
     game->selected_unit = nullptr;
 
-    
+    game->placeUnits();
 
     while (game->running())
     {
