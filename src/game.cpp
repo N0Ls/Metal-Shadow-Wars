@@ -431,12 +431,6 @@ void Game::clickCheck(float mouseX, float mouseY)
             std::cout << "unité cliquée" << std::endl;
           }
         }
-        else
-        {
-          this->selected_unit = &currentPlayerClick.units[j];
-          std::cout << "unité cliquée" << std::endl;
-          printUnitInfos(this->selected_unit);
-        }
       }
     }
     // Vérification à faire : unité selectionnée, et un click sur une case où une unité n'appartenant au joueur à qui c'est le tour est présente
@@ -446,10 +440,10 @@ void Game::clickCheck(float mouseX, float mouseY)
     }
     if (this->selected_unit != NULL && lastClickX != NULL && lastClickY != NULL && !(lastClickX == this->selected_unit->x && lastClickY == this->selected_unit->y) && this->moving_unit == false && validClickMove(lastClickX, lastClickY))
     {
-        this->moving_unit = true;
+        //this->moving_unit = true;
         this->selected_unit->currentPath = aStar(this->tabMap, this->selected_unit->x, this->selected_unit->y, this->lastClickX, this->lastClickY);
         this->selected_unit->isMoving =true;
-        deplacement(this->selected_unit, lastClickX, lastClickY);
+        //deplacement(this->selected_unit, lastClickX, lastClickY);
 
     }
   }
