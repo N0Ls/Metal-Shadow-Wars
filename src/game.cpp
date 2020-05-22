@@ -286,13 +286,14 @@ player* Game::getCurrentPlayer()
 void Game::nextTurn()
 {
   this->currentPlayer = this->getCurrentPlayer();
+  this->selected_unit = nullptr;
   std::cout << "Tour n°" << Game::turn << endl;
   //std::cout << "Joueur : " << currentPlayer.name << ", avec les unités :" << endl;
   for (int i = 0; i < this->currentPlayer->nbUnits; i++)
   {
     printUnitInfos(&currentPlayer->units[i]);
   }
-  Game::turn++;
+  this->turn++;
   for(int y=0; y<this->nb_players ; y++){
     isAlive(&this->players[y]);
   }
