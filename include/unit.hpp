@@ -20,9 +20,12 @@ typedef struct {
     float displayX;
     float displayY;
     int arrayIndex;
+
     bool isAlive;
     bool isMoving;
     bool isMovingToNextTile=false;
+    bool hasToAttack=false;
+
     float force;
     float dexterity;
     float fireRange;

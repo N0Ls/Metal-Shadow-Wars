@@ -115,7 +115,17 @@ void Game::init(const char *title, int width, int height)
 
   loadMap(this->tabMap);
 
+  this->placeUnits();
 
+  //Initialisation des tours
+  this->turn = 1;
+  this->currentPlayer = this->getCurrentPlayer();
+  std::cout << "Tour n°" << Game::turn << endl;
+  std::cout << "Joueur : " << this->currentPlayer->name << ", avec les unités :" << endl;
+  for (int i = 0; i < this->currentPlayer->nbUnits; i++)
+  {
+    printUnitInfos(&currentPlayer->units[i]);
+  }
 
   reshape(&surface, width, height);
 }
