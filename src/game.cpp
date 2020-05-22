@@ -285,6 +285,9 @@ player* Game::getCurrentPlayer()
 
 void Game::nextTurn()
 {
+  //increment tour
+  this->turn++;
+
   this->currentPlayer = this->getCurrentPlayer();
   this->selected_unit = nullptr;
   std::cout << "Tour n°" << Game::turn << endl;
@@ -293,7 +296,7 @@ void Game::nextTurn()
   {
     printUnitInfos(&currentPlayer->units[i]);
   }
-  this->turn++;
+
   for(int y=0; y<this->nb_players ; y++){
     isAlive(&this->players[y]);
   }
