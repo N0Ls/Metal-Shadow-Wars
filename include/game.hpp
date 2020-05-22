@@ -47,6 +47,7 @@ public :
     int tabMap[MAP_SIZE * MAP_SIZE];
 
     unit *selected_unit=NULL;
+    player *currentPlayer=NULL;
 
     bool move = false;
     bool moving_unit = false;
@@ -66,9 +67,10 @@ private :
     int lastClickX;
     int lastClickY;
 
-    void displaySelectdUnit();
-    player getCurrentPlayer();
+    int currentTurn;
 
+    void displaySelectdUnit();
+    player* getCurrentPlayer();
 };
 
 #endif /* GAME_H */
