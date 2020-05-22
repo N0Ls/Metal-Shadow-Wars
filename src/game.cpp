@@ -115,6 +115,8 @@ void Game::init(const char *title, int width, int height)
 
   loadMap(this->tabMap);
 
+
+
   reshape(&surface, width, height);
 }
 
@@ -246,19 +248,19 @@ void Game::update()
   //std::cout << "counter "<< std::endl;
 }
 
-player Game::getCurrentPlayer()
+player* Game::getCurrentPlayer()
 {
-  return this->players[this->turn % this->nb_players];
+  return &this->players[this->turn % this->nb_players];
 }
 
 void Game::nextTurn()
 {
-  player currentPlayer = this->getCurrentPlayer();
+  this->currentPlayer = this->getCurrentPlayer();
   std::cout << "Tour n°" << Game::turn << endl;
   //std::cout << "Joueur : " << currentPlayer.name << ", avec les unités :" << endl;
-  for (int i = 0; i < currentPlayer.nbUnits; i++)
+  for (int i = 0; i < this->currentPlayer->nbUnits; i++)
   {
-    printUnitInfos(&currentPlayer.units[i]);
+    printUnitInfos(&currentPlayer->units[i]);
   }
   Game::turn++;
   for(int y=0; y<this->nb_players ; y++){
