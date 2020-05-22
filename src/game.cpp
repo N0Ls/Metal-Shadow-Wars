@@ -394,25 +394,25 @@ void Game::clickCheck(float mouseX, float mouseY)
     this->lastClickX = mouseTileX;
     this->lastClickY = mouseTileY;
 
-    for (int i = 0; i < this->nb_players; i++)
+    player currentPlayerClick = *this->currentPlayer;
+
+    for (int j = 0; j < currentPlayerClick.nbUnits; j++)
     {
-      for (int j = 0; j < players[i].nbUnits; j++)
+      if (mouseTileX == currentPlayerClick.units[j].x && mouseTileY == currentPlayerClick.units[j].y)
       {
-        if (mouseTileX == players[i].units[j].x && mouseTileY == players[i].units[j].y)
+        if (this->selected_unit != NULL && this->selected_unit->x == mouseTileX && this->selected_unit->y == mouseTileY)
         {
-          if (this->selected_unit != NULL && this->selected_unit->x == mouseTileX && this->selected_unit->y == mouseTileY)
-          {
-            std::cout << "unité désélectionnée" << '\n';
-            this->selected_unit = NULL;
-          }
-          else
-          {
-            this->selected_unit = &players[i].units[j];
-            std::cout << "unité cliquée" << std::endl;
-          }
+          std::cout << "unité désélectionnée" << '\n';
+          this->selected_unit = NULL;
+        }
+        else
+        {
+          this->selected_unit = &currentPlayerClick.units[j];
+          std::cout << "unité cliquée" << std::endl;
         }
       }
     }
+
     // Vérification à faire : unité selectionnée, et un click sur une case où une unité n'appartenant au joueur à qui c'est le tour est présente
     if(false)
     {
