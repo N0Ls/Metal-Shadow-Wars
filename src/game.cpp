@@ -414,22 +414,18 @@ void Game::clickCheck(float mouseX, float mouseY)
     this->lastClickX = mouseTileX;
     this->lastClickY = mouseTileY;
 
-    for (int i = 0; i < this->nb_players; i++)
-    {
-      for (int j = 0; j < players[i].nbUnits; j++)
+    for(int y=0; y < this->currentPlayer->nbUnits; y++){
+      if (mouseTileX == this->currentPlayer->units[y].x && mouseTileY == this->currentPlayer->units[y].y)
       {
-        if (mouseTileX == players[i].units[j].x && mouseTileY == players[i].units[j].y)
+        if (this->selected_unit != NULL && this->selected_unit->x == mouseTileX && this->selected_unit->y == mouseTileY)
         {
-          if (this->selected_unit != NULL && this->selected_unit->x == mouseTileX && this->selected_unit->y == mouseTileY)
-          {
-            std::cout << "unité désélectionnée" << '\n';
-            this->selected_unit = NULL;
-          }
-          else
-          {
-            this->selected_unit = &players[i].units[j];
-            std::cout << "unité cliquée" << std::endl;
-          }
+          std::cout << "unité désélectionnée" << '\n';
+          this->selected_unit = NULL;
+        }
+        else
+        {
+          this->selected_unit = &currentPlayer->units[y];
+          std::cout << "unité cliquée" << std::endl;
         }
       }
     }
