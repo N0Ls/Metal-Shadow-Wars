@@ -134,34 +134,41 @@ void Game::init(const char *title, int width, int height)
 
 void Game::placeUnits()
 {
-  //Checking alvailableTiles
-  vector <PathCoordinates> alvailableTiles;
+  //Checking availableTiles
+  vector <PathCoordinates> availableTiles;
   for(int j=0; j<MAP_SIZE ; j++){
     for(int k=0; k<MAP_SIZE; k++){
       if(this->tabMap[j*MAP_SIZE+k] == 2){
         PathCoordinates newTile;
         newTile.x=j;
         newTile.y=k;
-        alvailableTiles.push_back(newTile);
+        availableTiles.push_back(newTile);
       }
     }
   }
-  for(int a=0; a<(int)alvailableTiles.size(); a++){
-    cout << alvailableTiles[a].x << " : " << alvailableTiles[a].y << endl;
-  }
 
+  //Displaying availableTiles
+  // for(int a=0; a<(int)availableTiles.size(); a++){
+  //   cout << availableTiles[a].x << " : " << availableTiles[a].y << endl;
+  // }
+
+  //Placing Units
   for (int i = 0; i < this->nb_players; i++)
   {
     for (int y = 0; y < this->players[i].nbUnits; y++)
     {
       srand(time(NULL)+rand());
-      PathCoordinates randomTile = alvailableTiles[rand() % alvailableTiles.size()];
+      //Maybe add different range for each players
+      int randIndex = rand() % availableTiles.size();
+      PathCoordinates randomTile = availableTiles[randIndex];
+      availableTiles.erase(availableTiles.begin()+randIndex); //removing available tile after use
       setCoordinates(&this->players[i].units[y], randomTile.x, randomTile.y);
       this->players[i].units[y].displayX = (-GL_VIEW_SIZE/2)+this->players[i].units[y].x*MAP_TILE_SIZE;
       this->players[i].units[y].displayY = (-GL_VIEW_SIZE/2)+this->players[i].units[y].y*MAP_TILE_SIZE;
-      //updateDisplayCoordinates(&this->players[i].units[y]);
     }
   }
+
+
   this->unitPlaced = true;
 }
 
