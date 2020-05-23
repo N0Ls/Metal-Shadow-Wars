@@ -299,6 +299,12 @@ void Game::nextTurn()
 
   //end of last turn
 
+  //reset last current player units status
+  for(int u=0; u<this->currentPlayer->nbUnits;u++){
+    unit *unitToReset;
+    unitToReset=&this->currentPlayer->units[u];
+    unitToReset->isDONE=false;
+  }
 
   //increment tour
   this->turn++;
