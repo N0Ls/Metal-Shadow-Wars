@@ -277,12 +277,16 @@ void Game::draw(SDL_Surface *surface)
 }
 void Game::update()
 {
-  //std::cout << this->selected_unit << '\n';
-  int k = 0;
-
-  k++;
-
-  //std::cout << "counter "<< std::endl;
+  //Checking units status
+  bool playerDone=true;
+  for(int i=0; i<this->currentPlayer->nbUnits; i++){
+    if(this->currentPlayer->units[i].isDONE ==false){
+      playerDone=false;
+    }
+  }
+  if(playerDone){
+    nextTurn();
+  }
 }
 
 player* Game::getCurrentPlayer()
@@ -292,6 +296,10 @@ player* Game::getCurrentPlayer()
 
 void Game::nextTurn()
 {
+
+  //end of last turn
+
+
   //increment tour
   this->turn++;
 
