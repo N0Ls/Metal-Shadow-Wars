@@ -56,6 +56,7 @@ public :
     void placeUnits();
 
     bool validClickMove(int x, int y);
+    bool validClickAttack(int x, int y);
 
     void nextTurn();
 

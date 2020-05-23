@@ -371,11 +371,11 @@ void Game::displaySelectdUnit()
 {
   if (this->selected_unit != NULL && this->selected_unit->isMoving ==false && this->selected_unit->hasToAttack==false)
   {
-    glColor4f(1, 0.6, 0, 0.5);
+    glColor4f(1, 0.6, 0, 0.5); //orange color
     displayPyramid(*this->selected_unit,this->selected_unit->dexterity, this->tabMap);
   }
   if(this->selected_unit != NULL && this->selected_unit->isMoving ==false && this->selected_unit->hasToAttack==true){
-    glColor4f(0, 0.6, 1, 0.5);
+    glColor4f(0, 0.6, 1, 0.5); //light blue color
     displayPyramid(*this->selected_unit,this->selected_unit->fireRange, this->tabMap);
   }
 }
@@ -384,6 +384,7 @@ bool Game::validClickMove(int x, int y)
 {
   if ((x >= 0 && y >= 0 && x < MAP_SIZE && y < MAP_SIZE) && (this->tabMap[(x)*MAP_SIZE + y] == 1 || this->tabMap[(x)*MAP_SIZE + y] == 2) && (abs(this->selected_unit->x - x) + abs(this->selected_unit->y - y) <= this->selected_unit->dexterity))
   {
+    //emepche d'aller sur d'autres unités
     for(int a = 0 ; a < this->nb_players ; a++){
       for(int b=0; b < this->players[a].nbUnits; b++){
         if(x == this->players[a].units[b].x && y == this->players[a].units[b].y){
@@ -396,6 +397,19 @@ bool Game::validClickMove(int x, int y)
   else
   {
     cout << "Impossible de cliquer ici"<< endl;
+    return 0;
+  }
+}
+
+bool Game::validClickAttack(int x, int y)
+{
+  if ((x >= 0 && y >= 0 && x < MAP_SIZE && y < MAP_SIZE) && (abs(this->selected_unit->x - x) + abs(this->selected_unit->y - y) <= this->selected_unit->fireRange))
+  {
+    return 1;
+  }
+  else
+  {
+    cout << "Impossible de tirer ici"<< endl;
     return 0;
   }
 }
@@ -458,18 +472,34 @@ void Game::clickCheck(float mouseX, float mouseY)
         }
       }
     }
-    // Vérification à faire : unité selectionnée, et un click sur une case où une unité n'appartenant au joueur à qui c'est le tour est présente
-    if(false)
-    {
-      attackUnit(this->selected_unit, &players[0].units[0]);
-    }
+
     if (this->selected_unit != NULL && !(lastClickX == this->selected_unit->x && lastClickY == this->selected_unit->y) && this->moving_unit == false && this->selected_unit->hasToAttack==false && validClickMove(lastClickX, lastClickY))
     {
         //this->moving_unit = true;
         this->selected_unit->currentPath = aStar(this->tabMap, this->selected_unit->x, this->selected_unit->y, this->lastClickX, this->lastClickY);
         this->selected_unit->isMoving =true;
         deplacement(this->selected_unit, lastClickX, lastClickY);
+    }
+    if(this->selected_unit != NULL && this->moving_unit == false && this->selected_unit->hasToAttack==true && validClickAttack(lastClickX, lastClickY))
+    {
+      cout << "FUS RO DAH"<< endl;
 
+      //check where firing
+      //FRIENDLY FIRE ACTIVATED
+      for(int o=0; o < this->nb_players; o++){
+        for(int p=0; p<this->players[o].nbUnits; p++){
+          int xTargetCheck=this->players[o].units[p].x;
+          int yTargetCheck=this->players[o].units[p].y;
+          if(lastClickX == xTargetCheck && lastClickY ==yTargetCheck){
+            cout << "Bim !" << endl;
+            attackUnit(this->selected_unit, &this->players[o].units[p]);
+          }
+        }
+      }
+
+      this->selected_unit->hasToAttack=false;
+      this->selected_unit->isDONE = true;
+      this->selected_unit=nullptr;
     }
   }
 }

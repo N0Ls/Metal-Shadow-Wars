@@ -127,11 +127,14 @@ void attackUnit(unit *attacker, unit *defender)
 {
     // When call, attacker correspond to the selected unit,
     // and the defender to the unit corresponding to the position where the click happened.
-    defender->pv -= attacker->force * attacker->pv/(float)attacker->pvMax;
+    int damages = attacker->force * attacker->pv/(float)attacker->pvMax;
+    defender->pv -= damages;
+    cout << "Aie j'ai pris " << damages << " dégats dans les dents ! " << endl;
     if (defender->pv <= 0)
     {
+        defender->isAlive==false;
         std::cout << "Defender is dead." << std::endl;
         // Retirer l'unité de la liste des unités du joueur
     }
-    //attacker->state = DONE;
+
 }
