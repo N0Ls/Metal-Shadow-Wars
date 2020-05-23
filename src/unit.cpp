@@ -96,6 +96,7 @@ void drawQuadUnit(){
 
 
 void displayUnit(unit *unit, GLuint textureIds_units[]){
+  glClearColor(0, 0, 0, 0);
   glPushMatrix();
   glScalef(1,-1,1.);
 
@@ -105,7 +106,12 @@ void displayUnit(unit *unit, GLuint textureIds_units[]){
   glTranslatef(unit->displayX, unit->displayY,0);
   glBindTexture(GL_TEXTURE_2D, textureIds_units[unit->texture_id]);
   //glRotatef(90,0,0,1);
-  glColor3f(unit->ownerPlayer->color.r,unit->ownerPlayer->color.g,unit->ownerPlayer->color.b);
+  if(unit->isDONE==false){
+    glColor4f(unit->ownerPlayer->color.r,unit->ownerPlayer->color.g,unit->ownerPlayer->color.b,1);
+  }
+  else{
+    glColor3f(1,1,1);
+  }
   drawQuadUnit();
 
   glPopMatrix();
