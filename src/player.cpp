@@ -14,10 +14,13 @@ void initPlayer(player *player, int id, int nbUnits, char name[], SDL_Color coul
     player->nbUnits = nbUnits;
     player->resources = 45;
     player->isAlive = true;
-
+    std::cout << "Init Units" << '\n';
     for (int i = 0; i < nbUnits; i++)
     {
-        initUnit(player->units + i, i, player,100, 50, 4, 3, i, 0);
+      unit newUnit;
+      initUnit(&newUnit, i, player,100, 50, 4, 3, i, 0);
+      player->units.push_back(newUnit);
+
         // setCoordinates(player->units + i, rand()%9, rand()%9);
         // updateDisplayCoordinates(player->units + i);
     }

@@ -267,7 +267,7 @@ void Game::draw(SDL_Surface *surface)
     for (int a = 0; a < this->players[g].nbUnits; a++)
     {
       if(this->players[g].units[a].isAlive == true){
-          displayUnit(this->players[g].units + a, this->textureIds_units);
+          displayUnit(&this->players[g].units[a], this->textureIds_units);
       }
       //printUnitInfos(this->players[g].units + a);
     }

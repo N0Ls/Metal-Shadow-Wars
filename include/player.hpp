@@ -8,13 +8,15 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "unit.hpp"
+#include <vector>
+using namespace std;
 
 struct player {
   int id;
   char name[28];
   int nbUnits;
   int resources;
-  unit units[255];
+  vector <unit> units;
   bool isAlive;
   SDL_Color color;
 } ;
