@@ -277,6 +277,13 @@ void Game::draw(SDL_Surface *surface)
 }
 void Game::update()
 {
+  //Checking victory
+  for(int y=0; y<this->nb_players;y++){
+    if(this->players[y].nbUnits <=0){
+      this->isRunning=false;
+    }
+  }
+
   //Checking units status
   bool playerDone=true;
   for(int i=0; i<this->currentPlayer->nbUnits; i++){
