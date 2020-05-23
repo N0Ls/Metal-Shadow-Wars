@@ -132,7 +132,7 @@ void attackUnit(unit *attacker, unit *defender)
     cout << "Aie j'ai pris " << damages << " dégats dans les dents ! " << endl;
     if (defender->pv <= 0)
     {
-        defender->isAlive==false;
+        defender->isAlive=false;
         std::cout << "Defender is dead." << std::endl;
         player *playerMourning = defender->ownerPlayer;
         playerMourning->units.erase(playerMourning->units.begin()+defender->arrayIndex);
