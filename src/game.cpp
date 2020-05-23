@@ -377,6 +377,13 @@ bool Game::validClickMove(int x, int y)
 {
   if ((x >= 0 && y >= 0 && x < MAP_SIZE && y < MAP_SIZE) && (this->tabMap[(x)*MAP_SIZE + y] == 1 || this->tabMap[(x)*MAP_SIZE + y] == 2) && (abs(this->selected_unit->x - x) + abs(this->selected_unit->y - y) <= this->selected_unit->dexterity))
   {
+    for(int a = 0 ; a < this->nb_players ; a++){
+      for(int b=0; b < this->players[a].nbUnits; b++){
+        if(x == this->players[a].units[b].x && y == this->players[a].units[b].y){
+          return 0;
+        }
+      }
+    }
     return 1;
   }
   else
