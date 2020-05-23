@@ -456,7 +456,7 @@ void Game::clickCheck(float mouseX, float mouseY)
 
     //Vérification de clic sur unité
     for(int y=0; y < this->currentPlayer->nbUnits; y++){
-      if (mouseTileX == this->currentPlayer->units[y].x && mouseTileY == this->currentPlayer->units[y].y)
+      if (mouseTileX == this->currentPlayer->units[y].x && mouseTileY == this->currentPlayer->units[y].y && this->currentPlayer->units[y].isDONE==false)
       {
         if (this->selected_unit != NULL && this->selected_unit->x == mouseTileX && this->selected_unit->y == mouseTileY && this->selected_unit->hasToAttack==false)
         {
