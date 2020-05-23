@@ -134,6 +134,8 @@ void attackUnit(unit *attacker, unit *defender)
     {
         defender->isAlive==false;
         std::cout << "Defender is dead." << std::endl;
+        player *playerMourning = defender->ownerPlayer;
+        playerMourning->units.erase(playerMourning->units.begin()+defender->arrayIndex);
         // Retirer l'unité de la liste des unités du joueur
     }
 
