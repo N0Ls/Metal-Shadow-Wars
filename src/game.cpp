@@ -388,6 +388,7 @@ bool Game::validClickMove(int x, int y)
   }
   else
   {
+    cout << "Impossible de cliquer ici"<< endl;
     return 0;
   }
 }
@@ -432,18 +433,21 @@ void Game::clickCheck(float mouseX, float mouseY)
     this->lastClickX = mouseTileX;
     this->lastClickY = mouseTileY;
 
+    //Vérification de clic sur unité
     for(int y=0; y < this->currentPlayer->nbUnits; y++){
       if (mouseTileX == this->currentPlayer->units[y].x && mouseTileY == this->currentPlayer->units[y].y)
       {
-        if (this->selected_unit != NULL && this->selected_unit->x == mouseTileX && this->selected_unit->y == mouseTileY)
+        if (this->selected_unit != NULL && this->selected_unit->x == mouseTileX && this->selected_unit->y == mouseTileY && this->selected_unit->hasToAttack==false)
         {
           std::cout << "unité désélectionnée" << '\n';
           this->selected_unit = NULL;
         }
         else
         {
-          this->selected_unit = &currentPlayer->units[y];
-          std::cout << "unité cliquée" << std::endl;
+          if((this->selected_unit != NULL && this->selected_unit->hasToAttack==false) || this->selected_unit==NULL){
+            this->selected_unit = &currentPlayer->units[y];
+            std::cout << "unité cliquée" << std::endl;
+          }
         }
       }
     }
@@ -452,7 +456,7 @@ void Game::clickCheck(float mouseX, float mouseY)
     {
       attackUnit(this->selected_unit, &players[0].units[0]);
     }
-    if (this->selected_unit != NULL && lastClickX != NULL && lastClickY != NULL && !(lastClickX == this->selected_unit->x && lastClickY == this->selected_unit->y) && this->moving_unit == false && validClickMove(lastClickX, lastClickY))
+    if (this->selected_unit != NULL && !(lastClickX == this->selected_unit->x && lastClickY == this->selected_unit->y) && this->moving_unit == false && this->selected_unit->hasToAttack==false && validClickMove(lastClickX, lastClickY))
     {
         //this->moving_unit = true;
         this->selected_unit->currentPath = aStar(this->tabMap, this->selected_unit->x, this->selected_unit->y, this->lastClickX, this->lastClickY);

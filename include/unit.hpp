@@ -25,6 +25,7 @@ typedef struct {
     bool isMoving;
     bool isMovingToNextTile=false;
     bool hasToAttack=false;
+    bool isDONE=false;
 
     float force;
     float dexterity;

@@ -72,6 +72,7 @@ void updateDisplayCoordinates(unit *unit){
   else{
     cout << "Chemin terminé" << endl;
     unit->isMoving=false;
+    unit->hasToAttack=true;
   }
 
 }
