@@ -316,7 +316,6 @@ void Game::nextTurn()
 void drawQuadsSelection()
 {
   glBegin(GL_QUADS);
-  glColor4f(1, 0, 0, 0.5);
   glTexCoord2f(0, 0);
   glVertex2f(0, 0);
 
@@ -331,45 +330,53 @@ void drawQuadsSelection()
   glEnd();
 }
 
+void displayPyramid(unit unit, int size, int tabMap[]){
+  glPushMatrix();
+  glScalef(1, -1, 1.);
+  //Drawing red square on selected unit
+  glPushMatrix();
+  glTranslatef(unit.displayX, unit.displayY, 0);
+  drawQuadsSelection();
+  glPopMatrix();
+
+  for (int y = 0; y <= size; y++)
+  {
+    for (int j = 0; j <= size - y; j++)
+    {
+      glPushMatrix();
+      glTranslatef((-GL_VIEW_SIZE / 2) + (unit.x + y) * MAP_TILE_SIZE, (-GL_VIEW_SIZE / 2) + (unit.y + j) * MAP_TILE_SIZE, 0);
+      if (!(unit.x + y >= MAP_SIZE || unit.y + j >= MAP_SIZE) && ((tabMap[(unit.x + y) * MAP_SIZE + unit.y + j] == 1) || (tabMap[(unit.x + y) * MAP_SIZE + unit.y + j] == 2)))
+        drawQuadsSelection();
+      glPopMatrix();
+      glPushMatrix();
+      glTranslatef((-GL_VIEW_SIZE / 2) + (unit.x - y) * MAP_TILE_SIZE, (-GL_VIEW_SIZE / 2) + (unit.y - j) * MAP_TILE_SIZE, 0);
+      if (!(unit.x - y < 0 || unit.y - j < 0) && ((tabMap[(unit.x - y) * MAP_SIZE + unit.y - j] == 1) || (tabMap[(unit.x - y) * MAP_SIZE + unit.y - j] == 2)))
+        drawQuadsSelection();
+      glPopMatrix();
+      glPushMatrix();
+      glTranslatef((-GL_VIEW_SIZE / 2) + (unit.x + y) * MAP_TILE_SIZE, (-GL_VIEW_SIZE / 2) + (unit.y - j) * MAP_TILE_SIZE, 0);
+      if (!(unit.x + y >= MAP_SIZE || unit.y - j < 0) && ((tabMap[(unit.x + y) * MAP_SIZE + unit.y - j] == 1) || (tabMap[(unit.x + y) * MAP_SIZE + unit.y - j] == 2)))
+        drawQuadsSelection();
+      glPopMatrix();
+      glPushMatrix();
+      glTranslatef((-GL_VIEW_SIZE / 2) + (unit.x - y) * MAP_TILE_SIZE, (-GL_VIEW_SIZE / 2) + (unit.y + j) * MAP_TILE_SIZE, 0);
+      if (!(unit.x - y < 0 || unit.y + j >= MAP_SIZE) && ((tabMap[(unit.x - y) * MAP_SIZE + unit.y + j] == 1) || (tabMap[(unit.x - y) * MAP_SIZE + unit.y + j] == 2)))
+        drawQuadsSelection();
+      glPopMatrix();
+    }
+  }
+  glPopMatrix();
+}
 void Game::displaySelectdUnit()
 {
-  if (this->selected_unit != NULL && this->selected_unit->isMoving ==false)
+  if (this->selected_unit != NULL && this->selected_unit->isMoving ==false && this->selected_unit->hasToAttack==false)
   {
-    glPushMatrix();
-    glScalef(1, -1, 1.);
-    //Drawing red square on selected unit
-    glPushMatrix();
-    glTranslatef(this->selected_unit->displayX, this->selected_unit->displayY, 0);
-    drawQuadsSelection();
-    glPopMatrix();
-
-    for (int y = 0; y <= this->selected_unit->dexterity; y++)
-    {
-      for (int j = 0; j <= this->selected_unit->dexterity - y; j++)
-      {
-        glPushMatrix();
-        glTranslatef((-GL_VIEW_SIZE / 2) + (this->selected_unit->x + y) * MAP_TILE_SIZE, (-GL_VIEW_SIZE / 2) + (this->selected_unit->y + j) * MAP_TILE_SIZE, 0);
-        if (!(this->selected_unit->x + y >= MAP_SIZE || this->selected_unit->y + j >= MAP_SIZE) && ((this->tabMap[(this->selected_unit->x + y) * MAP_SIZE + this->selected_unit->y + j] == 1) || (this->tabMap[(this->selected_unit->x + y) * MAP_SIZE + this->selected_unit->y + j] == 2)))
-          drawQuadsSelection();
-        glPopMatrix();
-        glPushMatrix();
-        glTranslatef((-GL_VIEW_SIZE / 2) + (this->selected_unit->x - y) * MAP_TILE_SIZE, (-GL_VIEW_SIZE / 2) + (this->selected_unit->y - j) * MAP_TILE_SIZE, 0);
-        if (!(this->selected_unit->x - y < 0 || this->selected_unit->y - j < 0) && ((this->tabMap[(this->selected_unit->x - y) * MAP_SIZE + this->selected_unit->y - j] == 1) || (this->tabMap[(this->selected_unit->x - y) * MAP_SIZE + this->selected_unit->y - j] == 2)))
-          drawQuadsSelection();
-        glPopMatrix();
-        glPushMatrix();
-        glTranslatef((-GL_VIEW_SIZE / 2) + (this->selected_unit->x + y) * MAP_TILE_SIZE, (-GL_VIEW_SIZE / 2) + (this->selected_unit->y - j) * MAP_TILE_SIZE, 0);
-        if (!(this->selected_unit->x + y >= MAP_SIZE || this->selected_unit->y - j < 0) && ((this->tabMap[(this->selected_unit->x + y) * MAP_SIZE + this->selected_unit->y - j] == 1) || (this->tabMap[(this->selected_unit->x + y) * MAP_SIZE + this->selected_unit->y - j] == 2)))
-          drawQuadsSelection();
-        glPopMatrix();
-        glPushMatrix();
-        glTranslatef((-GL_VIEW_SIZE / 2) + (this->selected_unit->x - y) * MAP_TILE_SIZE, (-GL_VIEW_SIZE / 2) + (this->selected_unit->y + j) * MAP_TILE_SIZE, 0);
-        if (!(this->selected_unit->x - y < 0 || this->selected_unit->y + j >= MAP_SIZE) && ((this->tabMap[(this->selected_unit->x - y) * MAP_SIZE + this->selected_unit->y + j] == 1) || (this->tabMap[(this->selected_unit->x - y) * MAP_SIZE + this->selected_unit->y + j] == 2)))
-          drawQuadsSelection();
-        glPopMatrix();
-      }
-    }
-    glPopMatrix();
+    glColor4f(1, 0.6, 0, 0.5);
+    displayPyramid(*this->selected_unit,this->selected_unit->dexterity, this->tabMap);
+  }
+  if(this->selected_unit != NULL && this->selected_unit->isMoving ==false && this->selected_unit->hasToAttack==true){
+    glColor4f(0, 0.6, 1, 0.5);
+    displayPyramid(*this->selected_unit,this->selected_unit->fireRange, this->tabMap);
   }
 }
 
