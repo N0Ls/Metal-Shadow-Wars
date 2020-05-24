@@ -36,16 +36,6 @@ int main(int argc, const char *argv[])
 
     game->init("IMAC WARS 2 - Game", WINDOW_WIDTH, WINDOW_HEIGHT);
 
-    //init_textures(game->nb_textures_map, game->textureIds_map,game->textureLink);
-    //printf("%d\n",game->textureLink[MAP_SIZE -17]); //Test pour voir si le tableau était rempli en sortie
-
-    // player newPlayer;
-    // initPlayer(&newPlayer, 1, 3);
-    // std::cout << newPlayer.resources << std::endl;
-
-    // setCoordinates(game->players->units, 9, 9);
-    // printUnitInfos(game->players->units);
-    // updateDisplayCoordinates(game->players->units);
 
     game->selected_unit = nullptr;
 

@@ -43,5 +43,6 @@ void printUnitInfos(unit *unit);
 void updateDisplayCoordinates(unit *unit);
 void deplacement(unit *unit , int destinationX, int destinationY);
 void attackUnit(unit *attacker, unit *defender);
+void autoMove(unit *unit, int tab[]);
 
 #endif

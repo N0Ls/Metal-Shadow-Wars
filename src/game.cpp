@@ -228,7 +228,9 @@ void Game::handleEvents()
       {
         printf("clic en (%d, %d)\n", e.button.x, e.button.y);
         Mix_PlayChannel(-1, this->click, 0);
-        this->clickCheck(e.button.x, e.button.y);
+        if(this->currentPlayer != NULL && this->currentPlayer->id==1){
+          this->clickCheck(e.button.x, e.button.y);
+        }
       }
       break;
 
@@ -284,6 +286,10 @@ void Game::update()
     }
   }
 
+  if(this->currentPlayer != NULL && this->currentPlayer->id==0){
+    this->autoPlayer();
+  }
+
   //Checking units status
   bool playerDone=true;
   for(int i=0; i<this->currentPlayer->nbUnits; i++){
@@ -293,6 +299,16 @@ void Game::update()
   }
   if(playerDone){
     nextTurn();
+  }
+}
+
+void Game::autoPlayer(){
+  for(int i=0; i<this->currentPlayer->nbUnits; i++){
+    if(this->currentPlayer->units[i].isDONE ==false){
+      if(this->currentPlayer->units[i].isMoving ==false){
+        autoMove(&currentPlayer->units[i],this->tabMap);
+      }
+    }
   }
 }
 
@@ -537,5 +553,5 @@ void Game::clean()
   Mix_FreeChunk(this->click);
   SDL_Quit();
   glDisable(GL_TEXTURE_2D);
-  exit(EXIT_SUCCESS);
+  //exit(EXIT_SUCCESS);
 }

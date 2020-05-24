@@ -134,6 +134,7 @@ void attackUnit(unit *attacker, unit *defender)
     // When call, attacker correspond to the selected unit,
     // and the defender to the unit corresponding to the position where the click happened.
     int damages = attacker->force * attacker->pv/(float)attacker->pvMax;
+    //int damages = defender->pv
     defender->pv -= damages;
     cout << "Aie j'ai pris " << damages << " dégats dans les dents ! " << endl;
     if (defender->pv <= 0)
@@ -145,5 +146,41 @@ void attackUnit(unit *attacker, unit *defender)
         playerMourning->nbUnits=playerMourning->units.size();
         // Retirer l'unité de la liste des unités du joueur
     }
+}
+
+void autoMove(unit *unit, int tab[])
+{
+  //calcul d'une case d'arrivé
+  cout << "Unité en : " << unit->x << " : " << unit->y << endl;
+  vector <PathCoordinates> possibleTile;
+  for(int x=(unit->x-unit->dexterity); x < (unit->x+unit->dexterity); x++){
+    for(int y=(unit->y-unit->dexterity); y < (unit->y+unit->dexterity); y++){
+      if((x >=0 && x < MAP_SIZE && y>=0&& y<MAP_SIZE)){
+        if(abs(unit->x - x) + abs(unit->y - y) <= unit->dexterity && (tab[x*MAP_SIZE + y]==2) && !(unit->x ==x && unit->y ==y)){
+          PathCoordinates NewCoord;
+          NewCoord.x=x;
+          NewCoord.y=y;
+          possibleTile.push_back(NewCoord);
+          cout << "adding the tile " << x << " : " << y << endl;
+        }
+      }
+    }
+  }
+
+
+  srand(time(NULL)+rand());
+  int randIndex = rand() % possibleTile.size();
+  PathCoordinates randomTile = possibleTile[randIndex];
+  cout << endl << "selected " << randomTile.x << " : "  << randomTile.y <<endl;
+    cout << endl<< endl;
+
+
+  unit->currentPath = aStar(tab, unit->x, unit->y, randomTile.x, randomTile.y);
+   unit->isMoving =true;
+
+  deplacement(unit, randomTile.x, randomTile.y);
+  // unit->displayX = (-GL_VIEW_SIZE/2)+unit->x*MAP_TILE_SIZE;
+  // unit->displayY = (-GL_VIEW_SIZE/2)+unit->y*MAP_TILE_SIZE;
+     unit->isDONE =true;
 
 }

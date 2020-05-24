@@ -59,6 +59,7 @@ public :
     bool validClickAttack(int x, int y);
 
     void nextTurn();
+    void autoPlayer();
 
 private :
     int counter;
