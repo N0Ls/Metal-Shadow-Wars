@@ -281,8 +281,9 @@ void Game::update()
 {
   //Checking victory
   for(int y=0; y<this->nb_players;y++){
-    if(this->players[y].nbUnits <=0){
+    if(this->players[y].nbUnits <=0 || players[y].isAlive==false){
       this->isRunning=false;
+      return;
     }
   }
 
@@ -300,6 +301,7 @@ void Game::update()
   if(playerDone){
     nextTurn();
   }
+  return;
 }
 
 void Game::autoPlayer(){
@@ -340,13 +342,13 @@ void Game::nextTurn()
   {
     printUnitInfos(&currentPlayer->units[i]);
   }
-
-  for(int y=0; y<this->nb_players ; y++){
-    isAlive(&this->players[y]);
-  }
-  if(this->players[0].isAlive == false || this->players[1].isAlive==false){
-    this->isRunning=false;
-  }
+  //
+  // for(int y=0; y<this->nb_players ; y++){
+  //   isAlive(&this->players[y]);
+  // }
+  // if(this->players[0].isAlive == false || this->players[1].isAlive==false){
+  //   this->isRunning=false;
+  // }
 
 }
 
@@ -549,9 +551,10 @@ void Game::changeState(bool state)
 void Game::clean()
 {
   /* AJOUTER LE CLEAN DES TEXTURES*/
+  SDL_FreeSurface(this->surface);
+  glDisable(GL_TEXTURE_2D);
   Mix_FreeMusic(this->music);
   Mix_FreeChunk(this->click);
   SDL_Quit();
-  glDisable(GL_TEXTURE_2D);
-  //exit(EXIT_SUCCESS);
+  exit(EXIT_SUCCESS);
 }
