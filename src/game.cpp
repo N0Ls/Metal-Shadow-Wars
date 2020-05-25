@@ -504,7 +504,7 @@ void Game::clickCheck(float mouseX, float mouseY)
         }
         else
         {
-          if((this->selected_unit != NULL && this->selected_unit->hasToAttack==false) || this->selected_unit==NULL){
+          if((this->selected_unit != NULL && this->selected_unit->hasToAttack==false && this->selected_unit->isMoving==false) || this->selected_unit==NULL){
             this->selected_unit = &currentPlayer->units[y];
             std::cout << "unité cliquée" << std::endl;
           }
