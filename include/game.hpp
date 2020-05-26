@@ -46,7 +46,7 @@ public :
 
     int tabMap[MAP_SIZE * MAP_SIZE];
 
-    unit *selected_unit=NULL;
+    Unit *selected_unit=NULL;
     player *currentPlayer=NULL;
 
     bool move = false;
@@ -61,6 +61,7 @@ public :
     void nextTurn();
     void autoPlayer();
 
+    std::vector<Unit> unitRef;
 private :
     int counter;
     bool isRunning;
@@ -71,6 +72,7 @@ private :
 
     int currentTurn;
 
+    void updateUnitList();
     void displaySelectdUnit();
     player* getCurrentPlayer();
 };

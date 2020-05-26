@@ -17,7 +17,7 @@ void initPlayer(player *player, int id, int nbUnits, char name[], SDL_Color coul
     std::cout << "Init Units" << '\n';
     for (int i = 0; i < nbUnits; i++)
     {
-      unit newUnit;
+      Unit newUnit;
       initUnit(&newUnit, i, player,100, 50, 4, 3, i, 0);
       player->units.push_back(newUnit);
 

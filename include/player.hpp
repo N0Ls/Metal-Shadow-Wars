@@ -16,7 +16,7 @@ struct player {
   char name[28];
   int nbUnits;
   int resources;
-  vector <unit> units;
+  vector <Unit> units;
   bool isAlive;
   SDL_Color color;
 } ;

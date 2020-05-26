@@ -6,10 +6,11 @@ using namespace std;
 #include <math.h>
 #include <SDL/SDL.h>
 #include <stack>
+#include <vector>
 #include "node.hpp"
 #include "player.hpp"
 
-void initUnit(unit *unit, int id, player *owner, float pv,float force,float dexterity, float fireRange, int arrayIndex, GLuint texture_id){
+void initUnit(Unit *unit, int id, player *owner, float pv,float force,float dexterity, float fireRange, int arrayIndex, GLuint texture_id){
   unit -> ownerId = id;
   unit -> ownerPlayer = owner;
   unit -> pv = pv;
@@ -23,12 +24,12 @@ void initUnit(unit *unit, int id, player *owner, float pv,float force,float dext
   unit -> texture_id = texture_id;
 }
 
-void setCoordinates(unit *unit, int x, int y){
+void setCoordinates(Unit *unit, int x, int y){
   unit -> x = x;
   unit -> y = y;
 }
 
-void updateDisplayCoordinates(unit *unit){
+void updateDisplayCoordinates(Unit *unit){
 
   float destinationDisplayX;
   float destinationDisplayY;
@@ -95,7 +96,7 @@ void drawQuadUnit(){
 }
 
 
-void displayUnit(unit *unit, GLuint textureIds_units[]){
+void displayUnit(Unit *unit, GLuint textureIds_units[]){
   glClearColor(0, 0, 0, 0);
   glPushMatrix();
   glScalef(1,-1,1.);
@@ -118,18 +119,18 @@ void displayUnit(unit *unit, GLuint textureIds_units[]){
   glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void deplacement(unit *unit , int destinationX, int destinationY){
+void deplacement(Unit *unit , int destinationX, int destinationY){
   unit->x = destinationX;
   unit->y = destinationY;
 }
 
-void printUnitInfos(unit *unit){
+void printUnitInfos(Unit *unit){
   cout << "Cette unité se situe en"<< unit->x <<", "<< unit->y << '\n';
   cout << "Cette unité utilise la texture"<< unit->texture_id << '\n';
   //cout << "Cette unité appartient à "<< unit->ownerPlayer->name << '\n';
 }
 
-void attackUnit(unit *attacker, unit *defender)
+void attackUnit(Unit *attacker, Unit *defender)
 {
     // When call, attacker correspond to the selected unit,
     // and the defender to the unit corresponding to the position where the click happened.
@@ -148,7 +149,7 @@ void attackUnit(unit *attacker, unit *defender)
     }
 }
 
-void autoMove(unit *unit, int tab[])
+void autoMove(Unit *unit, int tab[],vector<Unit> &unitRef)
 {
   //calcul d'une case d'arrivé
   cout << "Unité en : " << unit->x << " : " << unit->y << endl;
@@ -167,6 +168,17 @@ void autoMove(unit *unit, int tab[])
     }
   }
 
+  //removing tiles with unit on it
+  for(int z = 0 ; z<(int)possibleTile.size(); z++){
+    for(int w = 0 ; w<(int)unitRef.size(); w++){
+      PathCoordinates currentCoord=possibleTile[z];
+      Unit unitToCheck = unitRef[w];
+      if(currentCoord.x == unitToCheck.x && currentCoord.y==unitToCheck.y){
+        possibleTile.erase(possibleTile.begin()+z);
+      }
+    }
+  }
+
 
   srand(time(NULL)+rand());
   int randIndex = rand() % possibleTile.size();
@@ -176,11 +188,11 @@ void autoMove(unit *unit, int tab[])
 
 
   unit->currentPath = aStar(tab, unit->x, unit->y, randomTile.x, randomTile.y);
-   unit->isMoving =true;
+  unit->isMoving =true;
 
   deplacement(unit, randomTile.x, randomTile.y);
   // unit->displayX = (-GL_VIEW_SIZE/2)+unit->x*MAP_TILE_SIZE;
   // unit->displayY = (-GL_VIEW_SIZE/2)+unit->y*MAP_TILE_SIZE;
-     unit->isDONE =true;
+     unit->hasToAttack =true;
 
 }

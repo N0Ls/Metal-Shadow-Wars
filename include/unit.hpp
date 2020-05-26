@@ -1,16 +1,16 @@
 #ifndef UNIT_H
 #define UNIT_H
 
-using namespace std;
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <stack>
+#include <vector>
 #include "node.hpp"
+using namespace std;
 
 struct player;
-
-typedef struct {
+struct Unit{
     int ownerId;
     player *ownerPlayer;
     float pv;
@@ -33,16 +33,17 @@ typedef struct {
     GLuint texture_id;
     stack <PathCoordinates> currentPath;
     PathCoordinates currentDestination;
-} unit;
+};
+
 
 //Declaration of prototypes
-void initUnit(unit *unit, int id, player *owner, float pv,float force,float dexterity, float fireRange, int arrayIndex, GLuint texture_id);
-void setCoordinates(unit *unit, int x, int y);
-void displayUnit(unit *unit, GLuint textureIds_units[]);
-void printUnitInfos(unit *unit);
-void updateDisplayCoordinates(unit *unit);
-void deplacement(unit *unit , int destinationX, int destinationY);
-void attackUnit(unit *attacker, unit *defender);
-void autoMove(unit *unit, int tab[]);
+void initUnit(Unit *unit, int id, player *owner, float pv,float force,float dexterity, float fireRange, int arrayIndex, GLuint texture_id);
+void setCoordinates(Unit *unit, int x, int y);
+void displayUnit(Unit *unit, GLuint textureIds_units[]);
+void printUnitInfos(Unit *unit);
+void updateDisplayCoordinates(Unit *unit);
+void deplacement(Unit *unit , int destinationX, int destinationY);
+void attackUnit(Unit *attacker, Unit *defender);
+void autoMove(Unit *unit, int tab[], vector<Unit> &unitRef);
 
 #endif

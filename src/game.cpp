@@ -168,7 +168,7 @@ void Game::placeUnits()
     }
   }
 
-
+  this->updateUnitList();
   this->unitPlaced = true;
 }
 
@@ -305,11 +305,27 @@ void Game::update()
 }
 
 void Game::autoPlayer(){
+  //getting other player id
+
+  //checking
+  //
   for(int i=0; i<this->currentPlayer->nbUnits; i++){
     if(this->currentPlayer->units[i].isDONE ==false){
       if(this->currentPlayer->units[i].isMoving ==false){
-        autoMove(&currentPlayer->units[i],this->tabMap);
+        autoMove(&currentPlayer->units[i],this->tabMap, this->unitRef);
       }
+      if(this->currentPlayer->units[i].hasToAttack==true){
+        //autoAttack(&currentPlayer->units[i],this->tabMap);
+      }
+    }
+  }
+}
+
+void Game::updateUnitList(){
+  unitRef.clear();
+  for (int i = 0; i < this->nb_players; i++) {
+    for(int y = 0; y < this->players[i].nbUnits; y++){
+      this->unitRef.push_back(this->players[i].units[y]);
     }
   }
 }
@@ -321,12 +337,11 @@ player* Game::getCurrentPlayer()
 
 void Game::nextTurn()
 {
-
   //end of last turn
-
+  this->updateUnitList();
   //reset last current player units status
   for(int u=0; u<this->currentPlayer->nbUnits;u++){
-    unit *unitToReset;
+    Unit *unitToReset;
     unitToReset=&this->currentPlayer->units[u];
     unitToReset->isDONE=false;
   }
@@ -369,7 +384,7 @@ void drawQuadsSelection()
   glEnd();
 }
 
-void displayPyramid(unit unit, int size, int tabMap[]){
+void displayPyramid(Unit unit, int size, int tabMap[]){
   glPushMatrix();
   glScalef(1, -1, 1.);
   //Drawing red square on selected unit

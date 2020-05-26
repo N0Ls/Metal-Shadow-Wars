@@ -59,5 +59,6 @@ int main(int argc, const char *argv[])
 
     game->clean();
   }
+
   return 0;
 }
