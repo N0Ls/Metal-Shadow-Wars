@@ -149,7 +149,7 @@ void attackUnit(Unit *attacker, Unit *defender)
     }
 }
 
-void autoMove(Unit *unit, int tab[],vector<Unit> &unitRef)
+void autoMove(Unit *unit, int tab[],vector<Unit*> &unitRef)
 {
   //calcul d'une case d'arrivé
   cout << "Unité en : " << unit->x << " : " << unit->y << endl;
@@ -172,13 +172,12 @@ void autoMove(Unit *unit, int tab[],vector<Unit> &unitRef)
   for(int z = 0 ; z<(int)possibleTile.size(); z++){
     for(int w = 0 ; w<(int)unitRef.size(); w++){
       PathCoordinates currentCoord=possibleTile[z];
-      Unit unitToCheck = unitRef[w];
-      if(currentCoord.x == unitToCheck.x && currentCoord.y==unitToCheck.y){
+      Unit* unitToCheck = unitRef[w];
+      if(currentCoord.x == unitToCheck->x && currentCoord.y==unitToCheck->y){
         possibleTile.erase(possibleTile.begin()+z);
       }
     }
   }
-
 
   srand(time(NULL)+rand());
   int randIndex = rand() % possibleTile.size();
@@ -193,6 +192,20 @@ void autoMove(Unit *unit, int tab[],vector<Unit> &unitRef)
   deplacement(unit, randomTile.x, randomTile.y);
   // unit->displayX = (-GL_VIEW_SIZE/2)+unit->x*MAP_TILE_SIZE;
   // unit->displayY = (-GL_VIEW_SIZE/2)+unit->y*MAP_TILE_SIZE;
-     unit->hasToAttack =true;
+  unit->hasToAttack =true;
 
+  //unit->isDONE=true;
+}
+void autoAttack(Unit *unit, int tab[], vector<Unit*> &unitRef){
+  //privielging
+  //checking units
+  for(int w = 0 ; w<(int)unitRef.size(); w++){
+    if(abs(unit->x - unitRef[w]->x) + abs(unit->y - unitRef[w]->y) <= unit->fireRange && !(unit->x ==unitRef[w]->x && unit->y ==unitRef[w]->y)){
+      attackUnit(unit, unitRef[w]);
+      unit->isDONE=true;
+      cout << "Joueur clavier attaqué" << endl;
+      return;
+    }
+  }
+  unit->isDONE=true;
 }

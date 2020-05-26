@@ -44,6 +44,8 @@ void printUnitInfos(Unit *unit);
 void updateDisplayCoordinates(Unit *unit);
 void deplacement(Unit *unit , int destinationX, int destinationY);
 void attackUnit(Unit *attacker, Unit *defender);
-void autoMove(Unit *unit, int tab[], vector<Unit> &unitRef);
+void autoMove(Unit *unit, int tab[], vector<Unit*> &unitRef);
+void autoAttack(Unit *unit, int tab[],vector<Unit*> &unitRef);
+
 
 #endif

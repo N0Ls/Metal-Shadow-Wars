@@ -61,7 +61,7 @@ public :
     void nextTurn();
     void autoPlayer();
 
-    std::vector<Unit> unitRef;
+    std::vector<Unit*> unitRef;
 private :
     int counter;
     bool isRunning;

@@ -315,7 +315,7 @@ void Game::autoPlayer(){
         autoMove(&currentPlayer->units[i],this->tabMap, this->unitRef);
       }
       if(this->currentPlayer->units[i].hasToAttack==true){
-        //autoAttack(&currentPlayer->units[i],this->tabMap);
+        autoAttack(&currentPlayer->units[i],this->tabMap, this->unitRef);
       }
     }
   }
@@ -325,7 +325,7 @@ void Game::updateUnitList(){
   unitRef.clear();
   for (int i = 0; i < this->nb_players; i++) {
     for(int y = 0; y < this->players[i].nbUnits; y++){
-      this->unitRef.push_back(this->players[i].units[y]);
+      this->unitRef.push_back(&this->players[i].units[y]);
     }
   }
 }
