@@ -118,7 +118,7 @@ void loadMap(TileMap *tabMapTile){
       //printf("Pixel Color -> R: %d,  G: %d,  B: %d,  A: %d\n", red, green, blue, alpha);
 
       if(red == 255 && green ==0 && blue ==0){
-        setTile(&tabMapTile[y*MAP_SIZE + i],3,0,0);
+        setTile(&tabMapTile[y*MAP_SIZE + i],3,0,1);
       }
       else if(red == 0 && green ==255 && blue ==0){
         setTile(&tabMapTile[y*MAP_SIZE + i],2,1,0);
@@ -131,8 +131,12 @@ void loadMap(TileMap *tabMapTile){
       }
     }
   }
+}
 
-
+void destroyEnvironnement(TileMap *tabMapTile, int x , int y){
+  if(tabMapTile[x*MAP_SIZE + y].isDestructible){
+      setTile(&tabMapTile[x*MAP_SIZE + y],2,1,0);
+  }
 }
 
 void fillGrid(GLuint textureIds[],GLuint textureLink[], TileMap *tabMapTile){

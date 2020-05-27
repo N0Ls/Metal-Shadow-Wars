@@ -488,16 +488,53 @@ void displayPyramid(Unit unit, int size, TileMap tabMap[]){
   }
   glPopMatrix();
 }
+
+void displayDestroyPyramid(Unit unit, int size, TileMap tabMap[]){
+  glPushMatrix();
+  glScalef(1, -1, 1.);
+
+
+  for (int y = 0; y <= size; y++)
+  {
+    for (int j = 0; j <= size - y; j++)
+    {
+      glPushMatrix();
+      glTranslatef((-GL_VIEW_SIZE / 2) + (unit.x + y) * MAP_TILE_SIZE, (-GL_VIEW_SIZE / 2) + (unit.y + j) * MAP_TILE_SIZE, 0);
+      if (!(unit.x + y >= MAP_SIZE || unit.y + j >= MAP_SIZE) && (tabMap[(unit.x + y) * MAP_SIZE + unit.y + j].isDestructible))
+        drawQuadsSelection();
+      glPopMatrix();
+      glPushMatrix();
+      glTranslatef((-GL_VIEW_SIZE / 2) + (unit.x - y) * MAP_TILE_SIZE, (-GL_VIEW_SIZE / 2) + (unit.y - j) * MAP_TILE_SIZE, 0);
+      if (!(unit.x - y < 0 || unit.y - j < 0) && (tabMap[(unit.x - y) * MAP_SIZE + unit.y - j].isDestructible))
+        drawQuadsSelection();
+      glPopMatrix();
+      glPushMatrix();
+      glTranslatef((-GL_VIEW_SIZE / 2) + (unit.x + y) * MAP_TILE_SIZE, (-GL_VIEW_SIZE / 2) + (unit.y - j) * MAP_TILE_SIZE, 0);
+      if (!(unit.x + y >= MAP_SIZE || unit.y - j < 0) && (tabMap[(unit.x + y) * MAP_SIZE + unit.y - j].isDestructible))
+        drawQuadsSelection();
+      glPopMatrix();
+      glPushMatrix();
+      glTranslatef((-GL_VIEW_SIZE / 2) + (unit.x - y) * MAP_TILE_SIZE, (-GL_VIEW_SIZE / 2) + (unit.y + j) * MAP_TILE_SIZE, 0);
+      if (!(unit.x - y < 0 || unit.y + j >= MAP_SIZE) && (tabMap[(unit.x - y) * MAP_SIZE + unit.y + j].isDestructible))
+        drawQuadsSelection();
+      glPopMatrix();
+    }
+  }
+  glPopMatrix();
+}
 void Game::displaySelectdUnit()
 {
   if (this->selected_unit != NULL && this->selected_unit->isMoving ==false && this->selected_unit->hasToAttack==false)
   {
     glColor4f(1, 0.6, 0, 0.5); //orange color
     displayPyramid(*this->selected_unit,this->selected_unit->dexterity, this->tabMapTile);
+
   }
   if(this->selected_unit != NULL && this->selected_unit->isMoving ==false && this->selected_unit->hasToAttack==true){
     glColor4f(0, 0.6, 1, 0.5); //light blue color
     displayPyramid(*this->selected_unit,this->selected_unit->fireRange, this->tabMapTile);
+    glColor4f(1, 0.3, 0, 0.5);
+    displayDestroyPyramid(*this->selected_unit,this->selected_unit->fireRange, this->tabMapTile);
   }
 }
 
@@ -613,6 +650,9 @@ void Game::clickCheck(float mouseX, float mouseY)
           if(lastClickX == xTargetCheck && lastClickY ==yTargetCheck){
             cout << "Bim !" << endl;
             attackUnit(this->selected_unit, &this->players[o].units[p]);
+          }
+          else{
+            destroyEnvironnement(this->tabMapTile, lastClickX,lastClickY);
           }
         }
       }

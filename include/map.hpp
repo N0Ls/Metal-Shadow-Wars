@@ -19,4 +19,5 @@ void setTile(TileMap *tile, GLuint textureId, bool isWalkable, bool isDestructib
 void fillGrid(GLuint textureIds[], GLuint textureLink[], TileMap *tabMapTile);
 Uint32 getpixel(SDL_Surface *surface, int x, int y);
 void loadMap(TileMap *tabMapTile);
+void destroyEnvironnement(TileMap *tabMapTile, int x , int y);
 #endif
