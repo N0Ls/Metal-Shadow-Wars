@@ -12,7 +12,7 @@ using namespace std;
 
 void init_textures(int nb_sub_groups,int nb_textures_map, int nb_textures_units, GLuint *textureIds_map, GLuint *textureIds_units ,GLuint *textureLink){
   char textures_paths_map[nb_textures_map][255]= { "doc/water.jpg","doc/grass_block_side.png","doc/tile.jpg","doc/block.jpg","doc/mountain.png","doc/factory.png"};
-  char textures_paths_units[nb_textures_units][255] = {"doc/perso.png"};
+  char textures_paths_units[nb_textures_units][255] = {"doc/perso.png","doc/perso2.png"};
   for(int i = 0; i < MAP_SIZE*2 - 1; i++){
     textureLink[i] = rand()%4 + 1;
   }//Tableau qui fait le lien entre les coordonnées [ligne*i + colonne*j] et la texture associée bien définie
