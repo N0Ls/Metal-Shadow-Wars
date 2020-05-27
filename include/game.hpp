@@ -11,6 +11,7 @@
 #include "unit.hpp"
 #include "player.hpp"
 #include "map.hpp"
+#include "menu.hpp"
 
 class Game
 {
@@ -46,6 +47,7 @@ public :
     GLuint textureIds_map[nb_textures_map];
     GLuint textureLink[MAP_SIZE*2];
     GLuint textureIds_units[nb_textures_units];
+    GLuint menu_tex[2];
 
     //int tabMap[MAP_SIZE * MAP_SIZE];
     TileMap tabMapTile[MAP_SIZE * MAP_SIZE];
@@ -66,6 +68,8 @@ public :
     void autoPlayer();
 
     std::vector<Unit*> unitRef;
+
+    SDL_Surface *pause;
 private :
     int counter;
     bool isRunning;
@@ -81,6 +85,7 @@ private :
     void updateUnitList();
     void displaySelectdUnit();
     player* getCurrentPlayer();
+
 };
 
 #endif /* GAME_H */

@@ -1,6 +1,5 @@
 #include "game.hpp"
 #include "map.hpp"
-#include "menu.hpp"
 #include "constants.hpp"
 #include "texture.hpp"
 #include <iostream>
@@ -11,6 +10,7 @@
 #include "node.hpp"
 #include <stack>
 #include <vector>
+#include <SDL/SDL_ttf.h>
 using namespace std;
 
 static const unsigned int BIT_PER_PIXEL = 32;
@@ -121,6 +121,32 @@ void Game::init(const char *title, int width, int height)
   loadMap(this->tabMapTile);
 
 
+
+  TTF_Font *font;
+  TTF_Init();
+  font = TTF_OpenFont("test.ttf", 30);
+    SDL_Color color={1,0,0};
+  this->pause = TTF_RenderText_Solid(font, "ntm", color);
+  glGenTextures(1,&menu_tex[0]);
+  glBindTexture(GL_TEXTURE_2D, menu_tex[0]);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  GLenum format;
+  switch(this->pause->format->BytesPerPixel){
+    case 1:
+          format = GL_RED;
+          break;
+      case 3:
+          format = GL_RGB;
+          break;
+      case 4:
+          format = GL_RGBA;
+          break;
+      default:
+          exit(EXIT_FAILURE);
+  }
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,pause->w, pause->h, 0,format, GL_UNSIGNED_BYTE,pause->pixels);
+  glBindTexture(GL_TEXTURE_2D, 0);
+
   this->placeUnits();
 
   //Initialisation des tours
@@ -195,8 +221,15 @@ void Game::handleEvents()
     /* Pause state */
     if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_SPACE)
     {
-      isPaused == true ? isPaused = false : isPaused = true;
-      std::cout << isPaused << std::endl;
+      //isPaused == true ? isPaused = false : isPaused = true;
+      if(this->isPaused==true){
+        this->isPaused=false;
+      }
+      else{
+        this->isPaused=true;
+        cout << "game paused "<< endl;
+      }
+      //std::cout << isPaused << std::endl;
     }
 
     if (e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_m))
@@ -264,12 +297,32 @@ void Game::handleEvents()
     }
   }
 }
+
+void drawQuadsSelection()
+{
+  glBegin(GL_QUADS);
+  glTexCoord2f(0, 0);
+  glVertex2f(0, 0);
+
+  glTexCoord2f(1, 0);
+  glVertex2f(MAP_TILE_SIZE, 0);
+
+  glTexCoord2f(1, 1);
+  glVertex2f(MAP_TILE_SIZE, MAP_TILE_SIZE);
+
+  glTexCoord2f(0, 1);
+  glVertex2f(0, MAP_TILE_SIZE);
+  glEnd();
+}
+
 void Game::draw(SDL_Surface *surface)
 {
   glClearColor(0, 0, 0, 0);
   glClear(GL_COLOR_BUFFER_BIT);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
+
+
   fillGrid(this->textureIds_map, this->textureLink, this->tabMapTile);
   this->displaySelectdUnit();
   for (int g = 0; g < this->nb_players; g++)
@@ -281,8 +334,29 @@ void Game::draw(SDL_Surface *surface)
       }
     }
   }
+
+    if(this->isPaused){
+      glColor4f(0,0,0,1);
+
+      glPushMatrix();
+      glScalef(1, -1, 1.);
+
+
+      glTranslatef(-50, -50,0);
+      glBindTexture(GL_TEXTURE_2D, this->menu_tex[0]);
+      glScalef(100, 100, 1.);
+        glPushMatrix();
+        drawQuadsSelection();
+        glPopMatrix();
+      glPopMatrix();
+      glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
   SDL_GL_SwapBuffers();
 }
+
+
+
 void Game::update()
 {
   //Checking victory
@@ -296,6 +370,8 @@ void Game::update()
   if(this->currentPlayer != NULL && this->currentPlayer->id==0){
     this->autoPlayer();
   }
+
+
 
   //Checking units status
   bool playerDone=true;
@@ -373,22 +449,7 @@ void Game::nextTurn()
 
 }
 
-void drawQuadsSelection()
-{
-  glBegin(GL_QUADS);
-  glTexCoord2f(0, 0);
-  glVertex2f(0, 0);
 
-  glTexCoord2f(1, 0);
-  glVertex2f(MAP_TILE_SIZE, 0);
-
-  glTexCoord2f(1, 1);
-  glVertex2f(MAP_TILE_SIZE, MAP_TILE_SIZE);
-
-  glTexCoord2f(0, 1);
-  glVertex2f(0, MAP_TILE_SIZE);
-  glEnd();
-}
 
 void displayPyramid(Unit unit, int size, TileMap tabMap[]){
   glPushMatrix();
@@ -570,6 +631,7 @@ void Game::changeState(bool state)
 
 void Game::clean()
 {
+
   /* AJOUTER LE CLEAN DES TEXTURES*/
   SDL_FreeSurface(this->surface);
   glDisable(GL_TEXTURE_2D);

@@ -165,6 +165,7 @@ void Menu::showPause(SDL_Surface *screen)
   SDL_Surface *menus[NUMMENU];
 
   // Menu items font
+
   menus[0] = TTF_RenderText_Solid(font, pauseLabels[0], color[0]);
   menus[1] = TTF_RenderText_Solid(font, pauseLabels[1], color[0]);
 
@@ -193,5 +194,5 @@ void Menu::showPause(SDL_Surface *screen)
     if (1000 / 30 > (SDL_GetTicks() - time))
       SDL_Delay(1000 / 30 - (SDL_GetTicks() - time));
   }
-  SDL_GL_SwapBuffers();
+  //SDL_GL_SwapBuffers();
 }

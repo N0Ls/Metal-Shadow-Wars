@@ -10,10 +10,6 @@ using namespace std;
 #include <stdio.h>
 #include "constants.hpp"
 
-
-
-
-
 void init_textures(int nb_sub_groups,int nb_textures_map, int nb_textures_units, GLuint *textureIds_map, GLuint *textureIds_units ,GLuint *textureLink){
   char textures_paths_map[nb_textures_map][255]= { "doc/water.jpg","doc/grass_block_side.png","doc/tile.jpg","doc/block.jpg","doc/mountain.png","doc/factory.png"};
   char textures_paths_units[nb_textures_units][255] = {"doc/perso.png"};
