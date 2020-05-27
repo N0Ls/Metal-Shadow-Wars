@@ -149,7 +149,7 @@ void attackUnit(Unit *attacker, Unit *defender)
     }
 }
 
-void autoMove(Unit *unit, int tab[],vector<Unit*> &unitRef)
+void autoMove(Unit *unit, TileMap tab[],vector<Unit*> &unitRef)
 {
   //calcul d'une case d'arrivé
   cout << "Unité en : " << unit->x << " : " << unit->y << endl;
@@ -157,7 +157,7 @@ void autoMove(Unit *unit, int tab[],vector<Unit*> &unitRef)
   for(int x=(unit->x-unit->dexterity); x < (unit->x+unit->dexterity); x++){
     for(int y=(unit->y-unit->dexterity); y < (unit->y+unit->dexterity); y++){
       if((x >=0 && x < MAP_SIZE && y>=0&& y<MAP_SIZE)){
-        if(abs(unit->x - x) + abs(unit->y - y) <= unit->dexterity && (tab[x*MAP_SIZE + y]==2) && !(unit->x ==x && unit->y ==y)){
+        if(abs(unit->x - x) + abs(unit->y - y) <= unit->dexterity && (tab[x*MAP_SIZE + y].isWalkable) && !(unit->x ==x && unit->y ==y)){
           PathCoordinates NewCoord;
           NewCoord.x=x;
           NewCoord.y=y;
@@ -194,7 +194,7 @@ void autoMove(Unit *unit, int tab[],vector<Unit*> &unitRef)
 
   //unit->isDONE=true;
 }
-void autoAttack(Unit *unit, int tab[], vector<Unit*> &unitRef){
+void autoAttack(Unit *unit, TileMap tab[], vector<Unit*> &unitRef){
   //privielging
   //checking units
   for(int w = 0 ; w<(int)unitRef.size(); w++){
