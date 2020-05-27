@@ -25,6 +25,7 @@ public :
     void clean();
     void draw(SDL_Surface *surface);
     bool running() { return isRunning; };
+    bool paused() { return isPaused; };
     void clickCheck(float mouseX,float mouseY);
 
     void changeState(bool state);
@@ -65,6 +66,7 @@ public :
 private :
     int counter;
     bool isRunning;
+    bool isPaused;
     Mix_Music *music = NULL;
     Mix_Chunk *click = NULL;
     int lastClickX;

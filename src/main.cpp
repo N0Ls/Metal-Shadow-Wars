@@ -51,6 +51,11 @@ int main(int argc, const char *argv[])
 
       frameTime = SDL_GetTicks() - frameStart;
 
+      // if(game->paused())
+      // {
+      //   std::cout << "Game paused" << std::endl;
+      // }
+
       if(frameDelay > frameTime)
       {
         SDL_Delay(frameDelay - frameTime);

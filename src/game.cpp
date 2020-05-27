@@ -86,6 +86,9 @@ void Game::init(const char *title, int width, int height)
   {
     isRunning = true;
   }
+
+  isPaused = false;
+
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_TEXTURE_2D);
@@ -185,6 +188,13 @@ void Game::handleEvents()
     {
       isRunning = false;
       break;
+    }
+
+    /* Pause state */
+    if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_SPACE)
+    {
+      isPaused == true ? isPaused = false : isPaused = true;
+      std::cout << isPaused << std::endl;
     }
 
     if (e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_m))

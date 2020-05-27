@@ -148,3 +148,35 @@ int Menu::show(const char *title, int width, int height)
       SDL_Delay(1000 / 30 - (SDL_GetTicks() - time));
   }
 }
+
+// int Menu::pause()
+// {
+//   // Axes
+//   int x, y;
+
+//   // Font initialization
+//   TTF_Font *font;
+//   TTF_Init();
+//   font = TTF_OpenFont("test.ttf", 30);
+
+//   // Menu buttons
+//   SDL_Surface *menus[NUMMENU];
+
+//   // Menu items font
+//   menus[0] = TTF_RenderText_Solid(font, labels[0], color[0]);
+//   menus[1] = TTF_RenderText_Solid(font, labels[1], color[0]);
+
+//   // Buttons rect (for positions)
+//   SDL_Rect pos[NUMMENU];
+
+//   // Buttons actual positions (x and y coordinates)
+//   pos[0].x = screen->clip_rect.w / 2 - menus[0]->clip_rect.w / 2;
+//   pos[0].y = screen->clip_rect.h / 2 - menus[0]->clip_rect.h;
+//   pos[1].x = screen->clip_rect.w / 2 - menus[0]->clip_rect.w / 2;
+//   pos[1].y = screen->clip_rect.h / 2 + menus[0]->clip_rect.h;
+
+//   // Selection state
+//   bool selected[NUMMENU] = {0, 0};
+
+//   SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x00, 0x00, 0x00));
+// }
