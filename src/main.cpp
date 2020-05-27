@@ -27,7 +27,7 @@ int main(int argc, const char *argv[])
   int frameTime;
 
   menu = new Menu();
-  int c = menu->show("IMAC WARS 2 - Menu", WINDOW_WIDTH, WINDOW_HEIGHT);
+  int c = menu->showMain("IMAC WARS 2 - Menu", WINDOW_WIDTH, WINDOW_HEIGHT);
 
   if (c == 0)
   {
@@ -35,7 +35,6 @@ int main(int argc, const char *argv[])
     game = new Game();
 
     game->init("IMAC WARS 2 - Game", WINDOW_WIDTH, WINDOW_HEIGHT);
-
 
     game->selected_unit = nullptr;
 
@@ -51,12 +50,13 @@ int main(int argc, const char *argv[])
 
       frameTime = SDL_GetTicks() - frameStart;
 
-      // if(game->paused())
-      // {
-      //   std::cout << "Game paused" << std::endl;
-      // }
+      if (game->paused())
+      {
+        menu = new Menu();
+        menu->showPause(game->surface);
+      }
 
-      if(frameDelay > frameTime)
+      if (frameDelay > frameTime)
       {
         SDL_Delay(frameDelay - frameTime);
       }

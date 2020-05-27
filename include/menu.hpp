@@ -16,7 +16,8 @@ public :
     Menu();
     ~Menu();
     SDL_Surface *surface;
-    int show(const char* title, int width, int height);
+    int showMain(const char* title, int width, int height);
+    void showPause(SDL_Surface* screen);
     bool running() { return isActiv; };
 
 private :
