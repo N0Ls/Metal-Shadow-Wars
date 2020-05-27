@@ -8,7 +8,15 @@
 #include <stdio.h>
 #include "constants.hpp"
 
-void fillGrid(GLuint textureIds[], GLuint textureLink[], int *tabMap);
+
+struct TileMap{
+  GLuint textureId;
+  bool isWalkable;
+  bool isDestructible;
+};
+
+void setTile(TileMap *tile, GLuint textureId, bool isWalkable, bool isDestructible);
+void fillGrid(GLuint textureIds[], GLuint textureLink[], TileMap *tabMapTile);
 Uint32 getpixel(SDL_Surface *surface, int x, int y);
-void loadMap(int *tabMap);
+void loadMap(TileMap *tabMapTile);
 #endif

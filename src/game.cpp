@@ -117,7 +117,8 @@ void Game::init(const char *title, int width, int height)
     exit(EXIT_FAILURE);
   }
 
-  loadMap(this->tabMap);
+  loadMap(this->tabMapTile);
+
 
   this->placeUnits();
 
@@ -137,7 +138,7 @@ void Game::placeUnits()
   vector <PathCoordinates> availableTiles;
   for(int j=0; j<MAP_SIZE ; j++){
     for(int k=0; k<MAP_SIZE; k++){
-      if(this->tabMap[j*MAP_SIZE+k] == 2){
+      if(this->tabMapTile[j*MAP_SIZE+k].isWalkable){
         PathCoordinates newTile;
         newTile.x=j;
         newTile.y=k;
@@ -268,7 +269,7 @@ void Game::draw(SDL_Surface *surface)
   glClear(GL_COLOR_BUFFER_BIT);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
-  fillGrid(this->textureIds_map, this->textureLink, this->tabMap);
+  fillGrid(this->textureIds_map, this->textureLink, this->tabMapTile);
   this->displaySelectdUnit();
   for (int g = 0; g < this->nb_players; g++)
   {
@@ -317,10 +318,10 @@ void Game::autoPlayer(){
   for(int i=0; i<this->currentPlayer->nbUnits; i++){
     if(this->currentPlayer->units[i].isDONE ==false){
       if(this->currentPlayer->units[i].isMoving ==false){
-        autoMove(&currentPlayer->units[i],this->tabMap, this->unitRef);
+        autoMove(&currentPlayer->units[i],this->tabMapTile, this->unitRef);
       }
       if(this->currentPlayer->units[i].hasToAttack==true){
-        autoAttack(&currentPlayer->units[i],this->tabMap, this->unitRef);
+        autoAttack(&currentPlayer->units[i],this->tabMapTile, this->unitRef);
       }
     }
   }
@@ -389,7 +390,7 @@ void drawQuadsSelection()
   glEnd();
 }
 
-void displayPyramid(Unit unit, int size, int tabMap[]){
+void displayPyramid(Unit unit, int size, TileMap tabMap[]){
   glPushMatrix();
   glScalef(1, -1, 1.);
   //Drawing red square on selected unit
@@ -404,22 +405,22 @@ void displayPyramid(Unit unit, int size, int tabMap[]){
     {
       glPushMatrix();
       glTranslatef((-GL_VIEW_SIZE / 2) + (unit.x + y) * MAP_TILE_SIZE, (-GL_VIEW_SIZE / 2) + (unit.y + j) * MAP_TILE_SIZE, 0);
-      if (!(unit.x + y >= MAP_SIZE || unit.y + j >= MAP_SIZE) && ((tabMap[(unit.x + y) * MAP_SIZE + unit.y + j] == 1) || (tabMap[(unit.x + y) * MAP_SIZE + unit.y + j] == 2)))
+      if (!(unit.x + y >= MAP_SIZE || unit.y + j >= MAP_SIZE) && (tabMap[(unit.x + y) * MAP_SIZE + unit.y + j].isWalkable))
         drawQuadsSelection();
       glPopMatrix();
       glPushMatrix();
       glTranslatef((-GL_VIEW_SIZE / 2) + (unit.x - y) * MAP_TILE_SIZE, (-GL_VIEW_SIZE / 2) + (unit.y - j) * MAP_TILE_SIZE, 0);
-      if (!(unit.x - y < 0 || unit.y - j < 0) && ((tabMap[(unit.x - y) * MAP_SIZE + unit.y - j] == 1) || (tabMap[(unit.x - y) * MAP_SIZE + unit.y - j] == 2)))
+      if (!(unit.x - y < 0 || unit.y - j < 0) && (tabMap[(unit.x - y) * MAP_SIZE + unit.y - j].isWalkable))
         drawQuadsSelection();
       glPopMatrix();
       glPushMatrix();
       glTranslatef((-GL_VIEW_SIZE / 2) + (unit.x + y) * MAP_TILE_SIZE, (-GL_VIEW_SIZE / 2) + (unit.y - j) * MAP_TILE_SIZE, 0);
-      if (!(unit.x + y >= MAP_SIZE || unit.y - j < 0) && ((tabMap[(unit.x + y) * MAP_SIZE + unit.y - j] == 1) || (tabMap[(unit.x + y) * MAP_SIZE + unit.y - j] == 2)))
+      if (!(unit.x + y >= MAP_SIZE || unit.y - j < 0) && (tabMap[(unit.x + y) * MAP_SIZE + unit.y - j].isWalkable))
         drawQuadsSelection();
       glPopMatrix();
       glPushMatrix();
       glTranslatef((-GL_VIEW_SIZE / 2) + (unit.x - y) * MAP_TILE_SIZE, (-GL_VIEW_SIZE / 2) + (unit.y + j) * MAP_TILE_SIZE, 0);
-      if (!(unit.x - y < 0 || unit.y + j >= MAP_SIZE) && ((tabMap[(unit.x - y) * MAP_SIZE + unit.y + j] == 1) || (tabMap[(unit.x - y) * MAP_SIZE + unit.y + j] == 2)))
+      if (!(unit.x - y < 0 || unit.y + j >= MAP_SIZE) && (tabMap[(unit.x - y) * MAP_SIZE + unit.y + j].isWalkable))
         drawQuadsSelection();
       glPopMatrix();
     }
@@ -431,17 +432,17 @@ void Game::displaySelectdUnit()
   if (this->selected_unit != NULL && this->selected_unit->isMoving ==false && this->selected_unit->hasToAttack==false)
   {
     glColor4f(1, 0.6, 0, 0.5); //orange color
-    displayPyramid(*this->selected_unit,this->selected_unit->dexterity, this->tabMap);
+    displayPyramid(*this->selected_unit,this->selected_unit->dexterity, this->tabMapTile);
   }
   if(this->selected_unit != NULL && this->selected_unit->isMoving ==false && this->selected_unit->hasToAttack==true){
     glColor4f(0, 0.6, 1, 0.5); //light blue color
-    displayPyramid(*this->selected_unit,this->selected_unit->fireRange, this->tabMap);
+    displayPyramid(*this->selected_unit,this->selected_unit->fireRange, this->tabMapTile);
   }
 }
 
 bool Game::validClickMove(int x, int y)
 {
-  if ((x >= 0 && y >= 0 && x < MAP_SIZE && y < MAP_SIZE) && (this->tabMap[(x)*MAP_SIZE + y] == 1 || this->tabMap[(x)*MAP_SIZE + y] == 2) && (abs(this->selected_unit->x - x) + abs(this->selected_unit->y - y) <= this->selected_unit->dexterity))
+  if ((x >= 0 && y >= 0 && x < MAP_SIZE && y < MAP_SIZE) && (this->tabMapTile[(x)*MAP_SIZE + y].isWalkable) && (abs(this->selected_unit->x - x) + abs(this->selected_unit->y - y) <= this->selected_unit->dexterity))
   {
     //emepche d'aller sur d'autres unités
     for(int a = 0 ; a < this->nb_players ; a++){
@@ -506,7 +507,7 @@ void Game::clickCheck(float mouseX, float mouseY)
     mouseTileX = MAP_SIZE / 2 + mouseXpos / step;
     mouseTileY = MAP_SIZE / 2 + mouseYpos / step;
   }
-  //std::cout << "Tu as cliqué sur la case : " << mouseTileX << " ; " << mouseTileY << " : " << this->tabMap[mouseTileX * MAP_SIZE + mouseTileY] << std::endl;
+  std::cout << "Tu as cliqué sur la case : " << mouseTileX << " ; " << mouseTileY << " : " << this->tabMapTile[mouseTileX * MAP_SIZE + mouseTileY].textureId << std::endl;
   if (mouseTileX >= 0 && mouseTileY >= 0 && mouseTileX < MAP_SIZE && mouseTileY < MAP_SIZE)
   {
     this->lastClickX = mouseTileX;
@@ -534,7 +535,7 @@ void Game::clickCheck(float mouseX, float mouseY)
     if (this->selected_unit != NULL && !(lastClickX == this->selected_unit->x && lastClickY == this->selected_unit->y) && this->moving_unit == false && this->selected_unit->hasToAttack==false && validClickMove(lastClickX, lastClickY))
     {
         //this->moving_unit = true;
-        this->selected_unit->currentPath = aStar(this->tabMap, this->selected_unit->x, this->selected_unit->y, this->lastClickX, this->lastClickY);
+        this->selected_unit->currentPath = aStar(this->tabMapTile, this->selected_unit->x, this->selected_unit->y, this->lastClickX, this->lastClickY);
         this->selected_unit->isMoving =true;
         deplacement(this->selected_unit, lastClickX, lastClickY);
     }

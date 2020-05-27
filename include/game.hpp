@@ -10,6 +10,7 @@
 #include <SDL/SDL_mixer.h>
 #include "unit.hpp"
 #include "player.hpp"
+#include "map.hpp"
 
 class Game
 {
@@ -45,7 +46,8 @@ public :
     GLuint textureLink[MAP_SIZE*2];
     GLuint textureIds_units[nb_textures_units];
 
-    int tabMap[MAP_SIZE * MAP_SIZE];
+    //int tabMap[MAP_SIZE * MAP_SIZE];
+    TileMap tabMapTile[MAP_SIZE * MAP_SIZE];
 
     Unit *selected_unit=NULL;
     player *currentPlayer=NULL;

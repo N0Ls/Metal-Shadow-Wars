@@ -3,8 +3,9 @@
 #define NODE_H
 
 #include <stack>
-using namespace std;
 #include "constants.hpp"
+#include "map.hpp"
+using namespace std;
 
 struct Node{
   int x,y;
@@ -35,13 +36,13 @@ void initNode(Node *node, int x, int y);
 
 void displayNode(Node node);
 
-bool isValid(int x, int y, int map[MAP_SIZE*MAP_SIZE]);
+bool isValid(int x, int y, TileMap map[MAP_SIZE*MAP_SIZE]);
 bool isDestination(int x, int y, Node node_destination);
 
 double calculateHeuristic(int x, int y, Node node_destination);
 
 
 void generateNodeTab(int map[][MAP_SIZE], Node* nodeMap[]);
-stack <PathCoordinates> aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yDest);
+stack <PathCoordinates> aStar(TileMap map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yDest);
 
 #endif

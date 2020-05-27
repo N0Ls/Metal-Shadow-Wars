@@ -20,9 +20,9 @@ void displayNode(Node node){
   std::cout << node.x<< " , " << node.y << " is valid : " << node.validity <<'\n';
 }
 
-bool isValid(int x, int y, int map[MAP_SIZE*MAP_SIZE])
+bool isValid(int x, int y, TileMap map[MAP_SIZE*MAP_SIZE])
 {
-    if((x>=0 && y>=0 && x<MAP_SIZE && y<MAP_SIZE) && (map[(x)*MAP_SIZE+ y]==1 || map[(x)*MAP_SIZE+ y]==2)){
+    if((x>=0 && y>=0 && x<MAP_SIZE && y<MAP_SIZE) && (map[(x)*MAP_SIZE+ y].isWalkable)){
       return 1;
     }
     else{
@@ -159,7 +159,7 @@ void setNodeValues(Node *nodeToSet, Node current,Node dest){
   nodeToSet->f=nodeToSet->g+nodeToSet->h;
 }
 
-std::stack <PathCoordinates> aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yDest){
+std::stack <PathCoordinates> aStar(TileMap map[MAP_SIZE*MAP_SIZE], int xStart, int yStart, int xDest, int yDest){
   Node nodeMap[MAP_SIZE*MAP_SIZE];
   stack <PathCoordinates> path;
   //le tableau de pointeur est surement inutile
@@ -167,7 +167,7 @@ std::stack <PathCoordinates> aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int y
   for (int j = 0; j < MAP_SIZE; j++) {
     for (int k = 0; k < MAP_SIZE; k++) {
       initNode(&nodeMap[j*MAP_SIZE +k],j,k);
-      setValidity(&nodeMap[j*MAP_SIZE +k],map[j*MAP_SIZE+k]);
+      setValidity(&nodeMap[j*MAP_SIZE +k],map[j*MAP_SIZE+k].isWalkable);
     }
   }
 

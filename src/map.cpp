@@ -8,6 +8,12 @@ using namespace std;
 #include "constants.hpp"
 
 
+
+void setTile(TileMap *tile, GLuint textureId, bool isWalkable, bool isDestructible){
+  tile->textureId=textureId;
+  tile->isWalkable=isWalkable;
+  tile->isDestructible=isDestructible;
+}
 void drawQuads(){
   glBegin(GL_QUADS);
     glColor3f(1,1,1);
@@ -59,7 +65,7 @@ switch (bpp)
 
 
 
-void loadMap(int *tabMap){
+void loadMap(TileMap *tabMapTile){
   SDL_Surface *mapLoad;
   SDL_Surface *mapColor;
   char mapLoadImage[255]= {"doc/map.png"};
@@ -112,16 +118,16 @@ void loadMap(int *tabMap){
       //printf("Pixel Color -> R: %d,  G: %d,  B: %d,  A: %d\n", red, green, blue, alpha);
 
       if(red == 255 && green ==0 && blue ==0){
-        tabMap[y*MAP_SIZE + i]=3;
+        setTile(&tabMapTile[y*MAP_SIZE + i],3,0,0);
       }
       else if(red == 0 && green ==255 && blue ==0){
-        tabMap[y*MAP_SIZE + i]=2;
+        setTile(&tabMapTile[y*MAP_SIZE + i],2,1,0);
       }
       else if(red == 0 && green ==0 && blue ==255){
-        tabMap[y*MAP_SIZE + i]=0;
+        setTile(&tabMapTile[y*MAP_SIZE + i],0,0,0);
       }
       else{
-        tabMap[y*MAP_SIZE + i]=0;
+        setTile(&tabMapTile[y*MAP_SIZE + i],0,0,0);
       }
     }
   }
@@ -129,7 +135,7 @@ void loadMap(int *tabMap){
 
 }
 
-void fillGrid(GLuint textureIds[],GLuint textureLink[], int *tabMap){
+void fillGrid(GLuint textureIds[],GLuint textureLink[], TileMap *tabMapTile){
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glPushMatrix();
     glScalef(1,-1,1.);
@@ -138,7 +144,7 @@ void fillGrid(GLuint textureIds[],GLuint textureLink[], int *tabMap){
       for (int y = 0; y < MAP_SIZE; y++) {
           glPushMatrix();
             glTranslatef((-GL_VIEW_SIZE/2)+i*MAP_TILE_SIZE,(-GL_VIEW_SIZE/2)+y*MAP_TILE_SIZE,0);
-            glBindTexture(GL_TEXTURE_2D, textureIds[tabMap[i*MAP_SIZE + y]]);
+            glBindTexture(GL_TEXTURE_2D, textureIds[tabMapTile[i*MAP_SIZE + y].textureId]);
             drawQuads();
 
             // if (textureLink[t] < 6){
