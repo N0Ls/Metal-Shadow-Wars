@@ -22,7 +22,8 @@ public :
 
 private :
     bool isActiv;
-    const char *labels[NUMMENU] = {"Play", "Exit"};
+    const char *mainLabels[NUMMENU] = {"Play", "Exit"};
+    const char *pauseLabels[NUMMENU] = {"Continue", "Exit"};
     SDL_Color color[2] = {{255, 255, 255}, {255, 0, 0}};
 
 };

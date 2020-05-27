@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include "map.hpp"
+#include "menu.hpp"
 #include "constants.hpp"
 #include "texture.hpp"
 #include <iostream>
@@ -280,7 +281,6 @@ void Game::draw(SDL_Surface *surface)
       }
     }
   }
-
   SDL_GL_SwapBuffers();
 }
 void Game::update()
