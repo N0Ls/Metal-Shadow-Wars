@@ -75,7 +75,7 @@ void afficherListe(Liste *liste)
 
     while (current != NULL)
     {
-      displayNode(*current->node);
+      //displayNode(*current->node);
       current = current->next;
     }
     free(current);
@@ -176,8 +176,8 @@ std::stack <PathCoordinates> aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int y
 
   Node *currentNode = startingNode;
 
-  displayNode(*startingNode);
-  displayNode(*destNode);
+  // displayNode(*startingNode);
+  // displayNode(*destNode);
 
   if(destNode->validity == false){
     std::cout << "case non valide" << '\n';
@@ -227,7 +227,7 @@ std::stack <PathCoordinates> aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int y
   while(found==0 && toVisit->first !=NULL){
 
     currentNode = findcheapestNode(toVisit);
-    cout <<"cheapestNode : " ;
+    //cout <<"cheapestNode : " ;
     //displayNode(*currentNode);
     deleteNode(toVisit,*currentNode);
     insertion(visited,currentNode);
@@ -241,7 +241,7 @@ std::stack <PathCoordinates> aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int y
     }
 
     else{
-      cout << "pas encore trouvé"<<endl;
+      //cout << "pas encore trouvé"<<endl;
     }
 
     //check pour chaque enfant
@@ -326,7 +326,7 @@ std::stack <PathCoordinates> aStar(int map[MAP_SIZE*MAP_SIZE], int xStart, int y
   //Else we fill in the path stack
   else{
     while (currentNode->parent != NULL) {
-      displayNode(*currentNode);
+      //displayNode(*currentNode);
       PathCoordinates newPathCoord;
       newPathCoord.x = currentNode->x;
       newPathCoord.y = currentNode->y;

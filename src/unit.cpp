@@ -56,7 +56,7 @@ void updateDisplayCoordinates(Unit *unit){
 
       //on vérifie si on est arrivé sur la case
       if(unit->displayX > (destinationDisplayX-0.2) && unit->displayX < (destinationDisplayX+0.2) && unit->displayY >(destinationDisplayY-0.2) && unit->displayY <(destinationDisplayY+0.2)){
-        cout <<"on est arrivé à la case"<< endl;
+        //cout <<"on est arrivé à la case"<< endl;
         //on arrondie la position pour être sur une valeur entière
         unit->displayX = (-GL_VIEW_SIZE/2)+unit->currentDestination.x*MAP_TILE_SIZE;
         unit->displayY = (-GL_VIEW_SIZE/2)+unit->currentDestination.y*MAP_TILE_SIZE;
@@ -162,7 +162,6 @@ void autoMove(Unit *unit, int tab[],vector<Unit*> &unitRef)
           NewCoord.x=x;
           NewCoord.y=y;
           possibleTile.push_back(NewCoord);
-          cout << "adding the tile " << x << " : " << y << endl;
         }
       }
     }
@@ -182,8 +181,7 @@ void autoMove(Unit *unit, int tab[],vector<Unit*> &unitRef)
   srand(time(NULL)+rand());
   int randIndex = rand() % possibleTile.size();
   PathCoordinates randomTile = possibleTile[randIndex];
-  cout << endl << "selected " << randomTile.x << " : "  << randomTile.y <<endl;
-    cout << endl<< endl;
+
 
 
   unit->currentPath = aStar(tab, unit->x, unit->y, randomTile.x, randomTile.y);

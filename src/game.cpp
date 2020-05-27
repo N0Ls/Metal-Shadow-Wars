@@ -123,10 +123,6 @@ void Game::init(const char *title, int width, int height)
   this->currentPlayer = this->getCurrentPlayer();
   std::cout << "Tour n°" << Game::turn << endl;
   std::cout << "Joueur : " << this->currentPlayer->name << ", avec les unités :" << endl;
-  for (int i = 0; i < this->currentPlayer->nbUnits; i++)
-  {
-    printUnitInfos(&currentPlayer->units[i]);
-  }
 
   reshape(&surface, width, height);
 }
@@ -226,7 +222,7 @@ void Game::handleEvents()
     case SDL_MOUSEBUTTONDOWN:
       if (e.button.button == SDL_BUTTON_LEFT)
       {
-        printf("clic en (%d, %d)\n", e.button.x, e.button.y);
+        //printf("clic en (%d, %d)\n", e.button.x, e.button.y);
         Mix_PlayChannel(-1, this->click, 0);
         if(this->currentPlayer != NULL && this->currentPlayer->id==1){
           this->clickCheck(e.button.x, e.button.y);
@@ -271,7 +267,6 @@ void Game::draw(SDL_Surface *surface)
       if(this->players[g].units[a].isAlive == true){
           displayUnit(&this->players[g].units[a], this->textureIds_units);
       }
-      //printUnitInfos(this->players[g].units + a);
     }
   }
 
@@ -353,10 +348,10 @@ void Game::nextTurn()
   this->selected_unit = nullptr;
   std::cout << "Tour n°" << Game::turn << endl;
   //std::cout << "Joueur : " << currentPlayer.name << ", avec les unités :" << endl;
-  for (int i = 0; i < this->currentPlayer->nbUnits; i++)
-  {
-    printUnitInfos(&currentPlayer->units[i]);
-  }
+  // for (int i = 0; i < this->currentPlayer->nbUnits; i++)
+  // {
+  //   printUnitInfos(&currentPlayer->units[i]);
+  // }
   //
   // for(int y=0; y<this->nb_players ; y++){
   //   isAlive(&this->players[y]);
@@ -490,7 +485,6 @@ void Game::clickCheck(float mouseX, float mouseY)
     mouseYpos = ((mouseY / this->surface->h) * 1 / ratio - 0.5 * 1 / ratio);
   }
   float step = (float)0.5 / (MAP_SIZE / 2);
-  std::cout << mouseXpos / step << std::endl;
 
   if ((mouseXpos / step < -(MAP_SIZE / 2) && mouseXpos / step > -((MAP_SIZE / 2) + 1)) || (mouseYpos / step < -(MAP_SIZE / 2) && mouseYpos / step > -((MAP_SIZE / 2) + 1)))
   { //avoiding -0 symetry
@@ -502,7 +496,7 @@ void Game::clickCheck(float mouseX, float mouseY)
     mouseTileX = MAP_SIZE / 2 + mouseXpos / step;
     mouseTileY = MAP_SIZE / 2 + mouseYpos / step;
   }
-  std::cout << "Tu as cliqué sur la case : " << mouseTileX << " ; " << mouseTileY << " : " << this->tabMap[mouseTileX * MAP_SIZE + mouseTileY] << std::endl;
+  //std::cout << "Tu as cliqué sur la case : " << mouseTileX << " ; " << mouseTileY << " : " << this->tabMap[mouseTileX * MAP_SIZE + mouseTileY] << std::endl;
   if (mouseTileX >= 0 && mouseTileY >= 0 && mouseTileX < MAP_SIZE && mouseTileY < MAP_SIZE)
   {
     this->lastClickX = mouseTileX;
