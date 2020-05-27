@@ -24,6 +24,9 @@ void initPlayer(player *player, int id, int nbUnits, char name[], SDL_Color coul
         // setCoordinates(player->units + i, rand()%9, rand()%9);
         // updateDisplayCoordinates(player->units + i);
     }
+    if(player->nbUnits >= 4){
+      initRobot(&player->units.front());
+    }
 }
 
 void isAlive(player *playerToCheck)

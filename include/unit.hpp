@@ -47,6 +47,7 @@ void deplacement(Unit *unit , int destinationX, int destinationY);
 void attackUnit(Unit *attacker, Unit *defender);
 void autoMove(Unit *unit, TileMap tab[], vector<Unit*> &unitRef);
 void autoAttack(Unit *unit, TileMap tab[],vector<Unit*> &unitRef);
+void initRobot(Unit *unit);
 
 
 #endif

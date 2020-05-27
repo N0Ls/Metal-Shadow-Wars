@@ -24,6 +24,15 @@ void initUnit(Unit *unit, int id, player *owner, float pv,float force,float dext
   unit -> texture_id = texture_id;
 }
 
+void initRobot(Unit *unit){
+  unit->pv = 150;
+  unit->force = 75;
+  unit->dexterity = 2;
+  unit->fireRange=2;
+  unit->texture_id = 1;
+}
+
+
 void setCoordinates(Unit *unit, int x, int y){
   unit -> x = x;
   unit -> y = y;
@@ -107,8 +116,9 @@ void displayUnit(Unit *unit, GLuint textureIds_units[]){
   glTranslatef(unit->displayX, unit->displayY,0);
   glBindTexture(GL_TEXTURE_2D, textureIds_units[unit->texture_id]);
   //glRotatef(90,0,0,1);
+  float reduction=0.5;
   if(unit->isDONE==false){
-    glColor4f(unit->ownerPlayer->color.r,unit->ownerPlayer->color.g,unit->ownerPlayer->color.b,1);
+    glColor4f(unit->ownerPlayer->color.r*reduction,unit->ownerPlayer->color.g*reduction,unit->ownerPlayer->color.b*reduction,1);
   }
   else{
     glColor3f(1,1,1);
