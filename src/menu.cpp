@@ -181,7 +181,7 @@ void Menu::showPause(SDL_Surface *screen)
   // Selection state
   bool selected[NUMMENU] = {0, 0};
 
-  //SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x00, 0x00, 0x00));
+  SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x00, 0x00, 0x00));
 
   while (1)
   {

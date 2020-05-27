@@ -97,10 +97,10 @@ void Game::init(const char *title, int width, int height)
   init_textures(this->nb_sub_groups_textures, this->nb_textures_map, this->nb_textures_units, this->textureIds_map, this->textureIds_units, this->textureLink);
 
   /* INIT PLAYERS */
-  SDL_Color couleurJ1 = {.r = 255, .g = 0 , .b = 0};
-  SDL_Color couleurJ2 = {.r = 0, .g = 255 , .b = 255};
-  initPlayer(&this->players[0],0,this->nb_start_units,"Michel",couleurJ1);
-  initPlayer(&this->players[1],1,this->nb_start_units,"Jacques",couleurJ2);
+  SDL_Color couleurJ1 = {.r = 255, .g = 0, .b = 0};
+  SDL_Color couleurJ2 = {.r = 0, .g = 255, .b = 255};
+  initPlayer(&this->players[0], 0, this->nb_start_units, "Michel", couleurJ1);
+  initPlayer(&this->players[1], 1, this->nb_start_units, "Jacques", couleurJ2);
 
   if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
   {
@@ -120,31 +120,30 @@ void Game::init(const char *title, int width, int height)
 
   loadMap(this->tabMapTile);
 
-
-
   TTF_Font *font;
   TTF_Init();
   font = TTF_OpenFont("test.ttf", 30);
-    SDL_Color color={1,0,0};
+  SDL_Color color = {1, 0, 0};
   this->pause = TTF_RenderText_Solid(font, "ntm", color);
-  glGenTextures(1,&menu_tex[0]);
+  glGenTextures(1, &menu_tex[0]);
   glBindTexture(GL_TEXTURE_2D, menu_tex[0]);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   GLenum format;
-  switch(this->pause->format->BytesPerPixel){
-    case 1:
-          format = GL_RED;
-          break;
-      case 3:
-          format = GL_RGB;
-          break;
-      case 4:
-          format = GL_RGBA;
-          break;
-      default:
-          exit(EXIT_FAILURE);
+  switch (this->pause->format->BytesPerPixel)
+  {
+  case 1:
+    format = GL_RED;
+    break;
+  case 3:
+    format = GL_RGB;
+    break;
+  case 4:
+    format = GL_RGBA;
+    break;
+  default:
+    exit(EXIT_FAILURE);
   }
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,pause->w, pause->h, 0,format, GL_UNSIGNED_BYTE,pause->pixels);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pause->w, pause->h, 0, format, GL_UNSIGNED_BYTE, pause->pixels);
   glBindTexture(GL_TEXTURE_2D, 0);
 
   this->placeUnits();
@@ -158,17 +157,19 @@ void Game::init(const char *title, int width, int height)
   reshape(&surface, width, height);
 }
 
-
 void Game::placeUnits()
 {
   //Checking availableTiles
-  vector <PathCoordinates> availableTiles;
-  for(int j=0; j<MAP_SIZE ; j++){
-    for(int k=0; k<MAP_SIZE; k++){
-      if(this->tabMapTile[j*MAP_SIZE+k].isWalkable){
+  vector<PathCoordinates> availableTiles;
+  for (int j = 0; j < MAP_SIZE; j++)
+  {
+    for (int k = 0; k < MAP_SIZE; k++)
+    {
+      if (this->tabMapTile[j * MAP_SIZE + k].isWalkable)
+      {
         PathCoordinates newTile;
-        newTile.x=j;
-        newTile.y=k;
+        newTile.x = j;
+        newTile.y = k;
         availableTiles.push_back(newTile);
       }
     }
@@ -184,14 +185,14 @@ void Game::placeUnits()
   {
     for (int y = 0; y < this->players[i].nbUnits; y++)
     {
-      srand(time(NULL)+rand());
+      srand(time(NULL) + rand());
       //Maybe add different range for each players
       int randIndex = rand() % availableTiles.size();
       PathCoordinates randomTile = availableTiles[randIndex];
-      availableTiles.erase(availableTiles.begin()+randIndex); //removing available tile after use
+      availableTiles.erase(availableTiles.begin() + randIndex); //removing available tile after use
       setCoordinates(&this->players[i].units[y], randomTile.x, randomTile.y);
-      this->players[i].units[y].displayX = (-GL_VIEW_SIZE/2)+this->players[i].units[y].x*MAP_TILE_SIZE;
-      this->players[i].units[y].displayY = (-GL_VIEW_SIZE/2)+this->players[i].units[y].y*MAP_TILE_SIZE;
+      this->players[i].units[y].displayX = (-GL_VIEW_SIZE / 2) + this->players[i].units[y].x * MAP_TILE_SIZE;
+      this->players[i].units[y].displayY = (-GL_VIEW_SIZE / 2) + this->players[i].units[y].y * MAP_TILE_SIZE;
     }
   }
 
@@ -219,15 +220,17 @@ void Game::handleEvents()
     }
 
     /* Pause state */
-    if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_SPACE)
+    if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_SPACE)
     {
       //isPaused == true ? isPaused = false : isPaused = true;
-      if(this->isPaused==true){
-        this->isPaused=false;
+      if (this->isPaused == true)
+      {
+        this->isPaused = false;
       }
-      else{
-        this->isPaused=true;
-        cout << "game paused "<< endl;
+      else
+      {
+        this->isPaused = true;
+        cout << "game paused " << endl;
       }
       //std::cout << isPaused << std::endl;
     }
@@ -269,7 +272,8 @@ void Game::handleEvents()
       {
         //printf("clic en (%d, %d)\n", e.button.x, e.button.y);
         Mix_PlayChannel(-1, this->click, 0);
-        if(this->currentPlayer != NULL && this->currentPlayer->id==1){
+        if (this->currentPlayer != NULL && this->currentPlayer->id == 1)
+        {
           this->clickCheck(e.button.x, e.button.y);
         }
       }
@@ -322,97 +326,134 @@ void Game::draw(SDL_Surface *surface)
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-
   fillGrid(this->textureIds_map, this->textureLink, this->tabMapTile);
   this->displaySelectdUnit();
   for (int g = 0; g < this->nb_players; g++)
   {
     for (int a = 0; a < this->players[g].nbUnits; a++)
     {
-      if(this->players[g].units[a].isAlive == true){
-          displayUnit(&this->players[g].units[a], this->textureIds_units);
+      if (this->players[g].units[a].isAlive == true)
+      {
+        displayUnit(&this->players[g].units[a], this->textureIds_units);
       }
     }
   }
 
-    if(this->isPaused){
-      glColor4f(0,0,0,1);
+  if (this->isPaused)
+  {
 
-      glPushMatrix();
-      glScalef(1, -1, 1.);
+    glColor4f(0, 0, 0, 0.75);
 
+    glPushMatrix();
+    glScalef(1, -1, 1.);
 
-      glTranslatef(-50, -50,0);
-      glBindTexture(GL_TEXTURE_2D, this->menu_tex[0]);
-      glScalef(100, 100, 1.);
-        glPushMatrix();
-        drawQuadsSelection();
-        glPopMatrix();
-      glPopMatrix();
-      glBindTexture(GL_TEXTURE_2D, 0);
-    }
+    glTranslatef(-50, -50, 0);
+    glBindTexture(GL_TEXTURE_2D, this->menu_tex[0]);
+    glScalef(100, 100, 1.);
+    glPushMatrix();
+    drawQuadsSelection();
+
+    // Axes
+    int x, y;
+
+    // Font initialization
+    TTF_Font *font;
+    TTF_Init();
+    font = TTF_OpenFont("test.ttf", 30);
+
+    // Menu buttons
+    SDL_Surface *texte = TTF_RenderText_Blended(font, "Continuer", {255, 255, 255}),
+                *fond;
+
+    //SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 255, 255, 255));
+
+    SDL_Rect position;
+
+    position.x = 0;
+    position.y = 0;
+    SDL_BlitSurface(fond, NULL, surface, &position); /* Blit du fond */
+
+    // position.x = 60;
+    // position.y = 370;
+    // SDL_BlitSurface(texte, NULL, surface, &position); /* Blit du texte */
+    // SDL_Flip(surface);
+
+    glPopMatrix();
+    glPopMatrix();
+    glBindTexture(GL_TEXTURE_2D, 0);
+  }
 
   SDL_GL_SwapBuffers();
 }
 
-
-
 void Game::update()
 {
   //Checking victory
-  for(int y=0; y<this->nb_players;y++){
-    if(this->players[y].nbUnits <=0 || players[y].isAlive==false){
-      this->isRunning=false;
+  for (int y = 0; y < this->nb_players; y++)
+  {
+    if (this->players[y].nbUnits <= 0 || players[y].isAlive == false)
+    {
+      this->isRunning = false;
       return;
     }
   }
 
-  if(this->currentPlayer != NULL && this->currentPlayer->id==0){
+  if (this->currentPlayer != NULL && this->currentPlayer->id == 0)
+  {
     this->autoPlayer();
   }
 
-
-
   //Checking units status
-  bool playerDone=true;
-  for(int i=0; i<this->currentPlayer->nbUnits; i++){
-    if(this->currentPlayer->units[i].isDONE ==false){
-      playerDone=false;
+  bool playerDone = true;
+  for (int i = 0; i < this->currentPlayer->nbUnits; i++)
+  {
+    if (this->currentPlayer->units[i].isDONE == false)
+    {
+      playerDone = false;
     }
   }
-  if(playerDone){
+  if (playerDone)
+  {
     nextTurn();
   }
   return;
 }
 
-void Game::autoPlayer(){
+void Game::autoPlayer()
+{
   //getting other player id
 
   //checking
   //
-  for(int i=0; i<this->currentPlayer->nbUnits; i++){
-    if(this->currentPlayer->units[i].isDONE ==false){
-      if(this->currentPlayer->units[i].isMoving ==false){
-        autoMove(&currentPlayer->units[i],this->tabMapTile, this->unitRef);
+  for (int i = 0; i < this->currentPlayer->nbUnits; i++)
+  {
+    if (this->currentPlayer->units[i].isDONE == false)
+    {
+      if (this->currentPlayer->units[i].isMoving == false)
+      {
+        autoMove(&currentPlayer->units[i], this->tabMapTile, this->unitRef);
       }
-      if(this->currentPlayer->units[i].hasToAttack==true){
-        autoAttack(&currentPlayer->units[i],this->tabMapTile, this->unitRef);
+      if (this->currentPlayer->units[i].hasToAttack == true)
+      {
+        autoAttack(&currentPlayer->units[i], this->tabMapTile, this->unitRef);
       }
     }
   }
 }
 
-void Game::updateUnitList(){
+void Game::updateUnitList()
+{
   unitRef.clear();
-  for (int i = 0; i < this->nb_players; i++) {
-    for(int y = 0; y < this->players[i].nbUnits; y++){
+  for (int i = 0; i < this->nb_players; i++)
+  {
+    for (int y = 0; y < this->players[i].nbUnits; y++)
+    {
       this->unitRef.push_back(&this->players[i].units[y]);
     }
   }
 }
 
-player* Game::getCurrentPlayer()
+player *Game::getCurrentPlayer()
 {
   return &this->players[this->turn % this->nb_players];
 }
@@ -422,10 +463,11 @@ void Game::nextTurn()
   //end of last turn
   this->updateUnitList();
   //reset last current player units status
-  for(int u=0; u<this->currentPlayer->nbUnits;u++){
+  for (int u = 0; u < this->currentPlayer->nbUnits; u++)
+  {
     Unit *unitToReset;
-    unitToReset=&this->currentPlayer->units[u];
-    unitToReset->isDONE=false;
+    unitToReset = &this->currentPlayer->units[u];
+    unitToReset->isDONE = false;
   }
 
   //increment tour
@@ -446,12 +488,10 @@ void Game::nextTurn()
   // if(this->players[0].isAlive == false || this->players[1].isAlive==false){
   //   this->isRunning=false;
   // }
-
 }
 
-
-
-void displayPyramid(Unit unit, int size, TileMap tabMap[]){
+void displayPyramid(Unit unit, int size, TileMap tabMap[])
+{
   glPushMatrix();
   glScalef(1, -1, 1.);
   //Drawing red square on selected unit
@@ -524,13 +564,13 @@ void displayDestroyPyramid(Unit unit, int size, TileMap tabMap[]){
 }
 void Game::displaySelectdUnit()
 {
-  if (this->selected_unit != NULL && this->selected_unit->isMoving ==false && this->selected_unit->hasToAttack==false)
+  if (this->selected_unit != NULL && this->selected_unit->isMoving == false && this->selected_unit->hasToAttack == false)
   {
     glColor4f(1, 0.6, 0, 0.5); //orange color
-    displayPyramid(*this->selected_unit,this->selected_unit->dexterity, this->tabMapTile);
-
+    displayPyramid(*this->selected_unit, this->selected_unit->dexterity, this->tabMapTile);
   }
-  if(this->selected_unit != NULL && this->selected_unit->isMoving ==false && this->selected_unit->hasToAttack==true){
+  if (this->selected_unit != NULL && this->selected_unit->isMoving == false && this->selected_unit->hasToAttack == true)
+  {
     glColor4f(0, 0.6, 1, 0.5); //light blue color
     displayPyramid(*this->selected_unit,this->selected_unit->fireRange, this->tabMapTile);
     glColor4f(1, 0.3, 0, 0.5);
@@ -543,9 +583,12 @@ bool Game::validClickMove(int x, int y)
   if ((x >= 0 && y >= 0 && x < MAP_SIZE && y < MAP_SIZE) && (this->tabMapTile[(x)*MAP_SIZE + y].isWalkable) && (abs(this->selected_unit->x - x) + abs(this->selected_unit->y - y) <= this->selected_unit->dexterity))
   {
     //emepche d'aller sur d'autres unités
-    for(int a = 0 ; a < this->nb_players ; a++){
-      for(int b=0; b < this->players[a].nbUnits; b++){
-        if(x == this->players[a].units[b].x && y == this->players[a].units[b].y){
+    for (int a = 0; a < this->nb_players; a++)
+    {
+      for (int b = 0; b < this->players[a].nbUnits; b++)
+      {
+        if (x == this->players[a].units[b].x && y == this->players[a].units[b].y)
+        {
           return 0;
         }
       }
@@ -554,7 +597,7 @@ bool Game::validClickMove(int x, int y)
   }
   else
   {
-    cout << "Impossible de cliquer ici"<< endl;
+    cout << "Impossible de cliquer ici" << endl;
     return 0;
   }
 }
@@ -567,7 +610,7 @@ bool Game::validClickAttack(int x, int y)
   }
   else
   {
-    cout << "Impossible de tirer ici"<< endl;
+    cout << "Impossible de tirer ici" << endl;
     return 0;
   }
 }
@@ -612,17 +655,19 @@ void Game::clickCheck(float mouseX, float mouseY)
     this->lastClickY = mouseTileY;
 
     //Vérification de clic sur unité
-    for(int y=0; y < this->currentPlayer->nbUnits; y++){
-      if (mouseTileX == this->currentPlayer->units[y].x && mouseTileY == this->currentPlayer->units[y].y && this->currentPlayer->units[y].isDONE==false)
+    for (int y = 0; y < this->currentPlayer->nbUnits; y++)
+    {
+      if (mouseTileX == this->currentPlayer->units[y].x && mouseTileY == this->currentPlayer->units[y].y && this->currentPlayer->units[y].isDONE == false)
       {
-        if (this->selected_unit != NULL && this->selected_unit->x == mouseTileX && this->selected_unit->y == mouseTileY && this->selected_unit->hasToAttack==false)
+        if (this->selected_unit != NULL && this->selected_unit->x == mouseTileX && this->selected_unit->y == mouseTileY && this->selected_unit->hasToAttack == false)
         {
           std::cout << "unité désélectionnée" << '\n';
           this->selected_unit = NULL;
         }
         else
         {
-          if((this->selected_unit != NULL && this->selected_unit->hasToAttack==false && this->selected_unit->isMoving==false) || this->selected_unit==NULL){
+          if ((this->selected_unit != NULL && this->selected_unit->hasToAttack == false && this->selected_unit->isMoving == false) || this->selected_unit == NULL)
+          {
             this->selected_unit = &currentPlayer->units[y];
             std::cout << "unité cliquée" << std::endl;
           }
@@ -630,24 +675,27 @@ void Game::clickCheck(float mouseX, float mouseY)
       }
     }
 
-    if (this->selected_unit != NULL && !(lastClickX == this->selected_unit->x && lastClickY == this->selected_unit->y) && this->moving_unit == false && this->selected_unit->hasToAttack==false && validClickMove(lastClickX, lastClickY))
+    if (this->selected_unit != NULL && !(lastClickX == this->selected_unit->x && lastClickY == this->selected_unit->y) && this->moving_unit == false && this->selected_unit->hasToAttack == false && validClickMove(lastClickX, lastClickY))
     {
-        //this->moving_unit = true;
-        this->selected_unit->currentPath = aStar(this->tabMapTile, this->selected_unit->x, this->selected_unit->y, this->lastClickX, this->lastClickY);
-        this->selected_unit->isMoving =true;
-        deplacement(this->selected_unit, lastClickX, lastClickY);
+      //this->moving_unit = true;
+      this->selected_unit->currentPath = aStar(this->tabMapTile, this->selected_unit->x, this->selected_unit->y, this->lastClickX, this->lastClickY);
+      this->selected_unit->isMoving = true;
+      deplacement(this->selected_unit, lastClickX, lastClickY);
     }
-    if(this->selected_unit != NULL && this->moving_unit == false && this->selected_unit->hasToAttack==true && validClickAttack(lastClickX, lastClickY))
+    if (this->selected_unit != NULL && this->moving_unit == false && this->selected_unit->hasToAttack == true && validClickAttack(lastClickX, lastClickY))
     {
-      cout << "FUS RO DAH"<< endl;
+      cout << "FUS RO DAH" << endl;
 
       //check where firing
       //FRIENDLY FIRE ACTIVATED
-      for(int o=0; o < this->nb_players; o++){
-        for(int p=0; p<this->players[o].nbUnits; p++){
-          int xTargetCheck=this->players[o].units[p].x;
-          int yTargetCheck=this->players[o].units[p].y;
-          if(lastClickX == xTargetCheck && lastClickY ==yTargetCheck){
+      for (int o = 0; o < this->nb_players; o++)
+      {
+        for (int p = 0; p < this->players[o].nbUnits; p++)
+        {
+          int xTargetCheck = this->players[o].units[p].x;
+          int yTargetCheck = this->players[o].units[p].y;
+          if (lastClickX == xTargetCheck && lastClickY == yTargetCheck)
+          {
             cout << "Bim !" << endl;
             attackUnit(this->selected_unit, &this->players[o].units[p]);
           }
@@ -657,9 +705,9 @@ void Game::clickCheck(float mouseX, float mouseY)
         }
       }
 
-      this->selected_unit->hasToAttack=false;
+      this->selected_unit->hasToAttack = false;
       this->selected_unit->isDONE = true;
-      this->selected_unit=nullptr;
+      this->selected_unit = nullptr;
     }
   }
 }
