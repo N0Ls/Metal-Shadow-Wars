@@ -57,7 +57,7 @@ int Menu::showMain(const char *title, int width, int height)
   // Font initialization
   TTF_Font *font;
   TTF_Init();
-  font = TTF_OpenFont("test.ttf", 30);
+  font = TTF_OpenFont("./doc/indelible.ttf", 40);
 
   // Menu buttons
   SDL_Surface *menus[NUMMENU];
@@ -159,7 +159,7 @@ void Menu::showPause(SDL_Surface *screen)
   // Font initialization
   TTF_Font *font;
   TTF_Init();
-  font = TTF_OpenFont("test.ttf", 30);
+  font = TTF_OpenFont("./doc/indelible.ttf", 30);
 
   // Menu buttons
   SDL_Surface *menus[NUMMENU];
