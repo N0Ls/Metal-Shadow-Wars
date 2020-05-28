@@ -671,8 +671,8 @@ void Game::clean()
 {
 
   /* AJOUTER LE CLEAN DES TEXTURES*/
+
   SDL_FreeSurface(this->surface);
-  SDL_FreeSurface(this->surfaceTextes);
   glDisable(GL_TEXTURE_2D);
   Mix_FreeMusic(this->music);
   Mix_FreeChunk(this->click);

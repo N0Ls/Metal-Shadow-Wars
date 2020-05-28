@@ -44,14 +44,15 @@ public :
     static const int nb_sub_groups_textures = 2;
     static const int nb_textures_map = 4;
     static const int nb_textures_units = 3;
+    static const int nb_textures_txt = 1;
 
     GLuint textureIds_map[nb_textures_map];
     GLuint textureLink[MAP_SIZE*2];
     GLuint textureIds_units[nb_textures_units];
     GLuint menu_tex[1];
-    GLuint textureText[1];
+    GLuint textureText[nb_textures_txt];
 
-    SDL_Surface surfaceTextes[1];
+    SDL_Surface surfaceTextes[nb_textures_txt];
 
     //int tabMap[MAP_SIZE * MAP_SIZE];
     TileMap tabMapTile[MAP_SIZE * MAP_SIZE];
