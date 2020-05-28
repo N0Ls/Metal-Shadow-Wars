@@ -57,6 +57,7 @@ int Menu::showMain(const char *title, int width, int height)
   // Font initialization
   TTF_Font *font;
   TTF_Init();
+
   font = TTF_OpenFont("./fonts/indelible.ttf", 40);
 
   // Menu buttons

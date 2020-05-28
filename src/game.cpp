@@ -119,32 +119,46 @@ void Game::init(const char *title, int width, int height)
   }
 
   loadMap(this->tabMapTile);
-
-  TTF_Font *font;
-  TTF_Init();
-  font = TTF_OpenFont("fonts/indelible.ttf", 30);
-  SDL_Color color = {1, 0, 0};
-  this->pause = TTF_RenderText_Solid(font, "ntm", color);
-  glGenTextures(1, &menu_tex[0]);
-  glBindTexture(GL_TEXTURE_2D, menu_tex[0]);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  GLenum format;
-  switch (this->pause->format->BytesPerPixel)
-  {
-  case 1:
-    format = GL_RED;
-    break;
-  case 3:
-    format = GL_RGB;
-    break;
-  case 4:
-    format = GL_RGBA;
-    break;
-  default:
-    exit(EXIT_FAILURE);
-  }
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pause->w, pause->h, 0, format, GL_UNSIGNED_BYTE, pause->pixels);
-  glBindTexture(GL_TEXTURE_2D, 0);
+        // TTF_Init();
+        // if (TTF_Init() < 0)
+        // {
+        //     printf("Couldn't initialize SDL TTF: %s\n", SDL_GetError());
+        //
+        //     exit(1);
+        // }
+        // TTF_Font *font;
+        // font = TTF_OpenFont("fonts/indelible.ttf", 30);
+        // if (font == NULL)
+        // {
+        // printf("Failed to open Font");
+        //
+        // exit(1);
+        // }
+        //
+        // SDL_Surface *pause;
+        // SDL_Color color = {1, 1, 1};
+        // this->pause = TTF_RenderText_Solid(font, "supreme ntm", color);
+        // glGenTextures(1, this->menu_tex);
+        // glBindTexture(GL_TEXTURE_2D, *this->menu_tex);
+        //
+        // GLenum format;
+        // switch (this->pause->format->BytesPerPixel)
+        // {
+        // case 1:
+        //   format = GL_RED;
+        //   break;
+        // case 3:
+        //   format = GL_RGB;
+        //   break;
+        // case 4:
+        //   format = GL_RGBA;
+        //   break;
+        // default:
+        //   exit(EXIT_FAILURE);
+        // }
+        // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->pause->w, this->pause->h, 0, format, GL_UNSIGNED_BYTE, this->pause->pixels);
+        // glBindTexture(GL_TEXTURE_2D, 0);
+        // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
   this->placeUnits();
 
@@ -319,7 +333,60 @@ void drawQuadsSelection()
   glEnd();
 }
 
-void Game::draw(SDL_Surface *surface)
+void Game::displayText(){
+  TTF_Init();
+  if (TTF_Init() < 0)
+  {
+      printf("Couldn't initialize SDL TTF: %s\n", SDL_GetError());
+      exit(1);
+  }
+  TTF_Font *font;
+  font = TTF_OpenFont("fonts/indelible.ttf", 35);
+  if (font == NULL)
+  {
+    printf("Failed to open Font");
+    exit(1);
+  }
+
+ SDL_Rect dest;
+ SDL_Surface *surfaceTmp;
+ SDL_Color foregroundColor;
+
+ foregroundColor.r = 1;
+ foregroundColor.g = 1;
+ foregroundColor.b = 1;
+
+ /* On utilise SDL_TTF pour générer une SDL_Surface à partir d'une chaîne de caractères (string) */
+
+ surfaceTmp = TTF_RenderText_Solid(font, "supreme ntm", foregroundColor);
+
+ if (surfaceTmp == NULL)
+ {
+     printf("Couldn't create String %s: %s\n", "chienne de ttf", SDL_GetError());
+
+     return;
+ }
+ //
+ /* On blitte cette SDL_Surface à l'écran */
+
+ dest.x = 0;
+ dest.y = 0;
+ dest.w = surfaceTmp->w;
+ dest.h = surfaceTmp->h;
+ //
+ if(this->surface==NULL){
+   printf("this surface null");
+   exit(0);
+ }
+ cout << dest.w<< " : " << dest.h << endl;
+ SDL_BlitSurface(surfaceTmp, NULL, this->surface, &dest);
+ printf("Done blit \n");
+ /* On libère la SDL_Surface temporaire (pour éviter les fuites de mémoire - cf. chapitre dédié) */
+ SDL_FreeSurface(surfaceTmp);
+ TTF_CloseFont(font);
+ //SDL_FreeSurface(font);
+}
+void Game::draw()
 {
   glClearColor(0, 0, 0, 0);
   glClear(GL_COLOR_BUFFER_BIT);
@@ -341,50 +408,15 @@ void Game::draw(SDL_Surface *surface)
 
   if (this->isPaused)
   {
+    //displayText();
 
-    glColor4f(0, 0, 0, 0.75);
 
-    glPushMatrix();
-    glScalef(1, -1, 1.);
-
-    glTranslatef(-50, -50, 0);
-    glBindTexture(GL_TEXTURE_2D, this->menu_tex[0]);
-    glScalef(100, 100, 1.);
-    glPushMatrix();
-    drawQuadsSelection();
-
-    // Axes
-    int x, y;
-
-    // Font initialization
-    TTF_Font *font;
-    TTF_Init();
-    font = TTF_OpenFont("test.ttf", 30);
-
-    // Menu buttons
-    SDL_Surface *texte = TTF_RenderText_Blended(font, "Continuer", {255, 255, 255}),
-                *fond;
-
-    //SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 255, 255, 255));
-
-    SDL_Rect position;
-
-    position.x = 0;
-    position.y = 0;
-    SDL_BlitSurface(fond, NULL, surface, &position); /* Blit du fond */
-
-    // position.x = 60;
-    // position.y = 370;
-    // SDL_BlitSurface(texte, NULL, surface, &position); /* Blit du texte */
-    // SDL_Flip(surface);
-
-    glPopMatrix();
-    glPopMatrix();
-    glBindTexture(GL_TEXTURE_2D, 0);
   }
 
   SDL_GL_SwapBuffers();
 }
+
+
 
 void Game::update()
 {

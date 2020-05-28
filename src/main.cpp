@@ -46,7 +46,7 @@ int main(int argc, const char *argv[])
 
       game->handleEvents();
 
-      game->draw(game->surface);
+      game->draw();
       game->update();
 
       frameTime = SDL_GetTicks() - frameStart;
