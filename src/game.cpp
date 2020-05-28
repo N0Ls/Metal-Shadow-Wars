@@ -212,14 +212,14 @@ void Game::handleEvents()
       break;
     }
 
-    /* Close window */
+    /* Close window | Fermer la fenêtre */
     if (e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_q || e.key.keysym.sym == SDLK_ESCAPE))
     {
       isRunning = false;
       break;
     }
 
-    /* Pause state */
+    /* Pause state | Etat de pause*/
     if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_SPACE)
     {
       //isPaused == true ? isPaused = false : isPaused = true;
@@ -239,7 +239,7 @@ void Game::handleEvents()
     {
       if (Mix_PlayingMusic() == 0)
       {
-        //On lance la musique
+        //On lance la musique | We start playing music
         Mix_PlayMusic(this->music, -1);
         break;
       }
