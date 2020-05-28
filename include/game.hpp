@@ -12,6 +12,7 @@
 #include "player.hpp"
 #include "map.hpp"
 #include "menu.hpp"
+#include "text.hpp"
 
 class Game
 {
@@ -30,7 +31,6 @@ public :
     bool paused() { return isPaused; };
     bool done() { return isDone; };
     void clickCheck(float mouseX,float mouseY);
-    void displayText();
 
     void changeState(bool state);
 
@@ -49,6 +49,9 @@ public :
     GLuint textureLink[MAP_SIZE*2];
     GLuint textureIds_units[nb_textures_units];
     GLuint menu_tex[1];
+    GLuint textureText[1];
+
+    SDL_Surface surfaceTextes[1];
 
     //int tabMap[MAP_SIZE * MAP_SIZE];
     TileMap tabMapTile[MAP_SIZE * MAP_SIZE];
