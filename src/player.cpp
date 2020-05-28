@@ -1,10 +1,11 @@
-using namespace std;
+
 #include <iostream>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
 #include "player.hpp"
 #include "unit.hpp"
+using namespace std;
 
 void initPlayer(player *player, int id, int nbUnits, char name[], SDL_Color couleur)
 {
