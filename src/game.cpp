@@ -328,7 +328,7 @@ void Game::draw()
       glScalef(25,25,0);
       drawQuadsSelection();
     glPopMatrix();
-    displayText(this->surfaceTextes,*this->textureText, 0, -40);
+    displayText(this->surfaceTextes,*this->textureText, 50, 10);
   }
 
   SDL_GL_SwapBuffers();
@@ -671,7 +671,7 @@ void Game::clean()
 {
 
   /* AJOUTER LE CLEAN DES TEXTURES*/
-
+  TTF_Quit();
   SDL_FreeSurface(this->surface);
   glDisable(GL_TEXTURE_2D);
   Mix_FreeMusic(this->music);

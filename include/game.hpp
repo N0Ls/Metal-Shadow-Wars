@@ -51,7 +51,6 @@ public :
     GLuint textureIds_units[nb_textures_units];
     GLuint menu_tex[1];
     GLuint textureText[nb_textures_txt];
-
     SDL_Surface surfaceTextes[nb_textures_txt];
 
     //int tabMap[MAP_SIZE * MAP_SIZE];

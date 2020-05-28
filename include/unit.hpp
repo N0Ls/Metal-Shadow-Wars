@@ -8,6 +8,8 @@
 #include <vector>
 #include "node.hpp"
 #include "map.hpp"
+#include "text.hpp"
+#include <SDL/SDL_ttf.h>
 using namespace std;
 
 struct player;
@@ -34,7 +36,11 @@ struct Unit{
     GLuint texture_id;
     stack <PathCoordinates> currentPath;
     PathCoordinates currentDestination;
-};
+
+    SDL_Surface surfaceText[1];
+    GLuint textureText[1];
+
+  };
 
 
 //Declaration of prototypes

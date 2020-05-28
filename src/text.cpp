@@ -44,11 +44,13 @@ void createTextureText(GLuint *texture, SDL_Surface *surfaceText){
 void displayText(SDL_Surface *surfaceText, GLuint texture_id, float x, float y){
   float w = (float)surfaceText->w/10;
   float h = (float)surfaceText->h/10;
+  glLoadIdentity();
   glClearColor(0, 0, 0, 0);
   glColor3f(1,1,1);
   glPushMatrix();
     glScalef(1,-1,1);
     glTranslatef(-w/2,-h/2,0);
+    //glTranslatef(-50,-50,0);
     glTranslatef(x,y,0);
     glBindTexture(GL_TEXTURE_2D, texture_id);
 

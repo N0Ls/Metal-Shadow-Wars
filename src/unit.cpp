@@ -37,6 +37,14 @@ void initUnit(Unit *unit, int id, player *owner, float pv,float force,float dext
   unit -> isMoving = false;
   unit -> arrayIndex = arrayIndex;
   unit -> texture_id = texture_id;
+
+  TTF_Font *font =TTF_OpenFont("./fonts/indelible.ttf", 15);
+  SDL_Color couleurTXT = {255,255, 255};
+  //unit->surfaceText=NULL;
+  char pvChar[10];
+  sprintf(pvChar, "%d", (int)unit->pv);
+  createText(unit->surfaceText,font, unit->textureText, pvChar, couleurTXT);
+
 }
 
 
@@ -194,6 +202,11 @@ void drawQuadUnit(){
  *
  */
 void displayUnit(Unit *unit, GLuint textureIds_units[]){
+
+  float step = 100/MAP_SIZE;
+
+  displayText(unit->surfaceText, *unit->textureText,unit->displayX+step/2, unit->displayY-step/2);
+
   glClearColor(0, 0, 0, 0);
   glPushMatrix();
   glScalef(1,-1,1.);
