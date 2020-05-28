@@ -41,7 +41,7 @@ public :
 
     //Textures
     static const int nb_sub_groups_textures = 2;
-    static const int nb_textures_map = 6;
+    static const int nb_textures_map = 4;
     static const int nb_textures_units = 2;
 
     GLuint textureIds_map[nb_textures_map];

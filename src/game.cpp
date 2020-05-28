@@ -107,8 +107,8 @@ void Game::init(const char *title, int width, int height)
     exit(EXIT_FAILURE);
   }
 
-  this->music = Mix_LoadMUS("doc/test.wav");
-  this->click = Mix_LoadWAV("doc/click.wav");
+  this->music = Mix_LoadMUS("sounds/test.wav");
+  this->click = Mix_LoadWAV("sounds/click.wav");
 
   if (this->music == NULL || this->click == NULL)
   {
@@ -122,7 +122,7 @@ void Game::init(const char *title, int width, int height)
 
   TTF_Font *font;
   TTF_Init();
-  font = TTF_OpenFont("test.ttf", 30);
+  font = TTF_OpenFont("fonts/indelible.ttf", 30);
   SDL_Color color = {1, 0, 0};
   this->pause = TTF_RenderText_Solid(font, "ntm", color);
   glGenTextures(1, &menu_tex[0]);

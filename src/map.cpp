@@ -68,7 +68,7 @@ switch (bpp)
 void loadMap(TileMap *tabMapTile){
   SDL_Surface *mapLoad;
   SDL_Surface *mapColor;
-  char mapLoadImage[255]= {"doc/map.png"};
+  char mapLoadImage[255]= {"assets/map.png"};
   mapLoad = IMG_Load(mapLoadImage);
   if(NULL == mapLoad) {
       fprintf(stderr, "Echec du chargement de l'image %s\n",mapLoadImage );

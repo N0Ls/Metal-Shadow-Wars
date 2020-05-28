@@ -11,8 +11,8 @@ using namespace std;
 #include "constants.hpp"
 
 void init_textures(int nb_sub_groups,int nb_textures_map, int nb_textures_units, GLuint *textureIds_map, GLuint *textureIds_units ,GLuint *textureLink){
-  char textures_paths_map[nb_textures_map][255]= { "doc/water.jpg","doc/grass_block_side.png","doc/tile.jpg","doc/block.jpg","doc/mountain.png","doc/factory.png"};
-  char textures_paths_units[nb_textures_units][255] = {"doc/perso.png","doc/perso2.png"};
+  char textures_paths_map[nb_textures_map][255]= { "assets/water.jpg","assets/grass_block_side.png","assets/tile.jpg","assets/block.jpg" };
+  char textures_paths_units[nb_textures_units][255] = { "assets/perso.png","assets/perso2.png" };
   for(int i = 0; i < MAP_SIZE*2 - 1; i++){
     textureLink[i] = rand()%4 + 1;
   }//Tableau qui fait le lien entre les coordonnées [ligne*i + colonne*j] et la texture associée bien définie
@@ -23,6 +23,7 @@ void init_textures(int nb_sub_groups,int nb_textures_map, int nb_textures_units,
   for(int a=0 ; a < nb_sub_groups ; a ++){
     for(int i=0; i < nb_textures_map; i++){
       images_map[i] = IMG_Load(textures_paths_map[i]);
+      std::cout << images_map[i] << std::endl;
       if(NULL == images_map[i]) {
           fprintf(stderr, "Echec du chargement de l'image %s\n", textures_paths_map[i]);
           exit(EXIT_FAILURE);
