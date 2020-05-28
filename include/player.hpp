@@ -24,6 +24,7 @@ struct player {
 void isAlive(player *playerToCheck);
 
 void initPlayer(player *player, int id, int nbUnits, char name[], SDL_Color couleur);
+void updateUnitIndex(player *player);
 
 void display_infos();
 void buy_unit();
