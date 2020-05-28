@@ -1,10 +1,11 @@
-using namespace std;
+
 #include <iostream>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
 #include "player.hpp"
 #include "unit.hpp"
+using namespace std;
 
 void initPlayer(player *player, int id, int nbUnits, char name[], SDL_Color couleur)
 {
@@ -33,5 +34,12 @@ void isAlive(player *playerToCheck)
 {
   if(playerToCheck->nbUnits <=0){
     playerToCheck->isAlive =false;
+  }
+}
+
+void updateUnitIndex(player *player){
+  for (int i = 0; i < player->units.size(); i++) {
+    cout << player->units[i].arrayIndex<<endl;
+    player->units[i].arrayIndex=i;
   }
 }

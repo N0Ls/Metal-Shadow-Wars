@@ -156,6 +156,7 @@ void attackUnit(Unit *attacker, Unit *defender)
         playerMourning->units.erase(playerMourning->units.begin()+defender->arrayIndex);
         playerMourning->nbUnits=playerMourning->units.size();
         // Retirer l'unité de la liste des unités du joueur
+        updateUnitIndex(playerMourning);
     }
 }
 
