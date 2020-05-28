@@ -44,7 +44,7 @@ void createTextureText(GLuint *texture, SDL_Surface *surfaceText){
 void displayText(SDL_Surface *surfaceText, GLuint texture_id, float x, float y){
   float w = (float)surfaceText->w/10;
   float h = (float)surfaceText->h/10;
-
+  glClearColor(0, 0, 0, 0);
   glColor3f(1,1,1);
   glPushMatrix();
     glScalef(1,-1,1);

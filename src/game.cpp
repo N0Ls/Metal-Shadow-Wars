@@ -123,7 +123,7 @@ void Game::init(const char *title, int width, int height)
 
   TTF_Init();
   TTF_Font *font =TTF_OpenFont("./fonts/indelible.ttf", 40);
-  SDL_Color couleurTXT = {255, 255, 255};
+  SDL_Color couleurTXT = {0,0, 255};
 
   createText(this->surfaceTextes,font, this->textureText, "NTM", couleurTXT);
 
@@ -253,7 +253,7 @@ void Game::handleEvents()
       {
         //printf("clic en (%d, %d)\n", e.button.x, e.button.y);
         Mix_PlayChannel(-1, this->click, 0);
-        if (this->currentPlayer != NULL && this->currentPlayer->id == 1)
+        if (this->currentPlayer != NULL && this->currentPlayer->id == 1 && this->isPaused==false)
         {
           this->clickCheck(e.button.x, e.button.y);
         }
@@ -322,6 +322,12 @@ void Game::draw()
 
   if (this->isPaused)
   {
+    glColor4f(0,0,0,0.5);
+    glPushMatrix();
+      glTranslatef(-50,-50,0);
+      glScalef(25,25,0);
+      drawQuadsSelection();
+    glPopMatrix();
     displayText(this->surfaceTextes,*this->textureText, 0, -40);
   }
 
@@ -666,6 +672,7 @@ void Game::clean()
 
   /* AJOUTER LE CLEAN DES TEXTURES*/
   SDL_FreeSurface(this->surface);
+  SDL_FreeSurface(this->surfaceTextes);
   glDisable(GL_TEXTURE_2D);
   Mix_FreeMusic(this->music);
   Mix_FreeChunk(this->click);
