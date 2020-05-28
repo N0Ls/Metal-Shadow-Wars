@@ -11,7 +11,7 @@ void initPlayer(player *player, int id, int nbUnits, char name[], SDL_Color coul
 {
     player->id = id;
     strcpy(player->name, name);
-    player->color = couleur;
+    player->color = couleur;  
     player->nbUnits = nbUnits;
     player->resources = 45;
     player->isAlive = true;
@@ -27,6 +27,7 @@ void initPlayer(player *player, int id, int nbUnits, char name[], SDL_Color coul
     }
     if(player->nbUnits >= 4){
       initRobot(&player->units.front());
+      initDog(&player->units.back());
     }
 }
 

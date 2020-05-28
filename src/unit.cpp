@@ -58,6 +58,22 @@ void initRobot(Unit *unit){
 
 /**
  *
+ * Setting the unit atttributes to correspond to a dog.
+ *
+ * @param unit The unit to modify.
+ *
+ */
+void initDog(Unit *unit){
+  unit->pv = 120;
+  unit->force = 70;
+  unit->dexterity = 4;
+  unit->fireRange=1;
+  unit->texture_id = 2;
+}
+
+
+/**
+ *
  * Set the coordinates of a unit.
  *
  * @param unit The unit to modify.

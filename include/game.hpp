@@ -36,7 +36,7 @@ public :
     int turn;
 
     static const int nb_players = 2 ;
-    static const int nb_start_units = 4;
+    static const int nb_start_units = 5;
     player players[nb_players];
 
     //Textures
