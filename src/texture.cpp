@@ -23,7 +23,6 @@ void init_textures(int nb_sub_groups,int nb_textures_map, int nb_textures_units,
   for(int a=0 ; a < nb_sub_groups ; a ++){
     for(int i=0; i < nb_textures_map; i++){
       images_map[i] = IMG_Load(textures_paths_map[i]);
-      std::cout << images_map[i] << std::endl;
       if(NULL == images_map[i]) {
           fprintf(stderr, "Echec du chargement de l'image %s\n", textures_paths_map[i]);
           exit(EXIT_FAILURE);
