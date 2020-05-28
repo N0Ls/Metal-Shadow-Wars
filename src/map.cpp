@@ -135,7 +135,7 @@ void loadMap(TileMap *tabMapTile){
 
 void destroyEnvironnement(TileMap *tabMapTile, int x , int y){
   if(tabMapTile[x*MAP_SIZE + y].isDestructible){
-      setTile(&tabMapTile[x*MAP_SIZE + y],2,1,0);
+      setTile(&tabMapTile[x*MAP_SIZE + y],1,1,0);
   }
 }
 
