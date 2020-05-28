@@ -35,3 +35,10 @@ void isAlive(player *playerToCheck)
     playerToCheck->isAlive =false;
   }
 }
+
+void updateUnitIndex(player *player){
+  for (int i = 0; i < player->units.size(); i++) {
+    cout << player->units[i].arrayIndex<<endl;
+    player->units[i].arrayIndex=i;
+  }
+}
