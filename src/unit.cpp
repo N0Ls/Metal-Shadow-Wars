@@ -38,12 +38,12 @@ void initUnit(Unit *unit, int id, player *owner, float pv,float force,float dext
   unit -> arrayIndex = arrayIndex;
   unit -> texture_id = texture_id;
 
-  TTF_Font *font =TTF_OpenFont("./fonts/indelible.ttf", 15);
+  TTF_Font *font2 =TTF_OpenFont("./fonts/indelible.ttf", 15);
   SDL_Color couleurTXT = {255,255, 255};
   //unit->surfaceText=NULL;
   char pvChar[10];
   sprintf(pvChar, "%d", (int)unit->pv);
-  createText(unit->surfaceText,font, unit->textureText, pvChar, couleurTXT);
+  createText(unit->surfaceText,font2, unit->textureText, "pute", couleurTXT);
 
 }
 
@@ -310,47 +310,63 @@ void autoMove(Unit *unit, TileMap tab[],vector<Unit*> &unitRef)
       }
     }
   }
-  // //searching the closest unit
-  // Unit* closestUnit = NULL;
-  // Unit* currentUnit = NULL;
-  // int closestDistance = MAP_SIZE*MAP_SIZE;
-  //
-  // for(int l=0; l<(int)unitRef.size(); l++){
-  //   currentUnit=unitRef[l];
-  //   int currentDistance = abs(unit->x - currentUnit->x) + abs(unit->y - currentUnit->y);
-  //   if(currentDistance<closestDistance && currentUnit->ownerId != unit->ownerId){
-  //     closestUnit=currentUnit;
-  //     closestDistance=currentDistance;
-  //   }
-  // }
-  // cout << "closest Unit to " << unit->x << ":" << unit->y << "   is  " << closestUnit->x << ":" << closestUnit->y<< endl;
-  //
-  // srand(time(NULL)+rand());
-  // int randIndex = rand() % possibleTile.size();
-  //
-  // PathCoordinates closestTile = possibleTile[(int)randIndex];
-  // int closestDistanceTiles = abs(closestUnit->x - closestTile.x) + abs(closestUnit->y - closestTile.y);
-  //
-  // for(int j = 0 ; j<(int)possibleTile.size(); j++){
-  //   PathCoordinates currentCoordTiles=possibleTile[j];
-  //   int currentDistanceTiles = abs(closestUnit->x - currentCoordTiles.x) + abs(closestUnit->y - currentCoordTiles.y);
-  //   if(currentDistanceTiles < closestDistanceTiles){
-  //     closestTile.x = currentCoordTiles.x;
-  //     closestTile.y = currentCoordTiles.y;
-  //     closestDistanceTiles=currentDistanceTiles;
-  //   }
-  // }
-  // cout << "closest Tile to " << closestUnit->x << ":" << closestUnit->y << "   is  " << closestTile.x << ":" << closestTile.y<< endl;
-  //EX CODE using random Tile
-  srand(time(NULL)+rand());
-  int randIndex = rand() % possibleTile.size();
-  PathCoordinates randomTile = possibleTile[randIndex];
+  //searching the closest unit
+  Unit* closestUnit = NULL; //to correct segFault
+  Unit* currentUnit = unitRef[0];
+  int closestDistance = abs(unit->x - currentUnit->x) + abs(unit->y - currentUnit->y);
 
-  unit->currentPath = aStar(tab, unit->x, unit->y, randomTile.x, randomTile.y);
-  unit->isMoving =true;
+  for(int l=0; l<(int)unitRef.size(); l++){
+    currentUnit=unitRef[l];
+    int currentDistance = abs(unit->x - currentUnit->x) + abs(unit->y - currentUnit->y);
+    if(currentDistance<=closestDistance && currentUnit->ownerId != unit->ownerId){
+      closestUnit=currentUnit;
+      closestDistance=currentDistance;
+    }
+  }
+  if(closestUnit!=NULL){
+      cout << "closest Unit to " << unit->x << ":" << unit->y << "   is  " << closestUnit->x << ":" << closestUnit->y<< endl;
+  }
+  else{
+    cout << "closest null" << endl;
+  }
+  if(closestUnit!=NULL){
+    srand(time(NULL)+rand());
+    int randIndex = rand() % possibleTile.size();
 
-  deplacement(unit, randomTile.x, randomTile.y);
-  unit->hasToAttack =true;
+    PathCoordinates closestTile = possibleTile[(int)randIndex];
+    int closestDistanceTiles = abs(closestUnit->x - closestTile.x) + abs(closestUnit->y - closestTile.y);
+
+    for(int j = 0 ; j<(int)possibleTile.size(); j++){
+      PathCoordinates currentCoordTiles=possibleTile[j];
+      int currentDistanceTiles = abs(closestUnit->x - currentCoordTiles.x) + abs(closestUnit->y - currentCoordTiles.y);
+      if(currentDistanceTiles < closestDistanceTiles){
+        closestTile.x = currentCoordTiles.x;
+        closestTile.y = currentCoordTiles.y;
+        closestDistanceTiles=currentDistanceTiles;
+      }
+    }
+    cout << "closest Tile to " << closestUnit->x << ":" << closestUnit->y << "   is  " << closestTile.x << ":" << closestTile.y<< endl;
+
+
+    unit->currentPath = aStar(tab, unit->x, unit->y, closestTile.x, closestTile.y);
+    unit->isMoving =true;
+
+    deplacement(unit, closestTile.x, closestTile.y);
+    unit->hasToAttack =true;
+  }
+  else{
+    //EX CODE using random Tile
+    srand(time(NULL)+rand());
+    int randIndex = rand() % possibleTile.size();
+    PathCoordinates randomTile = possibleTile[randIndex];
+
+    unit->currentPath = aStar(tab, unit->x, unit->y, randomTile.x, randomTile.y);
+    unit->isMoving =true;
+
+    deplacement(unit, randomTile.x, randomTile.y);
+    unit->hasToAttack =true;
+  }
+
 }
 
 /**
