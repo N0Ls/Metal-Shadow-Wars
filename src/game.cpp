@@ -376,13 +376,14 @@ void Game::autoPlayer()
   //
   for (int i = 0; i < this->currentPlayer->nbUnits; i++)
   {
+    this->updateUnitList();
     if (this->currentPlayer->units[i].isDONE == false)
     {
       if (this->currentPlayer->units[i].isMoving == false)
       {
         autoMove(&currentPlayer->units[i], this->tabMapTile, this->unitRef);
       }
-      if (this->currentPlayer->units[i].hasToAttack == true)
+      if (this->currentPlayer->units[i].hasToAttack == true && this->currentPlayer->units[i].isMoving == false)
       {
         autoAttack(&currentPlayer->units[i], this->tabMapTile, this->unitRef);
       }
