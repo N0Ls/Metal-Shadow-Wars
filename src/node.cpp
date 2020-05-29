@@ -163,7 +163,9 @@ std::stack <PathCoordinates> aStar(TileMap map[MAP_SIZE*MAP_SIZE], int xStart, i
   Node nodeMap[MAP_SIZE*MAP_SIZE];
   stack <PathCoordinates> path;
   //le tableau de pointeur est surement inutile
-
+  if(xStart==xDest && yStart==yDest){
+    return path;
+  }
   for (int j = 0; j < MAP_SIZE; j++) {
     for (int k = 0; k < MAP_SIZE; k++) {
       initNode(&nodeMap[j*MAP_SIZE +k],j,k);
