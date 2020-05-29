@@ -30,7 +30,7 @@ void initPlayer(player *player, int id, int nbUnits, char name[], SDL_Color coul
     for (int i = 0; i < nbUnits; i++)
     {
       Unit newUnit;
-      initUnit(&newUnit, i, player,100, 50, 4, 3, i, 0);
+      initUnit(&newUnit, id, player,100, 50, 4, 3, i, 0);
       player->units.push_back(newUnit);
     }
     if(player->nbUnits >= 4){

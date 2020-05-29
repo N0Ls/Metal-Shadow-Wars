@@ -312,14 +312,43 @@ void autoMove(Unit *unit, TileMap tab[],vector<Unit*> &unitRef)
     }
   }
 
-  srand(time(NULL)+rand());
-  int randIndex = rand() % possibleTile.size();
-  PathCoordinates randomTile = possibleTile[randIndex];
+  //searching the closest unit
+  int closestDistance = MAP_SIZE*MAP_SIZE;
+  Unit* closestUnit = NULL;
+  Unit* currentUnit = NULL;
+  for(int l=0; l<(int)unitRef.size(); l++){
+    currentUnit=unitRef[l];
+    int currentDistance = abs(unit->x - currentUnit->x) + abs(unit->y - currentUnit->y);
+    if(currentDistance<closestDistance && currentUnit->ownerId != unit->ownerId){
+      closestUnit=currentUnit;
+      closestDistance=currentDistance;
+    }
+  }
+  cout << "closest Unit to " << unit->x << ":" << unit->y << "   is  " << closestUnit->x << ":" << closestUnit->y<< endl;
 
-  unit->currentPath = aStar(tab, unit->x, unit->y, randomTile.x, randomTile.y);
+
+  PathCoordinates closestTile;
+  int closestDistanceTiles = MAP_SIZE*MAP_SIZE;
+
+  for(int j = 0 ; j<(int)possibleTile.size(); j++){
+    PathCoordinates currentCoordTiles=possibleTile[j];
+    int currentDistanceTiles = abs(closestUnit->x - currentCoordTiles.x) + abs(closestUnit->y - currentCoordTiles.y);
+    if(currentDistanceTiles < closestDistanceTiles){
+      closestTile.x = currentCoordTiles.x;
+      closestTile.y = currentCoordTiles.y;
+      closestDistanceTiles=currentDistanceTiles;
+    }
+  }
+  cout << "closest Tile to " << closestUnit->x << ":" << closestUnit->y << "   is  " << closestTile.x << ":" << closestTile.y<< endl;
+  //EX CODE using random Tile
+  // srand(time(NULL)+rand());
+  // int randIndex = rand() % possibleTile.size();
+  // PathCoordinates randomTile = possibleTile[randIndex];
+
+  unit->currentPath = aStar(tab, unit->x, unit->y, closestTile.x, closestTile.y);
   unit->isMoving =true;
 
-  deplacement(unit, randomTile.x, randomTile.y);
+  deplacement(unit, closestTile.x, closestTile.y);
   unit->hasToAttack =true;
 }
 

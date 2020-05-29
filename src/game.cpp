@@ -328,9 +328,8 @@ void Game::draw()
       glScalef(25,25,0);
       drawQuadsSelection();
     glPopMatrix();
-    displayText(this->surfaceTextes,*this->textureText, 50, 10);
+    displayText(this->surfaceTextes,*this->textureText, 0, -40);
   }
-
   SDL_GL_SwapBuffers();
 }
 
