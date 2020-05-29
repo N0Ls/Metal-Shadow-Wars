@@ -74,6 +74,7 @@ public :
     std::vector<Unit*> unitRef;
 
     SDL_Surface *pause;
+    bool endMenu=false;
 private :
     int counter;
     bool isRunning;

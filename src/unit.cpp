@@ -73,7 +73,7 @@ void initRobot(Unit *unit){
  */
 void initDog(Unit *unit){
   unit->pv = 120;
-  unit->force = 70;
+  unit->force = 60;
   unit->dexterity = 4;
   unit->fireRange=1;
   unit->texture_id = 2;

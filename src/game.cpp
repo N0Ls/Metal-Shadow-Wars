@@ -343,6 +343,7 @@ void Game::update()
     if (this->players[y].nbUnits <= 0 || players[y].isAlive == false)
     {
       this->isRunning = false;
+      this->endMenu = true;
       return;
     }
   }
@@ -661,6 +662,8 @@ void Game::clickCheck(float mouseX, float mouseY)
     }
   }
 }
+
+
 
 void Game::changeState(bool state)
 {

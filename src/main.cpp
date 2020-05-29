@@ -62,7 +62,9 @@ int main(int argc, const char *argv[])
         SDL_Delay(frameDelay - frameTime);
       }
     }
-
+    while(game->endMenu){
+      game->endMenu = false;
+    }
     game->clean();
   }
 

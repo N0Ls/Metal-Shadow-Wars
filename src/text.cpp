@@ -73,3 +73,8 @@ void displayText(SDL_Surface *surfaceText, GLuint texture_id, float x, float y){
 
   glPopMatrix();
 }
+
+void loadEndMenu(){
+
+  // createText(SDL_Surface *surfaceText, TTF_Font *police, GLuint *texture_id, char *txtContent, SDL_Color color)
+}
