@@ -300,7 +300,6 @@ void autoMove(Unit *unit, TileMap tab[],vector<Unit*> &unitRef)
       }
     }
   }
-
   //removing tiles with unit on it
   for(int z = 0 ; z<(int)possibleTile.size(); z++){
     for(int w = 0 ; w<(int)unitRef.size(); w++){
@@ -311,44 +310,46 @@ void autoMove(Unit *unit, TileMap tab[],vector<Unit*> &unitRef)
       }
     }
   }
-
-  //searching the closest unit
-  int closestDistance = MAP_SIZE*MAP_SIZE;
-  Unit* closestUnit = NULL;
-  Unit* currentUnit = NULL;
-  for(int l=0; l<(int)unitRef.size(); l++){
-    currentUnit=unitRef[l];
-    int currentDistance = abs(unit->x - currentUnit->x) + abs(unit->y - currentUnit->y);
-    if(currentDistance<closestDistance && currentUnit->ownerId != unit->ownerId){
-      closestUnit=currentUnit;
-      closestDistance=currentDistance;
-    }
-  }
-  cout << "closest Unit to " << unit->x << ":" << unit->y << "   is  " << closestUnit->x << ":" << closestUnit->y<< endl;
-
-
-  PathCoordinates closestTile;
-  int closestDistanceTiles = MAP_SIZE*MAP_SIZE;
-
-  for(int j = 0 ; j<(int)possibleTile.size(); j++){
-    PathCoordinates currentCoordTiles=possibleTile[j];
-    int currentDistanceTiles = abs(closestUnit->x - currentCoordTiles.x) + abs(closestUnit->y - currentCoordTiles.y);
-    if(currentDistanceTiles < closestDistanceTiles){
-      closestTile.x = currentCoordTiles.x;
-      closestTile.y = currentCoordTiles.y;
-      closestDistanceTiles=currentDistanceTiles;
-    }
-  }
-  cout << "closest Tile to " << closestUnit->x << ":" << closestUnit->y << "   is  " << closestTile.x << ":" << closestTile.y<< endl;
-  //EX CODE using random Tile
+  // //searching the closest unit
+  // Unit* closestUnit = NULL;
+  // Unit* currentUnit = NULL;
+  // int closestDistance = MAP_SIZE*MAP_SIZE;
+  //
+  // for(int l=0; l<(int)unitRef.size(); l++){
+  //   currentUnit=unitRef[l];
+  //   int currentDistance = abs(unit->x - currentUnit->x) + abs(unit->y - currentUnit->y);
+  //   if(currentDistance<closestDistance && currentUnit->ownerId != unit->ownerId){
+  //     closestUnit=currentUnit;
+  //     closestDistance=currentDistance;
+  //   }
+  // }
+  // cout << "closest Unit to " << unit->x << ":" << unit->y << "   is  " << closestUnit->x << ":" << closestUnit->y<< endl;
+  //
   // srand(time(NULL)+rand());
   // int randIndex = rand() % possibleTile.size();
-  // PathCoordinates randomTile = possibleTile[randIndex];
+  //
+  // PathCoordinates closestTile = possibleTile[(int)randIndex];
+  // int closestDistanceTiles = abs(closestUnit->x - closestTile.x) + abs(closestUnit->y - closestTile.y);
+  //
+  // for(int j = 0 ; j<(int)possibleTile.size(); j++){
+  //   PathCoordinates currentCoordTiles=possibleTile[j];
+  //   int currentDistanceTiles = abs(closestUnit->x - currentCoordTiles.x) + abs(closestUnit->y - currentCoordTiles.y);
+  //   if(currentDistanceTiles < closestDistanceTiles){
+  //     closestTile.x = currentCoordTiles.x;
+  //     closestTile.y = currentCoordTiles.y;
+  //     closestDistanceTiles=currentDistanceTiles;
+  //   }
+  // }
+  // cout << "closest Tile to " << closestUnit->x << ":" << closestUnit->y << "   is  " << closestTile.x << ":" << closestTile.y<< endl;
+  //EX CODE using random Tile
+  srand(time(NULL)+rand());
+  int randIndex = rand() % possibleTile.size();
+  PathCoordinates randomTile = possibleTile[randIndex];
 
-  unit->currentPath = aStar(tab, unit->x, unit->y, closestTile.x, closestTile.y);
+  unit->currentPath = aStar(tab, unit->x, unit->y, randomTile.x, randomTile.y);
   unit->isMoving =true;
 
-  deplacement(unit, closestTile.x, closestTile.y);
+  deplacement(unit, randomTile.x, randomTile.y);
   unit->hasToAttack =true;
 }
 
@@ -363,8 +364,9 @@ void autoMove(Unit *unit, TileMap tab[],vector<Unit*> &unitRef)
  */
 void autoAttack(Unit *unit, TileMap tab[], vector<Unit*> &unitRef){
   //privileging units in range
+  unit->hasToAttack=false;
   for(int w = 0 ; w<(int)unitRef.size(); w++){
-    if(abs(unit->x - unitRef[w]->x) + abs(unit->y - unitRef[w]->y) <= unit->fireRange && !(unit->x ==unitRef[w]->x && unit->y ==unitRef[w]->y)){
+    if(abs(unit->x - unitRef[w]->x) + abs(unit->y - unitRef[w]->y) <= unit->fireRange && !(unit->x ==unitRef[w]->x && unit->y ==unitRef[w]->y) && unit->ownerId != unitRef[w]->ownerId){
       attackUnit(unit, unitRef[w]);
       unit->isDONE=true;
       cout << "Joueur clavier attaqué" << endl;
