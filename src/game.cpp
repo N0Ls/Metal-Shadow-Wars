@@ -486,6 +486,7 @@ void Game::updateUnitList()
  *
  * Method that get the current player according the turn we are playing at the moment
  *
+ * @return the current player
  *
  */
 player *Game::getCurrentPlayer()
@@ -642,6 +643,8 @@ void Game::displaySelectdUnit()
  * @param x The x value where we clicked.
  * @param y The y value where we clicked.
  *
+ * @return Return true or false according to the validity of the movement
+ *
  */
 bool Game::validClickMove(int x, int y)
 {
@@ -675,6 +678,7 @@ bool Game::validClickMove(int x, int y)
  * @param x The x value where we clicked.
  * @param y The y value where we clicked.
  *
+ * @return True or false according the validity of the attack
  */
 bool Game::validClickAttack(int x, int y)
 {
