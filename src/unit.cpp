@@ -312,8 +312,8 @@ void autoMove(Unit *unit, TileMap tab[],vector<Unit*> &unitRef)
   }
   //searching the closest unit
   Unit* closestUnit = NULL; //to correct segFault
-  Unit* currentUnit = unitRef[0];
-  int closestDistance = abs(unit->x - currentUnit->x) + abs(unit->y - currentUnit->y);
+  Unit* currentUnit = NULL;
+  int closestDistance = MAP_SIZE+MAP_SIZE;
 
   for(int l=0; l<(int)unitRef.size(); l++){
     currentUnit=unitRef[l];
@@ -347,7 +347,6 @@ void autoMove(Unit *unit, TileMap tab[],vector<Unit*> &unitRef)
     }
     cout << "closest Tile to " << closestUnit->x << ":" << closestUnit->y << "   is  " << closestTile.x << ":" << closestTile.y<< endl;
 
-
     unit->currentPath = aStar(tab, unit->x, unit->y, closestTile.x, closestTile.y);
     unit->isMoving =true;
 
@@ -355,7 +354,7 @@ void autoMove(Unit *unit, TileMap tab[],vector<Unit*> &unitRef)
     //unit->hasToAttack =true;
   }
   else{
-    //EX CODE using random Tile
+    //When NULL using a random tile
     srand(time(NULL)+rand());
     int randIndex = rand() % possibleTile.size();
     PathCoordinates randomTile = possibleTile[randIndex];
