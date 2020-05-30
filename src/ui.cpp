@@ -5,6 +5,7 @@
 #include "text.hpp"
 #include <SDL/SDL_ttf.h>
 #include "constants.hpp"
+#include "player.hpp"
 using namespace std;
 
 void drawQuadsMenu()
@@ -24,6 +25,7 @@ void drawQuadsMenu()
   glEnd();
 }
 
+
 void loadPauseMenu(SDL_Surface *surface, GLuint *textureIdText){
   TTF_Init();
   TTF_Font *font =TTF_OpenFont("./fonts/indelible.ttf", 40);
@@ -42,4 +44,39 @@ void displayPauseMenu(SDL_Surface *surface, GLuint *textureIdText){
     drawQuadsMenu();
   glPopMatrix();
   displayText(surface,*textureIdText, 0, -40);
+}
+
+void loadEndMenu(SDL_Surface *surface, GLuint *textureIdText, player *winner){
+  TTF_Init();
+  TTF_Font *font =TTF_OpenFont("./fonts/indelible.ttf", 40);
+  SDL_Color couleurTXT = {255,255, 255};
+
+  char congrats[25] = "CONGRATULATIONS";
+  createText(&surface[0],font, &textureIdText[0], congrats, couleurTXT);
+
+  TTF_Font *font2 =TTF_OpenFont("./fonts/ChelseaMarket-Regular.ttf", 40);
+
+
+  createText(&surface[1],font2, &textureIdText[1], winner->name, couleurTXT);
+
+  TTF_CloseFont(font);
+  TTF_CloseFont(font2);
+
+
+}
+
+void displayEndMenu(SDL_Surface *surface, GLuint *textureIdText){
+  glClearColor(0, 0, 0, 0);
+  glClear(GL_COLOR_BUFFER_BIT);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  glColor4f(0,0,0,0.5);
+  glPushMatrix();
+    glTranslatef(-50,-50,0);
+    glScalef(25,25,0);
+    drawQuadsMenu();
+  glPopMatrix();
+  displayText(&surface[0],textureIdText[0], 0, -10);
+  displayText(&surface[1],textureIdText[1], 0, 10);
+  SDL_GL_SwapBuffers();
 }

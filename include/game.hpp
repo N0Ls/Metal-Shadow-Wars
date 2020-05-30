@@ -73,8 +73,11 @@ public :
 
     std::vector<Unit*> unitRef;
 
-    SDL_Surface *pause;
+
     bool endMenu=false;
+    SDL_Surface endMenuSurface[10];
+    GLuint textureEndMenu[10];
+
 private :
     int counter;
     bool isRunning;

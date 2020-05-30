@@ -12,6 +12,7 @@
 #include "map.hpp"
 #include "menu.hpp"
 #include <string.h>
+#include "ui.hpp"
 
 #include <iostream>
 
@@ -57,9 +58,10 @@ int main(int argc, const char *argv[])
         SDL_Delay(frameDelay - frameTime);
       }
     }
+    loadEndMenu(&game->endMenuSurface[0], game->textureEndMenu, game->currentPlayer);
     while(game->endMenu){
       game->handleEvents();
-      //game->endMenu = false;
+      displayEndMenu(&game->endMenuSurface[0], game->textureEndMenu);
     }
     game->clean();
   }
