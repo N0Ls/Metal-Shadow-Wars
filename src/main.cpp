@@ -32,7 +32,6 @@ int main(int argc, const char *argv[])
 
   if (c == 0)
   {
-    // game->changeState(true);
     game = new Game();
 
     game->init("IMAC WARS 2 - Game", WINDOW_WIDTH, WINDOW_HEIGHT);

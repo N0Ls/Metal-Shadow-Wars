@@ -33,7 +33,6 @@ public :
     bool paused() { return isPaused; };
     bool done() { return isDone; };
     void clickCheck(float mouseX,float mouseY);
-    void changeState(bool state);
     void placeUnits();
     bool validClickMove(int x, int y);
     bool validClickAttack(int x, int y);
