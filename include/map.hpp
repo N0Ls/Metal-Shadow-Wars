@@ -8,13 +8,14 @@
 #include <stdio.h>
 #include "constants.hpp"
 
-
+//Structure
 struct TileMap{
   GLuint textureId;
   bool isWalkable;
   bool isDestructible;
 };
 
+//Declaration of prototypes
 void setTile(TileMap *tile, GLuint textureId, bool isWalkable, bool isDestructible);
 void fillGrid(GLuint textureIds[], GLuint textureLink[], TileMap *tabMapTile);
 Uint32 getpixel(SDL_Surface *surface, int x, int y);

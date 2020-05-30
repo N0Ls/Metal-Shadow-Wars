@@ -5,8 +5,8 @@
 #include <SDL/SDL_image.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "unit.hpp"
 #include <vector>
+#include "unit.hpp"
 using namespace std;
 
 
@@ -21,13 +21,12 @@ struct player {
   SDL_Color color;
 } ;
 
-//Functions related to the player
+//Declaration of prototypes of functions related to players
 void isAlive(player *playerToCheck);
 void initPlayer(player *player, int id, int nbUnits, const char name[], SDL_Color couleur);
 void updateUnitIndex(player *player);
 
 //Not implemented yet
-void display_infos();
 void buy_unit();
 
 #endif

@@ -12,7 +12,9 @@
 #include <SDL/SDL_ttf.h>
 using namespace std;
 
+//reference to player struct
 struct player;
+//structure of the unit
 struct Unit{
     int ownerId;
     player *ownerPlayer;

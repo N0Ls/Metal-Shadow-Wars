@@ -2,12 +2,12 @@
 #define GAME_H
 
 #include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "constants.hpp"
-#include <SDL/SDL_mixer.h>
 #include "unit.hpp"
 #include "player.hpp"
 #include "map.hpp"
@@ -21,6 +21,8 @@ public :
     Game();
     ~Game();
     SDL_Surface *surface;
+
+    //Methods
     void reshape(SDL_Surface** surface, unsigned int width, unsigned int height);
     void init(const char* title, int width, int height);
     void handleEvents();
@@ -31,11 +33,16 @@ public :
     bool paused() { return isPaused; };
     bool done() { return isDone; };
     void clickCheck(float mouseX,float mouseY);
-
     void changeState(bool state);
+    void placeUnits();
+    bool validClickMove(int x, int y);
+    bool validClickAttack(int x, int y);
+    void nextTurn();
+    void autoPlayer();
 
     int turn;
 
+    //Players
     static const int nb_players = 2 ;
     static const int nb_start_units = 5;
     player players[nb_players];
@@ -53,27 +60,19 @@ public :
     GLuint textureText[nb_textures_txt];
     SDL_Surface surfaceTextes[nb_textures_txt];
 
-    //int tabMap[MAP_SIZE * MAP_SIZE];
+    //Map
     TileMap tabMapTile[MAP_SIZE * MAP_SIZE];
 
     Unit *selected_unit=NULL;
     player *currentPlayer=NULL;
 
+    //Units
+    bool unitPlaced=false;
     bool move = false;
     bool moving_unit = false;
-
-    bool unitPlaced=false;
-    void placeUnits();
-
-    bool validClickMove(int x, int y);
-    bool validClickAttack(int x, int y);
-
-    void nextTurn();
-    void autoPlayer();
-
     std::vector<Unit*> unitRef;
 
-
+    //End Menu
     bool endMenu=false;
     SDL_Surface endMenuSurface[10];
     GLuint textureEndMenu[10];
@@ -96,4 +95,4 @@ private :
 
 };
 
-#endif /* GAME_H */
+#endif
