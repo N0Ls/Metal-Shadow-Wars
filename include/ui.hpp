@@ -9,5 +9,6 @@
 using namespace std;
 
 void loadPauseMenu(SDL_Surface *surface, GLuint *textureIdText);
+void displayPauseMenu(SDL_Surface *surface, GLuint *textureIdText);
 
 #endif

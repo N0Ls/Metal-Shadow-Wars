@@ -122,7 +122,6 @@ void Game::init(const char *title, int width, int height)
   }
   Mix_PlayMusic(this->music, -1);
 
-
   loadMap(this->tabMapTile);
   loadPauseMenu(this->surfaceTextes,this->textureText);
 
@@ -208,11 +207,13 @@ void Game::handleEvents()
       if (this->isPaused == true)
       {
         this->isPaused = false;
+        Mix_ResumeMusic();
       }
       else
       {
         this->isPaused = true;
         cout << "game paused " << endl;
+        Mix_PauseMusic();
       }
       //std::cout << isPaused << std::endl;
     }
@@ -323,13 +324,7 @@ void Game::draw()
 
   if (this->isPaused)
   {
-    glColor4f(0,0,0,0.5);
-    glPushMatrix();
-      glTranslatef(-50,-50,0);
-      glScalef(25,25,0);
-      drawQuadsSelection();
-    glPopMatrix();
-    displayText(this->surfaceTextes,*this->textureText, 0, -40);
+    displayPauseMenu(this->surfaceTextes , this->textureText);
   }
   SDL_GL_SwapBuffers();
 }
