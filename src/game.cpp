@@ -150,6 +150,7 @@ void Game::init(const char *title, int width, int height)
 
   //Place units
   this->placeUnits();
+  this->selected_unit = nullptr;
 
   //Init games turns
   this->turn = 1;

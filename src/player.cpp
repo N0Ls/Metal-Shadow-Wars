@@ -24,7 +24,6 @@ void initPlayer(player *player, int id, int nbUnits, const char name[], SDL_Colo
     player->nbUnits = nbUnits;
     player->resources = 45;
     player->isAlive = true;
-    std::cout << "Init Units" << '\n';
 
     //Initialization of the units
     for (int i = 0; i < nbUnits; i++)
