@@ -44,7 +44,7 @@ void initUnit(Unit *unit, int id, player *owner, float pv,float force,float dext
   char pvChar[10];
   sprintf(pvChar, "%d", (int)unit->pv);
   createText(unit->surfaceText,font2, unit->textureText, pvChar, couleurTXT);
-
+  TTF_CloseFont(font2);
 }
 
 
@@ -390,4 +390,20 @@ void autoAttack(Unit *unit, TileMap tab[], vector<Unit*> &unitRef){
     }
   }
   unit->isDONE=true;
+}
+
+/**
+ *
+ * Update the text above the unit
+ *
+ * @param unit The unit we want to update the text.
+ *
+ */
+void updateTextUnit(Unit *unit){
+  TTF_Font *font2 =TTF_OpenFont("./fonts/ChelseaMarket-Regular.ttf", 15);
+  SDL_Color couleurTXT = {255,255, 255};
+  char pvChar[10];
+  sprintf(pvChar, "%d", (int)unit->pv);
+  createText(unit->surfaceText,font2, unit->textureText, pvChar, couleurTXT);
+  TTF_CloseFont(font2);
 }

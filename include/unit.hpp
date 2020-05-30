@@ -55,6 +55,7 @@ void autoMove(Unit *unit, TileMap tab[], vector<Unit*> &unitRef);
 void autoAttack(Unit *unit, TileMap tab[],vector<Unit*> &unitRef);
 void initRobot(Unit *unit);
 void initDog(Unit *unit);
+void updateTextUnit(Unit *unit);
 
 
 #endif

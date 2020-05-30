@@ -126,7 +126,7 @@ void Game::init(const char *title, int width, int height)
   SDL_Color couleurTXT = {0,0, 255};
 
   createText(this->surfaceTextes,font, this->textureText, "NTM", couleurTXT);
-
+  TTF_CloseFont(font);
   this->placeUnits();
 
   //Initialisation des tours
@@ -418,6 +418,7 @@ void Game::nextTurn()
   {
     Unit *unitToReset;
     unitToReset = &this->currentPlayer->units[u];
+    updateTextUnit(unitToReset);
     unitToReset->isDONE = false;
   }
 
