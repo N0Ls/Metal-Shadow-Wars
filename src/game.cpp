@@ -110,7 +110,7 @@ void Game::init(const char *title, int width, int height)
     exit(EXIT_FAILURE);
   }
 
-  this->music = Mix_LoadMUS("sounds/test.wav");
+  this->music = Mix_LoadMUS("sounds/game.mp3");
   this->click = Mix_LoadWAV("sounds/click.wav");
 
   if (this->music == NULL || this->click == NULL)
@@ -120,6 +120,8 @@ void Game::init(const char *title, int width, int height)
         "Impossible de charger la musique.\n");
     exit(EXIT_FAILURE);
   }
+  Mix_PlayMusic(this->music, -1);
+
 
   loadMap(this->tabMapTile);
   loadPauseMenu(this->surfaceTextes,this->textureText);
