@@ -80,6 +80,12 @@ int Menu::showMain(const char *title, int width, int height)
   bool selected[NUMMENU] = {0, 0};
 
   SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x00, 0x00, 0x00));
+
+  if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+  {
+    exit(EXIT_FAILURE);
+  }
+
   this->music = Mix_LoadMUS("sounds/menu.mp3");
 
   if (this->music == NULL )
