@@ -58,7 +58,8 @@ int main(int argc, const char *argv[])
       }
     }
     while(game->endMenu){
-      game->endMenu = false;
+      game->handleEvents();
+      //game->endMenu = false;
     }
     game->clean();
   }

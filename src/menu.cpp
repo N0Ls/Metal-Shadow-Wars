@@ -96,7 +96,7 @@ int Menu::showMain(const char *title, int width, int height)
       case SDL_MOUSEMOTION:
         x = event.motion.x;
         y = event.motion.y;
-        for (int i = 0; i < NUMMENU; i += 1)
+        for (int i = 0; i <(int) NUMMENU; i += 1)
         {
           if (x >= pos[i].x && x <= pos[i].x + pos[i].w && y >= pos[i].y && y <= pos[i].y + pos[i].h)
           {
@@ -121,7 +121,7 @@ int Menu::showMain(const char *title, int width, int height)
       case SDL_MOUSEBUTTONDOWN:
         x = event.button.x;
         y = event.button.y;
-        for (int i = 0; i < NUMMENU; i += 1)
+        for (int i = 0; i < (int)NUMMENU; i += 1)
         {
           if (x >= pos[i].x && x <= pos[i].x + pos[i].w && y >= pos[i].y && y <= pos[i].y + pos[i].h)
           {

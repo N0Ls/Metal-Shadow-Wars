@@ -23,7 +23,7 @@ struct player {
 
 //Functions related to the player
 void isAlive(player *playerToCheck);
-void initPlayer(player *player, int id, int nbUnits, char name[], SDL_Color couleur);
+void initPlayer(player *player, int id, int nbUnits, const char name[], SDL_Color couleur);
 void updateUnitIndex(player *player);
 
 //Not implemented yet

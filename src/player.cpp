@@ -16,7 +16,7 @@ using namespace std;
  * @param couleur The color of its units.
  *
  */
-void initPlayer(player *player, int id, int nbUnits, char name[], SDL_Color couleur)
+void initPlayer(player *player, int id, int nbUnits, const char name[], SDL_Color couleur)
 {
     player->id = id;
     strcpy(player->name, name);
@@ -61,7 +61,7 @@ void isAlive(player *playerToCheck)
  *
  */
 void updateUnitIndex(player *player){
-  for (int i = 0; i < player->units.size(); i++) {
+  for (int i = 0; i < (int)player->units.size(); i++) {
     cout << player->units[i].arrayIndex<<endl;
     player->units[i].arrayIndex=i;
   }

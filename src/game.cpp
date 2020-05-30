@@ -100,7 +100,8 @@ void Game::init(const char *title, int width, int height)
   /* INIT PLAYERS */
   SDL_Color couleurJ1 = {.r = 255, .g = 0, .b = 0};
   SDL_Color couleurJ2 = {.r = 0, .g = 255, .b = 255};
-  initPlayer(&this->players[0], 0, this->nb_start_units, "Michel", couleurJ1);
+  const char *name1 = "Michel";
+  initPlayer(&this->players[0], 0, this->nb_start_units, name1, couleurJ1);
   initPlayer(&this->players[1], 1, this->nb_start_units, "Jacques", couleurJ2);
 
   if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
@@ -125,7 +126,8 @@ void Game::init(const char *title, int width, int height)
   TTF_Font *font =TTF_OpenFont("./fonts/indelible.ttf", 40);
   SDL_Color couleurTXT = {0,0, 255};
 
-  createText(this->surfaceTextes,font, this->textureText, "NTM", couleurTXT);
+  char pauseMenuText[25] = "Pause";
+  createText(this->surfaceTextes,font, this->textureText, pauseMenuText, couleurTXT);
   TTF_CloseFont(font);
   this->placeUnits();
 
@@ -190,6 +192,7 @@ void Game::handleEvents()
     if (e.type == SDL_QUIT)
     {
       isRunning = false;
+      endMenu = false;
       break;
     }
 
@@ -197,6 +200,7 @@ void Game::handleEvents()
     if (e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_q || e.key.keysym.sym == SDLK_ESCAPE))
     {
       isRunning = false;
+      endMenu = false;
       break;
     }
 

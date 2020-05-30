@@ -67,7 +67,6 @@ switch (bpp)
 
 void loadMap(TileMap *tabMapTile){
   SDL_Surface *mapLoad;
-  SDL_Surface *mapColor;
   char mapLoadImage[255]= {"assets/map.png"};
   mapLoad = IMG_Load(mapLoadImage);
   if(NULL == mapLoad) {
@@ -80,7 +79,7 @@ void loadMap(TileMap *tabMapTile){
   SDL_Surface *surface;
   surface=IMG_Load(mapLoadImage);
   Uint32 temp, pixel;
-  Uint8 red, green, blue, alpha;
+  Uint8 red, green, blue;
 
   fmt=surface->format;
 
@@ -110,10 +109,10 @@ void loadMap(TileMap *tabMapTile){
       blue=(Uint8)temp;
 
       /* Get Alpha component */
-      temp=pixel&fmt->Amask; /* Isolate alpha component */
-      temp=temp>>fmt->Ashift;/* Shift it down to 8-bit */
-      temp=temp<<fmt->Aloss; /* Expand to a full 8-bit number */
-      alpha=(Uint8)temp;
+      // temp=pixel&fmt->Amask; /* Isolate alpha component */
+      // temp=temp>>fmt->Ashift;/* Shift it down to 8-bit */
+      // temp=temp<<fmt->Aloss; /* Expand to a full 8-bit number */
+      // alpha=(Uint8)temp;
 
       //printf("Pixel Color -> R: %d,  G: %d,  B: %d,  A: %d\n", red, green, blue, alpha);
 
