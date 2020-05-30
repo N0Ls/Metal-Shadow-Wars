@@ -6,6 +6,7 @@
 #include <SDL/SDL_image.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <SDL/SDL_mixer.h>
 
 static const unsigned int NUMMENU = 2;
 
@@ -25,6 +26,7 @@ private :
     const char *mainLabels[NUMMENU] = {"Play", "Exit"};
     const char *pauseLabels[NUMMENU] = {"Continue", "Exit"};
     SDL_Color color[2] = {{255, 255, 255}, {255, 0, 0}};
+    Mix_Music *music = NULL;
 
 };
 

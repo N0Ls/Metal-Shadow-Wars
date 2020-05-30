@@ -2,7 +2,7 @@
 #include <SDL/SDL_image.h>
 
 #include <SDL/SDL_ttf.h>
-
+#include <SDL/SDL_mixer.h>
 #include <menu.hpp>
 
 #include <iostream>
@@ -80,10 +80,28 @@ int Menu::showMain(const char *title, int width, int height)
   bool selected[NUMMENU] = {0, 0};
 
   SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x00, 0x00, 0x00));
+  this->music = Mix_LoadMUS("sounds/menu.mp3");
+
+  if (this->music == NULL )
+  {
+    fprintf(
+        stderr,
+        "Impossible de charger la musique.\n");
+    exit(EXIT_FAILURE);
+  }
+
+  Mix_PlayMusic(this->music, -1);
+
+
 
   SDL_Event event;
   while (1)
   {
+    if (Mix_PlayingMusic() == 0)
+    {
+      //On lance la musique | We start playing music
+      Mix_PlayMusic(this->music, -1);
+    }
     time = SDL_GetTicks();
     while (SDL_PollEvent(&event))
     {
