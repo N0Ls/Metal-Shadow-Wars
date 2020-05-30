@@ -34,7 +34,7 @@ int main(int argc, const char *argv[])
   {
     game = new Game();
 
-    game->init("IMAC WARS 2 - Game", WINDOW_WIDTH, WINDOW_HEIGHT);
+    game->init("METAL SHADOW WARS - Game", WINDOW_WIDTH, WINDOW_HEIGHT);
 
     game->selected_unit = nullptr;
 
