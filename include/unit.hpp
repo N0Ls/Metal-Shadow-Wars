@@ -25,7 +25,7 @@ struct Unit{
     int arrayIndex;
 
     bool isAlive;
-    bool isMoving;
+    bool isMoving=false;
     bool isMovingToNextTile=false;
     bool hasToAttack=false;
     bool isDONE=false;

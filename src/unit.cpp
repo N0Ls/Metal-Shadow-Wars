@@ -352,7 +352,7 @@ void autoMove(Unit *unit, TileMap tab[],vector<Unit*> &unitRef)
     unit->isMoving =true;
 
     deplacement(unit, closestTile.x, closestTile.y);
-    unit->hasToAttack =true;
+    //unit->hasToAttack =true;
   }
   else{
     //EX CODE using random Tile
@@ -364,7 +364,7 @@ void autoMove(Unit *unit, TileMap tab[],vector<Unit*> &unitRef)
     unit->isMoving =true;
 
     deplacement(unit, randomTile.x, randomTile.y);
-    unit->hasToAttack =true;
+    //unit->hasToAttack =true;
   }
 
 }

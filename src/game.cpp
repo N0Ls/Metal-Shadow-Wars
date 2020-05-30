@@ -371,10 +371,6 @@ void Game::update()
 
 void Game::autoPlayer()
 {
-  //getting other player id
-
-  //checking
-  //
   for (int i = 0; i < this->currentPlayer->nbUnits; i++)
   {
     this->updateUnitList();
@@ -384,7 +380,7 @@ void Game::autoPlayer()
       {
         autoMove(&currentPlayer->units[i], this->tabMapTile, this->unitRef);
       }
-      if (this->currentPlayer->units[i].hasToAttack == true)
+      else if (this->currentPlayer->units[i].hasToAttack == true)
       {
         autoAttack(&currentPlayer->units[i], this->tabMapTile, this->unitRef);
       }
