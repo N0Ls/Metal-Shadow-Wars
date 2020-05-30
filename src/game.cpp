@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "node.hpp"
 #include "text.hpp"
+#include "ui.hpp"
 #include <stack>
 #include <vector>
 #include <SDL/SDL_ttf.h>
@@ -121,14 +122,8 @@ void Game::init(const char *title, int width, int height)
   }
 
   loadMap(this->tabMapTile);
+  loadPauseMenu(this->surfaceTextes,this->textureText);
 
-  TTF_Init();
-  TTF_Font *font =TTF_OpenFont("./fonts/indelible.ttf", 40);
-  SDL_Color couleurTXT = {0,0, 255};
-
-  char pauseMenuText[25] = "Pause";
-  createText(this->surfaceTextes,font, this->textureText, pauseMenuText, couleurTXT);
-  TTF_CloseFont(font);
   this->placeUnits();
 
   //Initialisation des tours
