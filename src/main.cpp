@@ -51,11 +51,6 @@ int main(int argc, const char *argv[])
 
       frameTime = SDL_GetTicks() - frameStart;
 
-      // while(game->paused())
-      // {
-      //   menu = new Menu();
-      //   menu->showPause(game->surface);
-      // }
 
       if (frameDelay > frameTime)
       {
