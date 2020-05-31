@@ -119,8 +119,8 @@ void Game::init(const char *title, int width, int height)
   /* INIT PLAYERS */
   SDL_Color couleurJ1 = {.r = 255, .g = 60, .b = 150};
   SDL_Color couleurJ2 = {.r = 0, .g = 255, .b = 255};
-  const char *name1 = "Michel";
-  const char *name2 = "Jacques";
+  const char *name1 = "Nux";
+  const char *name2 = "Immortal Joe";
   initPlayer(&this->players[0], 0, this->nb_start_units, name1, couleurJ1);
   initPlayer(&this->players[1], 1, this->nb_start_units, name2, couleurJ2);
 
