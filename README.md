@@ -1,7 +1,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/N0Ls/IMAC-Wars-V2">
-    <img src="" alt="Logo" width="100">
+    <img src="./assets/logo-metal-shadow-wars.png" alt="Logo" width="400">
   </a>
 
   <p align="center">
