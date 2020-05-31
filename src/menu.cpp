@@ -4,12 +4,31 @@
 #include <SDL/SDL_mixer.h>
 #include <menu.hpp>
 #include <iostream>
+#include "texture.hpp"
+#include "constants.hpp"
 
 static const unsigned int BIT_PER_PIXEL = 32;
 
 Menu::Menu() {}
 
 Menu::~Menu() {}
+
+void drawQuadsBG(){
+  glBegin(GL_QUADS);
+    glColor3f(1,1,1);
+      glTexCoord2f(0 ,0);
+      glVertex2f(0,0);
+
+      glTexCoord2f(1 ,0);
+      glVertex2f(MAP_TILE_SIZE,0);
+
+      glTexCoord2f( 1 , 1);
+      glVertex2f(MAP_TILE_SIZE,MAP_TILE_SIZE);
+
+      glTexCoord2f( 0 , 1);
+      glVertex2f(0,MAP_TILE_SIZE);
+  glEnd();
+}
 
 int Menu::showMain(const char *title, int width, int height)
 {
@@ -56,7 +75,7 @@ int Menu::showMain(const char *title, int width, int height)
   TTF_Font *font;
   TTF_Init();
 
-  font = TTF_OpenFont("./assets/fonts/indelible.ttf", 40);
+  font = TTF_OpenFont("./assets/fonts/Road_Rage.ttf", 40);
 
   // Menu buttons
   SDL_Surface *menus[NUMMENU];
@@ -70,9 +89,9 @@ int Menu::showMain(const char *title, int width, int height)
 
   // Buttons actual positions (x and y coordinates)
   pos[0].x = screen->clip_rect.w / 2 - menus[0]->clip_rect.w / 2;
-  pos[0].y = screen->clip_rect.h / 2 - menus[0]->clip_rect.h;
+  pos[0].y = screen->clip_rect.h - 250;
   pos[1].x = screen->clip_rect.w / 2 - menus[0]->clip_rect.w / 2;
-  pos[1].y = screen->clip_rect.h / 2 + menus[0]->clip_rect.h;
+  pos[1].y = screen->clip_rect.h - 150;
 
   // Selection state
   bool selected[NUMMENU] = {0, 0};
@@ -94,6 +113,13 @@ int Menu::showMain(const char *title, int width, int height)
         "Impossible de charger la musique.\n");
     exit(EXIT_FAILURE);
   }
+
+  //Loading BG and LOGO
+  char BG_path[255]={ "assets/background.jpg"};
+  SDL_Surface *surfaceBG = IMG_Load(BG_path);
+
+  char LOGO_path[255]={ "assets/logo-metal-shadow-wars-medium.png"};
+  SDL_Surface *surfaceLOGO = IMG_Load(LOGO_path);
 
   //Play Music
   Mix_PlayMusic(this->music, -1);
@@ -162,6 +188,26 @@ int Menu::showMain(const char *title, int width, int height)
         }
       }
     }
+    // glPushMatrix();
+    // glScalef(1,-1,1.);
+    // glBindTexture(GL_TEXTURE_2D, *this->textureBG);
+    // drawQuadsBG();
+    // glPopMatrix();
+    // glBindTexture(GL_TEXTURE_2D, 0);
+    SDL_Rect posBG;
+    posBG.h = screen->w;;
+    posBG.w = screen->w;
+    posBG.x = 0;
+    posBG.y = 0;
+    SDL_BlitSurface(surfaceBG,&posBG, screen,&posBG);
+
+    SDL_Rect posLOGO;
+    posLOGO.h = surfaceLOGO->h;
+    posLOGO.w = surfaceLOGO->w;
+    posLOGO.x = screen->w/2- surfaceLOGO->w/2;
+    posLOGO.y = 50;
+    SDL_BlitSurface(surfaceLOGO,NULL, screen,&posLOGO);
+
     for (int i = 0; i <(int) NUMMENU; i += 1)
     {
       SDL_BlitSurface(menus[i], NULL, screen, &pos[i]);

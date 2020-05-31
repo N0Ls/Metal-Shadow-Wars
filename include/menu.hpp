@@ -24,8 +24,8 @@ public :
 private :
     bool isActiv;
     const char *mainLabels[NUMMENU] = {"Play", "Exit"};
-    const char *pauseLabels[NUMMENU] = {"Continue", "Exit"};
-    SDL_Color color[2] = {{255, 255, 255}, {255, 0, 0}};
+    GLuint textureBG[1];
+    SDL_Color color[2] = {{255, 255, 255}, {255, 0, 48}};
     Mix_Music *music = NULL;
 
 };
