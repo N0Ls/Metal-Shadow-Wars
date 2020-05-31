@@ -1,10 +1,8 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
-
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
 #include <menu.hpp>
-
 #include <iostream>
 
 static const unsigned int BIT_PER_PIXEL = 32;
@@ -81,13 +79,14 @@ int Menu::showMain(const char *title, int width, int height)
 
   SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0x00, 0x00, 0x00));
 
+  //Init audio
   if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
   {
     exit(EXIT_FAILURE);
   }
 
+  //Loading music
   this->music = Mix_LoadMUS("sounds/menu.mp3");
-
   if (this->music == NULL )
   {
     fprintf(
@@ -96,9 +95,8 @@ int Menu::showMain(const char *title, int width, int height)
     exit(EXIT_FAILURE);
   }
 
+  //Play Music
   Mix_PlayMusic(this->music, -1);
-
-
 
   SDL_Event event;
   while (1)
