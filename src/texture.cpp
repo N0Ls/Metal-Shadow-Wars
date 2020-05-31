@@ -1,23 +1,37 @@
-#include "texture.hpp"
-#include <string.h>
-using namespace std;
-#include <iostream>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <string.h>
+#include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
+#include "texture.hpp"
 #include "constants.hpp"
+using namespace std;
 
 
-
+/**
+ *
+ * Initialize the textures for the map and the units
+ *
+ * @param nb_sub_groups The number of textures sub groups (map / units / etc.).
+ * @param nb_textures_map The number of textures for the map.
+ * @param nb_textures_units The number of textures for the units.
+ * @param textureIds_map The palce we store the textures for the map.
+ * @param textureIds_units The palce we store the textures for the units.
+ *
+ */
 void init_textures(int nb_sub_groups,int nb_textures_map, int nb_textures_units, GLuint *textureIds_map, GLuint *textureIds_units){
+  /* PATHS TO THE TEXTURES */
   char textures_paths_map[nb_textures_map][255]= { "assets/water.jpg","assets/tilebroken.jpg","assets/tile.jpg","assets/block.jpg" };
   char textures_paths_units[nb_textures_units][255] = { "assets/perso.png","assets/perso2.png", "assets/dog.png" };
+
+  /* INIT SURFACES */
   SDL_Surface *images_map[nb_textures_map];
   SDL_Surface *images_units[nb_textures_units];
-  //load images
+
+  /* LOAD THE IMAGES */
   for(int a=0 ; a < nb_sub_groups ; a ++){
     for(int i=0; i < nb_textures_map; i++){
       images_map[i] = IMG_Load(textures_paths_map[i]);
@@ -37,6 +51,7 @@ void init_textures(int nb_sub_groups,int nb_textures_map, int nb_textures_units,
     glGenTextures(nb_textures_map,&textureIds_map[0]);
     glGenTextures(nb_textures_units,&textureIds_units[0]);
 
+    /* CREATING THE TEXTURES */
     for(int k=0; k< nb_textures_map; k++){
       glBindTexture(GL_TEXTURE_2D, textureIds_map[k]);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
