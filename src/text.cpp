@@ -1,8 +1,20 @@
-#include "text.hpp"
 #include <SDL/SDL_ttf.h>
 #include <iostream>
+#include "text.hpp"
 using namespace std;
 
+
+/**
+ *
+ * Create a text.
+ *
+ * @param surfaceText The surface used to create the text.
+ * @param font The font used for this text.
+ * @param texture_id The texture storer.
+ * @param txtContent The text content itself.
+ * @param color The color of the text.
+ *
+ */
 void createText(SDL_Surface *surfaceText, TTF_Font *police, GLuint *texture_id, char *txtContent, SDL_Color color){
   SDL_Surface* sText = TTF_RenderUTF8_Blended(police, txtContent, color);
   if(sText == NULL){
@@ -15,6 +27,15 @@ void createText(SDL_Surface *surfaceText, TTF_Font *police, GLuint *texture_id, 
   SDL_FreeSurface(sText);
 }
 
+
+/**
+ *
+ * Create a texture for surface.
+ *
+ * @param texture The texture container.
+ * @param surfaceText The surface used to create the texture.
+ *
+ */
 void createTextureText(GLuint *texture, SDL_Surface *surfaceText){
   if(surfaceText==NULL){
     exit(1);
@@ -41,6 +62,15 @@ void createTextureText(GLuint *texture, SDL_Surface *surfaceText){
   glBindTexture(GL_TEXTURE_2D,0);
 }
 
+
+/**
+ *
+ * Create a texture for surface.
+ *
+ * @param texture The texture container.
+ * @param surfaceText The surface used to create the texture.
+ *
+ */
 void displayText(SDL_Surface *surfaceText, GLuint texture_id, float x, float y){
   float w = (float)surfaceText->w/10;
   float h = (float)surfaceText->h/10;
@@ -72,9 +102,4 @@ void displayText(SDL_Surface *surfaceText, GLuint texture_id, float x, float y){
     glBindTexture(GL_TEXTURE_2D,0);
 
   glPopMatrix();
-}
-
-void loadEndMenu(){
-
-  // createText(SDL_Surface *surfaceText, TTF_Font *police, GLuint *texture_id, char *txtContent, SDL_Color color)
 }
