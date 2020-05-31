@@ -510,9 +510,16 @@ void Game::nextTurn()
   {
     Unit *unitToReset;
     unitToReset = &this->currentPlayer->units[u];
-    updateTextUnit(unitToReset); //update the text for the life for the units
     unitToReset->isDONE = false;
   }
+
+  //update text above the Units
+  // for(int v =0; v < this->nb_players ; v++){
+  //   for (int w = 0; w < this->players[v].nbUnits; w++)
+  //   {
+  //     updateTextUnit(&this->players[v].units[w]); //update the text for the life for the units
+  //   }
+  // }
 
   //increment turn
   this->turn++;

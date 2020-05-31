@@ -260,6 +260,7 @@ void attackUnit(Unit *attacker, Unit *defender)
     int damages = attacker->force * attacker->pv/(float)attacker->pvMax;
     defender->pv -= damages;
     cout << "Aie j'ai pris " << damages << " dégats dans les dents ! " << endl;
+    updateTextUnit(defender);
     //Checking is the defender is dead
     if (defender->pv <= 0)
     {
