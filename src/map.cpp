@@ -100,17 +100,21 @@ switch (bpp)
  */
 void loadMap(TileMap *tabMapTile){
   SDL_Surface *mapLoad;
-  char mapLoadImage[255]= {"assets/map.png"};
-  mapLoad = IMG_Load(mapLoadImage);
+  char mapLoadImage[3][255]= {"assets/map.png","assets/map2.png","assets/map3.png"};
+
+  srand(time(NULL) + rand());
+  int randMap = rand() % 3;
+
+  mapLoad = IMG_Load(mapLoadImage[randMap]);
   if(NULL == mapLoad) {
-      fprintf(stderr, "Echec du chargement de l'image %s\n",mapLoadImage );
+      fprintf(stderr, "Echec du chargement de l'image %s\n",mapLoadImage[randMap] );
       exit(EXIT_FAILURE);
   }
 
   //Reading the pixels infos infos
   SDL_PixelFormat *fmt;
   SDL_Surface *surface;
-  surface=IMG_Load(mapLoadImage);
+  surface=IMG_Load(mapLoadImage[randMap]);
   Uint32 temp, pixel;
   Uint8 red, green, blue;
 
