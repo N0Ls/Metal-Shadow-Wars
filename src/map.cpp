@@ -102,6 +102,7 @@ void loadMap(TileMap *tabMapTile){
   SDL_Surface *mapLoad;
   char mapLoadImage[3][255]= {"assets/map.png","assets/map2.png","assets/map3.png"};
 
+  //Choosing a random map
   srand(time(NULL) + rand());
   int randMap = rand() % 3;
 

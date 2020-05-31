@@ -219,9 +219,8 @@ void displayUnit(Unit *unit, GLuint textureIds_units[]){
   glBindTexture(GL_TEXTURE_2D, textureIds_units[unit->texture_id]);
 
   //coloring the unit
-  float reduction=0.5;
   if(unit->isDONE==false){
-    glColor4f(unit->ownerPlayer->color.r*reduction,unit->ownerPlayer->color.g*reduction,unit->ownerPlayer->color.b*reduction,1);
+    glColor4f((float) unit->ownerPlayer->color.r/255,(float)unit->ownerPlayer->color.g/255,(float)unit->ownerPlayer->color.b/255,1);
   }
   else{
     glColor3f(1,1,1);

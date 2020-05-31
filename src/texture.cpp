@@ -99,3 +99,34 @@ void init_textures(int nb_sub_groups,int nb_textures_map, int nb_textures_units,
 
   }
 }
+
+void createSingleTexture(char *path , GLuint *textureContainer){
+  SDL_Surface *surface;
+  surface = IMG_Load(path);
+  if(NULL == surface) {
+      fprintf(stderr, "Echec du chargement de l'image %s\n", path);
+      exit(EXIT_FAILURE);
+  }
+  GLenum format;
+  glGenTextures(1,textureContainer);
+    glBindTexture(GL_TEXTURE_2D, *textureContainer);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+    switch(surface->format->BytesPerPixel){
+      case 1:
+            format = GL_RED;
+            break;
+        case 3:
+            format = GL_RGB;
+            break;
+        case 4:
+            format = GL_RGBA;
+            break;
+        default:
+            fprintf(stderr, "Format des pixels de l'image %s non supporte.\n", path);
+            exit(EXIT_FAILURE);
+    }
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,surface->w, surface->h, 0,format, GL_UNSIGNED_BYTE, surface->pixels);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+}

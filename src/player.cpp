@@ -20,7 +20,10 @@ void initPlayer(player *player, int id, int nbUnits, const char name[], SDL_Colo
 {
     player->id = id;
     strcpy(player->name, name);
-    player->color = couleur;
+    //player->color = couleur;
+    player->color.r= couleur.r;
+    player->color.g= couleur.g;
+    player->color.b= couleur.b;
     player->nbUnits = nbUnits;
     player->resources = 45;
     player->isAlive = true;
@@ -42,7 +45,7 @@ void initPlayer(player *player, int id, int nbUnits, const char name[], SDL_Colo
  *
  * Check if the player is alive or not.
  *
- * @param player The player to to check.
+ * @param playerToCheck The player to to check.
  *
  */
 void isAlive(player *playerToCheck)
