@@ -117,7 +117,7 @@ void Game::init(const char *title, int width, int height)
   init_textures(this->nb_sub_groups_textures, this->nb_textures_map, this->nb_textures_units, this->textureIds_map, this->textureIds_units);
 
   /* INIT PLAYERS */
-  SDL_Color couleurJ1 = {.r = 255, .g = 65, .b = 150};
+  SDL_Color couleurJ1 = {.r = 255, .g = 60, .b = 150};
   SDL_Color couleurJ2 = {.r = 0, .g = 255, .b = 255};
   const char *name1 = "Michel";
   const char *name2 = "Jacques";

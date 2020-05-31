@@ -20,10 +20,7 @@ void initPlayer(player *player, int id, int nbUnits, const char name[], SDL_Colo
 {
     player->id = id;
     strcpy(player->name, name);
-    //player->color = couleur;
-    player->color.r= couleur.r;
-    player->color.g= couleur.g;
-    player->color.b= couleur.b;
+    player->color = couleur;
     player->nbUnits = nbUnits;
     player->resources = 45;
     player->isAlive = true;
