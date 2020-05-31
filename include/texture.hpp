@@ -14,6 +14,6 @@ typedef struct{
 } texture;
 
 //Declaration of prototypes
-void init_textures(int nb_sub_groups,int nb_textures_map, int nb_textures_units, GLuint *textureIds_map, GLuint *textureIds_units ,GLuint *textureLink);
+void init_textures(int nb_sub_groups,int nb_textures_map, int nb_textures_units, GLuint *textureIds_map, GLuint *textureIds_units);
 
 #endif

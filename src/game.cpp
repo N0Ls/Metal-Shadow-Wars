@@ -114,7 +114,7 @@ void Game::init(const char *title, int width, int height)
   glEnable(GL_TEXTURE_2D);
 
   /* INIT TEXTURES */
-  init_textures(this->nb_sub_groups_textures, this->nb_textures_map, this->nb_textures_units, this->textureIds_map, this->textureIds_units, this->textureLink);
+  init_textures(this->nb_sub_groups_textures, this->nb_textures_map, this->nb_textures_units, this->textureIds_map, this->textureIds_units);
 
   /* INIT PLAYERS */
   SDL_Color couleurJ1 = {.r = 255, .g = 0, .b = 0};
@@ -367,7 +367,7 @@ void Game::draw()
   glLoadIdentity();
 
   //Display the map
-  fillGrid(this->textureIds_map, this->textureLink, this->tabMapTile);
+  fillGrid(this->textureIds_map, this->tabMapTile);
 
   //Special display for the selected unit
   this->displaySelectdUnit();

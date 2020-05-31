@@ -1,19 +1,35 @@
-#include "map.hpp"
-#include "constants.hpp"
-using namespace std;
-#include <iostream>
-#include "texture.hpp"
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
+#include <iostream>
 #include "constants.hpp"
+#include "map.hpp"
+#include "texture.hpp"
+#include "constants.hpp"
+using namespace std;
 
-
-
+/**
+ *
+ * Initialize the tile values that is required for the game
+ *
+ * @param tile The tile we want to initialize.
+ * @param textureId The reference to the texture of the tile.
+ * @param isWalkable The walkable status of the tile.
+ * @param isDestructible The destructible status of the tile.
+ *
+ */
 void setTile(TileMap *tile, GLuint textureId, bool isWalkable, bool isDestructible){
   tile->textureId=textureId;
   tile->isWalkable=isWalkable;
   tile->isDestructible=isDestructible;
 }
+
+
+/**
+ *
+ * Basic quad display used to display the tiles
+ *
+ *
+ */
 void drawQuads(){
   glBegin(GL_QUADS);
     glColor3f(1,1,1);
@@ -31,6 +47,17 @@ void drawQuads(){
   glEnd();
 }
 
+/**
+ *
+ * Function to get the pixels infos of a pixel
+ *
+ * @param tile The tile we want to initialize.
+ * @param x The x position of the pixel.
+ * @param y The x position of the pixel.
+ *
+ * @return Pixel data
+ *
+ */
 Uint32 getpixel(SDL_Surface *surface, int x, int y)
 {
     int bpp = surface->format->BytesPerPixel;
@@ -64,7 +91,13 @@ switch (bpp)
 }
 
 
-
+/**
+ *
+ * Function that load the map according to a loaded image
+ *
+ * @param tile The tile we want to initialize.
+ *
+ */
 void loadMap(TileMap *tabMapTile){
   SDL_Surface *mapLoad;
   char mapLoadImage[255]= {"assets/map.png"};
@@ -74,7 +107,7 @@ void loadMap(TileMap *tabMapTile){
       exit(EXIT_FAILURE);
   }
 
-  //c'est juste
+  //Reading the pixels infos infos
   SDL_PixelFormat *fmt;
   SDL_Surface *surface;
   surface=IMG_Load(mapLoadImage);
@@ -116,6 +149,7 @@ void loadMap(TileMap *tabMapTile){
 
       //printf("Pixel Color -> R: %d,  G: %d,  B: %d,  A: %d\n", red, green, blue, alpha);
 
+      //Creating a tile according the color of the pixel
       if(red == 255 && green ==0 && blue ==0){
         setTile(&tabMapTile[y*MAP_SIZE + i],3,0,1);
       }
@@ -132,13 +166,30 @@ void loadMap(TileMap *tabMapTile){
   }
 }
 
+/**
+ *
+ * Function that alters the map for destroyable tiles
+ *
+ * @param tabMapTile The reference to the array of tiles.
+ * @param x The x coordinate we clicked.
+ * @param y The y coordinate we clicked.
+ *
+ */
 void destroyEnvironnement(TileMap *tabMapTile, int x , int y){
   if(tabMapTile[x*MAP_SIZE + y].isDestructible){
       setTile(&tabMapTile[x*MAP_SIZE + y],1,1,0);
   }
 }
 
-void fillGrid(GLuint textureIds[],GLuint textureLink[], TileMap *tabMapTile){
+/**
+ *
+ * Displays the map on the screen
+ *
+ * @param textureIds The array to store the textures created.
+ * @param tabMapTile The reference to the array of tiles.
+ *
+ */
+void fillGrid(GLuint textureIds[], TileMap *tabMapTile){
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glPushMatrix();
     glScalef(1,-1,1.);

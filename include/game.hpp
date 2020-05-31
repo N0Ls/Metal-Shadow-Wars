@@ -53,7 +53,6 @@ public :
     static const int nb_textures_txt = 1;
 
     GLuint textureIds_map[nb_textures_map];
-    GLuint textureLink[MAP_SIZE*2];
     GLuint textureIds_units[nb_textures_units];
     GLuint menu_tex[1];
     GLuint textureText[nb_textures_txt];
