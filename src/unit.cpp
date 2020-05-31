@@ -38,7 +38,7 @@ void initUnit(Unit *unit, int id, player *owner, float pv,float force,float dext
   unit -> arrayIndex = arrayIndex;
   unit -> texture_id = texture_id;
 
-  TTF_Font *font2 =TTF_OpenFont("./fonts/ChelseaMarket-Regular.ttf", 15);
+  TTF_Font *font2 =TTF_OpenFont("./assets/fonts/ChelseaMarket-Regular.ttf", 15);
   SDL_Color couleurTXT = {255,255, 255};
   //unit->surfaceText=NULL;
   char pvChar[10];
@@ -399,7 +399,7 @@ void autoAttack(Unit *unit, TileMap tab[], vector<Unit*> &unitRef){
  *
  */
 void updateTextUnit(Unit *unit){
-  TTF_Font *font2 =TTF_OpenFont("./fonts/ChelseaMarket-Regular.ttf", 15);
+  TTF_Font *font2 =TTF_OpenFont("./assets/fonts/ChelseaMarket-Regular.ttf", 15);
   SDL_Color couleurTXT = {255,255, 255};
   char pvChar[10];
   sprintf(pvChar, "%d", (int)unit->pv);

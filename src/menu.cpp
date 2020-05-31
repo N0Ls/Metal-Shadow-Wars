@@ -56,7 +56,7 @@ int Menu::showMain(const char *title, int width, int height)
   TTF_Font *font;
   TTF_Init();
 
-  font = TTF_OpenFont("./fonts/indelible.ttf", 40);
+  font = TTF_OpenFont("./assets/fonts/indelible.ttf", 40);
 
   // Menu buttons
   SDL_Surface *menus[NUMMENU];
@@ -86,7 +86,7 @@ int Menu::showMain(const char *title, int width, int height)
   }
 
   //Loading music
-  this->music = Mix_LoadMUS("sounds/menu.mp3");
+  this->music = Mix_LoadMUS("./assets/sounds/menu.mp3");
   if (this->music == NULL )
   {
     fprintf(

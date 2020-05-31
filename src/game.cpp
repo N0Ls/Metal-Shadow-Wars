@@ -130,8 +130,8 @@ void Game::init(const char *title, int width, int height)
     exit(EXIT_FAILURE);
   }
   //loading music files
-  this->music = Mix_LoadMUS("sounds/game.mp3");
-  this->click = Mix_LoadWAV("sounds/click.wav");
+  this->music = Mix_LoadMUS("assets/sounds/game.mp3");
+  this->click = Mix_LoadWAV("assets/sounds/click.wav");
   if (this->music == NULL || this->click == NULL)
   {
     fprintf(
