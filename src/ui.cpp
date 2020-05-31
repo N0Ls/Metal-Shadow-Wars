@@ -43,7 +43,7 @@ void drawQuadsMenu()
  */
 void loadPauseMenu(SDL_Surface *surface, GLuint *textureIdText){
   TTF_Init();
-  TTF_Font *font =TTF_OpenFont("./assets/fonts/indelible.ttf", 40);
+  TTF_Font *font =TTF_OpenFont("./assets/fonts/Road_Rage.ttf", 40);
   SDL_Color couleurTXT = {0,0, 255};
 
   char pauseMenuText[25] = "Pause";
@@ -87,8 +87,6 @@ void loadEndMenu(SDL_Surface *surface, GLuint *textureIdText, player *winner){
   createText(&surface[0],font, &textureIdText[0], congrats, couleurTXT);
 
   TTF_Font *font2 =TTF_OpenFont("./assets/fonts/ChelseaMarket-Regular.ttf", 40);
-
-
   createText(&surface[1],font2, &textureIdText[1], winner->name, couleurTXT);
 
   TTF_CloseFont(font);

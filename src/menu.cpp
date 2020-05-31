@@ -140,6 +140,8 @@ int Menu::showMain(const char *title, int width, int height)
       case SDL_QUIT:
         SDL_FreeSurface(menus[0]);
         SDL_FreeSurface(menus[1]);
+        SDL_FreeSurface(surfaceLOGO);
+        SDL_FreeSurface(surfaceBG);
         return 1;
       case SDL_MOUSEMOTION:
         x = event.motion.x;
@@ -175,6 +177,8 @@ int Menu::showMain(const char *title, int width, int height)
           {
             SDL_FreeSurface(menus[0]);
             SDL_FreeSurface(menus[1]);
+            SDL_FreeSurface(surfaceLOGO);
+            SDL_FreeSurface(surfaceBG);
             return i;
           }
         }
@@ -184,6 +188,8 @@ int Menu::showMain(const char *title, int width, int height)
         {
           SDL_FreeSurface(menus[0]);
           SDL_FreeSurface(menus[1]);
+          SDL_FreeSurface(surfaceLOGO);
+          SDL_FreeSurface(surfaceBG);
           return 0;
         }
       }
