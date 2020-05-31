@@ -1,13 +1,20 @@
-#include "ui.hpp"
 #include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include "ui.hpp"
 #include "text.hpp"
-#include <SDL/SDL_ttf.h>
 #include "constants.hpp"
 #include "player.hpp"
 using namespace std;
 
+
+/**
+ *
+ * Basic quad drawing for menus
+ *
+ *
+ */
 void drawQuadsMenu()
 {
   glBegin(GL_QUADS);
@@ -26,6 +33,14 @@ void drawQuadsMenu()
 }
 
 
+/**
+ *
+ * Load the pause menu content .
+ *
+ * @param surface The surface used to create the texture.
+ * @param textureIdText The texture container.
+ *
+ */
 void loadPauseMenu(SDL_Surface *surface, GLuint *textureIdText){
   TTF_Init();
   TTF_Font *font =TTF_OpenFont("./fonts/indelible.ttf", 40);
@@ -36,6 +51,14 @@ void loadPauseMenu(SDL_Surface *surface, GLuint *textureIdText){
   TTF_CloseFont(font);
 }
 
+/**
+ *
+ * Displays the pause menu.
+ *
+ * @param surface The surface used for display.
+ * @param textureIdText The texture container.
+ *
+ */
 void displayPauseMenu(SDL_Surface *surface, GLuint *textureIdText){
   glColor4f(0,0,0,0.5);
   glPushMatrix();
@@ -46,6 +69,15 @@ void displayPauseMenu(SDL_Surface *surface, GLuint *textureIdText){
   displayText(surface,*textureIdText, 0, -40);
 }
 
+/**
+ *
+ * Load the end screen content .
+ *
+ * @param surface The surface used to create the texture.
+ * @param textureIdText The texture container.
+ * @param winner The winner player.
+ *
+ */
 void loadEndMenu(SDL_Surface *surface, GLuint *textureIdText, player *winner){
   TTF_Init();
   TTF_Font *font =TTF_OpenFont("./fonts/indelible.ttf", 40);
@@ -65,6 +97,14 @@ void loadEndMenu(SDL_Surface *surface, GLuint *textureIdText, player *winner){
 
 }
 
+/**
+ *
+ * Displays the pause menu.
+ *
+ * @param surface The surface used for display.
+ * @param textureIdText The texture container.
+ *
+ */
 void displayEndMenu(SDL_Surface *surface, GLuint *textureIdText){
   glClearColor(0, 0, 0, 0);
   glClear(GL_COLOR_BUFFER_BIT);
