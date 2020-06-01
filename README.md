@@ -69,7 +69,7 @@ make
 
 Then, to execute :
 ```sh
-./bin/ImacWars2
+./bin/MetalShadowWars
 ```
 
 <!-- LICENSE -->

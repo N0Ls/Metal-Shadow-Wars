@@ -1,4 +1,4 @@
-APP_BIN = ImacWars2
+APP_BIN = MetalShadowWars
 
 
 
