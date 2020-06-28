@@ -38,8 +38,10 @@ In a dystopian and dark universe, the last surviving men rub shoulders with huma
 <!-- BUILT-WITH -->
 ### Built With
 
-IMAC WARS 2 is built with :
+*METAL SHADOW WARS* 2 is built with :
 * [SDL1.2](https://www.libsdl.org/release/SDL-1.2.15/docs/)
+* [SDL_mixer1.2](https://www.libsdl.org/projects/SDL_mixer/docs/)
+* [SDL_ttf2.0](https://www.libsdl.org/projects/SDL_ttf/docs/)
 
 <!-- GETTING-STARTED -->
 ## Getting Started
@@ -50,11 +52,11 @@ To setting up the project locally and get a local copy up and running, follow th
 ```sh
 sudo apt-get install libsdl1.2-dev
 ```
-2. INSTALL SDL_mixer
+2. Install SDL_mixer
 ```sh
 sudo apt-get install libsdl-mixer1.2-dev
 ```
-3. INSTALL SDL_ttf
+3. Install SDL_ttf
 ```sh
 sudo apt-get install libsdl-ttf2.0-dev
 ```
